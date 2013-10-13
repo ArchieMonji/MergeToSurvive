@@ -27,15 +27,15 @@ animations: [
 	animation_name_3 
 ],
 
-sounds: [
-	[
+sounds: {
+	UnitStateEnum.ENUM_1: [
 		attack_sound_name_1,
 		attack_sound_name_2,
 		attack_sound_name_3
 	],
-	[
+	UnitStateEnum.ENUM_2: [
 		death_sound_name_1,
 		death_sound_name_2
 	]
-]
+}
 }
