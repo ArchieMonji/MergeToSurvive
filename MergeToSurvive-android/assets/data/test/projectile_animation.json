@@ -1,4 +1,5 @@
 {
+	frameCount: 4,
 	frameDuration: 0.10,
 	path: data/test/colorboxes.png,
 	name: projectile,
