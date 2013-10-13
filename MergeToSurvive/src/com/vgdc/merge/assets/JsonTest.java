@@ -17,9 +17,10 @@ public class JsonTest {
 		loadPersonDataList("data/People.json");
 		printPerson(people.get("Nate"));
 		printPerson(people.get("Kate"));
-		printPerson(people.get("Archie"));		
+		printPerson(people.get("Archie"));	
 	}
 
+	
 	private void loadPersonDataList(String path) {
 		AssetList list = json.fromJson(AssetList.class, Gdx.files.internal(path));
 		
