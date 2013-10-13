@@ -12,12 +12,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.Ability;
-import com.vgdc.merge.Controls;
-import com.vgdc.merge.Entity;
-import com.vgdc.merge.EntityData;
-import com.vgdc.merge.PlayerController;
-import com.vgdc.merge.Renderer;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.controllers.Controls;
+import com.vgdc.merge.entities.controllers.PlayerController;
+import com.vgdc.merge.entities.rendering.Renderer;
 
 public class TestMainGame implements ApplicationListener{
 	

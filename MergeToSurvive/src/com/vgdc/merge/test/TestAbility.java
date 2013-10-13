@@ -1,10 +1,10 @@
 package com.vgdc.merge.test;
 
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.Ability;
-import com.vgdc.merge.Entity;
-import com.vgdc.merge.EntityData;
-import com.vgdc.merge.Renderer;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.rendering.Renderer;
 
 public class TestAbility extends Ability {
 	

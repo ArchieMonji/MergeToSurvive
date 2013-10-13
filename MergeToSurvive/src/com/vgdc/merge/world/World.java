@@ -1,9 +1,10 @@
-package com.vgdc.merge;
+package com.vgdc.merge.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vgdc.merge.assets.Assets;
+import com.vgdc.merge.entities.BaseEntity;
 
 public class World {
 	private EntityManager entityManager = new EntityManager();

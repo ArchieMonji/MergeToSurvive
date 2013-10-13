@@ -1,7 +1,7 @@
 package com.vgdc.merge.test;
 
-import com.vgdc.merge.Controller;
-import com.vgdc.merge.UnitController;
+import com.vgdc.merge.entities.controllers.Controller;
+import com.vgdc.merge.entities.controllers.UnitController;
 
 public class TestAIController extends UnitController {
 	

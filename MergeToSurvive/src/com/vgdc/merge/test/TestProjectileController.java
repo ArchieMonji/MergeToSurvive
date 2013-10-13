@@ -1,7 +1,7 @@
 package com.vgdc.merge.test;
 
-import com.vgdc.merge.Controller;
-import com.vgdc.merge.Entity;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.controllers.Controller;
 
 public class TestProjectileController extends Controller{
 	

@@ -1,10 +1,11 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.rendering;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.vgdc.merge.entities.BaseEntity;
 
 public class Renderer {
 	public ArrayList<Animation> animations = new ArrayList<Animation>();

@@ -1,4 +1,4 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

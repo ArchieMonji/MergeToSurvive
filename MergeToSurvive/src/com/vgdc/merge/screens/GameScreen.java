@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.Entity;
 import com.vgdc.merge.MainGame;
-import com.vgdc.merge.Renderer;
-import com.vgdc.merge.SoundComponent;
-import com.vgdc.merge.World;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.audio.SoundComponent;
+import com.vgdc.merge.entities.rendering.Renderer;
 import com.vgdc.merge.test.TestPhysicsBody;
+import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
 	private SpriteBatch batch;

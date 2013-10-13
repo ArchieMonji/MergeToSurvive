@@ -1,4 +1,4 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.physics;
 
 import com.badlogic.gdx.math.Vector2;
 

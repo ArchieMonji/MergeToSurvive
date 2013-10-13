@@ -12,12 +12,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
-import com.vgdc.merge.Ability;
-import com.vgdc.merge.Controller;
-import com.vgdc.merge.Controls;
-import com.vgdc.merge.EntityData;
-import com.vgdc.merge.SoundFx;
-import com.vgdc.merge.UnitStateEnum;
+import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.UnitStateEnum;
+import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.audio.SoundFx;
+import com.vgdc.merge.entities.controllers.Controller;
+import com.vgdc.merge.entities.controllers.Controls;
 import com.vgdc.merge.test.TestAbility;
 
 public class Assets {
@@ -144,7 +144,7 @@ public class Assets {
 
 		// attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
-		if (data.sounds == null) {
+		if (template.sounds == null) {
 			for (UnitStateEnum state : UnitStateEnum.values()) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
 				data.sounds.add(soundList);

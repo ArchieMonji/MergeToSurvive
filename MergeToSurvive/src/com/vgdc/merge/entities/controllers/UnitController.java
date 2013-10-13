@@ -1,4 +1,6 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.controllers;
+
+import com.vgdc.merge.entities.Entity;
 
 public abstract class UnitController extends Controller{
 	

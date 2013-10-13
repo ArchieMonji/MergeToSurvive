@@ -1,8 +1,14 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.audio.SoundComponent;
+import com.vgdc.merge.entities.controllers.Controller;
+import com.vgdc.merge.entities.physics.PhysicsBody;
+import com.vgdc.merge.entities.rendering.Renderer;
+import com.vgdc.merge.world.World;
 
 public class Entity extends BaseEntity{
 	
@@ -110,7 +116,7 @@ public class Entity extends BaseEntity{
 	}
 
 	public void onEntityCollision(Entity other) {
-		
+		controller.onCollision(other);
 	}
 	
 	public void setState(int state){

@@ -1,6 +1,8 @@
-package com.vgdc.merge;
+package com.vgdc.merge.world;
 
 import java.util.ArrayList;
+
+import com.vgdc.merge.entities.BaseEntity;
 
 public class EntityManager {
 	

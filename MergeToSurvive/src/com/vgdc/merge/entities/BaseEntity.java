@@ -1,7 +1,11 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.vgdc.merge.entities.audio.SoundComponent;
+import com.vgdc.merge.entities.physics.PhysicsBody;
+import com.vgdc.merge.entities.rendering.Renderer;
+import com.vgdc.merge.world.World;
 
 public abstract class BaseEntity {
 	

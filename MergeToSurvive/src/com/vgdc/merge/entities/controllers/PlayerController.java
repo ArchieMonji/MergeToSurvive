@@ -1,8 +1,10 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.controllers;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.abilities.Ability;
 
 public class PlayerController extends UnitController {
 	

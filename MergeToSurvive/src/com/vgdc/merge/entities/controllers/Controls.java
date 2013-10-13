@@ -1,4 +1,4 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.controllers;
 
 public class Controls {
 	

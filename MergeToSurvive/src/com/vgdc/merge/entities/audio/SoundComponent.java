@@ -1,8 +1,10 @@
-package com.vgdc.merge;
+package com.vgdc.merge.entities.audio;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.audio.Sound;
+import com.vgdc.merge.entities.BaseEntity;
+import com.vgdc.merge.entities.Entity;
 
 public class SoundComponent {
 	

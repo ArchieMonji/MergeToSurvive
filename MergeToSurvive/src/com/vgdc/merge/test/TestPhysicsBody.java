@@ -1,7 +1,7 @@
 package com.vgdc.merge.test;
 
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.PhysicsBody;
+import com.vgdc.merge.entities.physics.PhysicsBody;
 
 public class TestPhysicsBody implements PhysicsBody {
 	
