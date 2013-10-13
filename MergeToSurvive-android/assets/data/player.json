@@ -1,0 +1,14 @@
+{
+maxHealth: 20,
+jumpHeight: 7,
+moveSpeed: 5,
+controller: AI,
+abilities: [
+	basic_attack
+],
+animations: [
+	run,
+	walk,
+	jump
+]
+}

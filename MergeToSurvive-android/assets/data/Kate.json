@@ -1,0 +1,14 @@
+{
+numbers: [
+	{
+		number: "805-555-5555",
+		name: Home
+	},
+	{
+		number: "805-777-7777",
+		name: Work
+	}
+],
+name: Kate,
+age: 27
+}

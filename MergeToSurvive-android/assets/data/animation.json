@@ -1,0 +1,7 @@
+{
+frameDuration: 100,
+path: data/animation_sheet.png,
+name: animation,
+cols: 6,
+rows: 5
+}

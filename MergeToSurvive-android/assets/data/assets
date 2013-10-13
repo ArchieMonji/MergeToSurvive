@@ -1,0 +1,25 @@
+{
+textures: [
+	data/runSheet.png,
+	data/walkSheet.png,
+	data/jumpSheet.png
+],
+animations: [	
+	{
+		name: run, 
+		path: data/run.json
+	},
+	{	
+		name: walk,
+		path: data/walk.json
+	},
+	{
+		name: jump,
+		path: data/jump.json
+	},
+],
+entities: [	
+	data/player.json,
+	data/monster.json,
+]
+}

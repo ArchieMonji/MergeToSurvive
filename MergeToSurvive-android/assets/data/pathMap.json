@@ -1,0 +1,7 @@
+{
+pathMap: {
+	Kate: "Kate.json",
+	Nate: "Nate.json",
+	Archie: "Archie.txt"
+}
+}

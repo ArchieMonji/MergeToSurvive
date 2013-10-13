@@ -1,0 +1,7 @@
+{
+paths: [
+	"data/Kate.json",
+	"data/Nate.json",
+	"data/Archie.txt"
+]
+}
