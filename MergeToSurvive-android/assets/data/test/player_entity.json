@@ -3,7 +3,7 @@ maxHealth: 	5,
 jumpHeight: 6,
 moveSpeed: 	2,
 controller: {
-	class: com.vgdc.merge.PlayerController,
+	class: com.vgdc.merge.entities.controllers.PlayerController,
 	controls: 
 	{
 		class: com.vgdc.merge.Controls,

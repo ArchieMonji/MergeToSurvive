@@ -4,7 +4,7 @@ jumpHeight: 5,
 moveSpeed: 	500,
 
 controller: {
-	class: com.vgdc.merge.PlayerController,
+	class: com.vgdc.merge.entities.controllers.PlayerController,
 	controls: {
 		up: 51,
 		down: 47,
