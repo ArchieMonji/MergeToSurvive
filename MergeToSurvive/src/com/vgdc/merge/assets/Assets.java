@@ -78,7 +78,7 @@ public class Assets {
 		TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()
 				/ data.cols, sheet.getHeight() / data.rows);
 
-		// repack into 1D array
+		// pack into 1D array
 		TextureRegion[] frames = new TextureRegion[data.cols * data.rows];
 		int index = 0;
 		for (int i = 0; i < data.rows; i++) {
