@@ -63,8 +63,6 @@ public class Assets {
 			animations.add(animationMap.get(animationName));
 		}
 		
-		data.defaultAbilities = new ArrayList<Ability>();
-		
 		entityDataMap.put(name, data);
 	}
 
