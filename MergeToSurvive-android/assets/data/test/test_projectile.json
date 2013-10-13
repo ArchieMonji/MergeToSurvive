@@ -1,0 +1,15 @@
+{
+moveSpeed: 	10,
+
+controller: {
+	class: com.vgdc.merge.test.TestProjectileController
+},
+
+abilities: [
+],
+
+animations: [
+	projectile,
+	projectile
+]
+}

@@ -3,11 +3,14 @@ package com.vgdc.merge;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vgdc.merge.assets.Assets;
 
 public class World {
 	private EntityManager entityManager = new EntityManager();
 	
 	private OrthographicCamera camera;
+	
+	private Assets assets;
 	
 	public EntityManager getEntityManager(){
 		return entityManager;
@@ -25,6 +28,16 @@ public class World {
 		entityManager.onUpdate();
 		for(BaseEntity e : entityManager.getEntities())
 			e.onUpdate(Gdx.graphics.getDeltaTime());
+	}
+	
+	public void setAssets(Assets nAssets)
+	{
+		assets = nAssets;
+	}
+	
+	public Assets getAssets()
+	{
+		return assets;
 	}
 	
 	public OrthographicCamera getCamera()

@@ -1,0 +1,27 @@
+{
+maxHealth: 	2,
+jumpHeight: 5,
+moveSpeed: 	5,
+
+controller: {
+	class: com.vgdc.merge.PlayerController,
+	controls: {
+		up: 51,
+		down: 47,
+		left: 29,
+		right: 32,
+		useAbility: 0
+	}
+},
+
+abilities: [
+	{
+		class: com.vgdc.merge.test.TestAbility,
+	}
+],
+
+animations: [
+	idle,
+	run
+]
+}

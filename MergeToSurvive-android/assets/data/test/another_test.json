@@ -1,0 +1,19 @@
+{
+sounds: [
+
+],
+textures: [
+	data/test/animation_sheet.png,
+	data/test/colorboxes.png
+],
+animations: [	
+	data/test/idle_animation.json,
+	data/test/run_animation.json,
+	data/test/projectile_animation.json
+],
+entities: {
+	testplayer: data/test/test_player.json,
+	testenemy: data/test/test_enemy.json,
+	testprojectile: data/test/test_projectile.json
+}
+}

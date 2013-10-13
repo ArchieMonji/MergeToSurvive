@@ -1,0 +1,7 @@
+{
+	frameDuration: 0.10,
+	path: data/test/colorboxes.png,
+	name: projectile,
+	cols: 4,
+	rows: 1
+}
