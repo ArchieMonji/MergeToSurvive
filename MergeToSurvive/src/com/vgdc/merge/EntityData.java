@@ -11,4 +11,5 @@ public class EntityData {
 	public Controller controller;
 	public ArrayList<Ability> defaultAbilities;
 	public ArrayList<Animation> animations;
+	public ArrayList<ArrayList<SoundFx>> sounds;
 }

@@ -45,6 +45,12 @@ public class Entity extends BaseEntity{
 		nRenderer.setState(0);
 	}
 	
+	public void setSoundComponent(SoundComponent sound)
+	{
+		super.setSoundComponent(sound);
+		sound.setSounds(data.sounds);
+	}
+	
 	@Override
 	public void onUpdate(float delta) {
 		controller.onUpdate(delta);
