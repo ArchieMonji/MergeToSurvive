@@ -16,5 +16,6 @@ abilities: [
 animations: [
 	idle,
 	run
-]
+],
+sounds: []
 }

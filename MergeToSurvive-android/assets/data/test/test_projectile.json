@@ -11,5 +11,6 @@ abilities: [
 animations: [
 	projectile,
 	projectile
-]
+],
+sounds: []
 }

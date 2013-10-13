@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 
-public class PlayerController extends Controller {
+public class PlayerController extends UnitController {
 	
 	private Controls controls;
 	
@@ -47,14 +47,12 @@ public class PlayerController extends Controller {
 		if(Gdx.input.isKeyPressed(controls.left))
 		{
 			//this is test, change later
-			getEntity().moveLeft(delta);
-			System.out.println("new location " + getEntity().getPosition());
+			moveLeft(delta);
 		}
 		if(Gdx.input.isKeyPressed(controls.right))
 		{
 			//this is test, change later
-			getEntity().moveRight(delta);
-			System.out.println("new location " + getEntity().getPosition());
+			moveRight(delta);
 		}
 		if(Gdx.input.isButtonPressed(controls.useAbility))
 		{
@@ -87,6 +85,7 @@ public class PlayerController extends Controller {
 		{
 			toggled = false;
 		}
+		stateMachine.affectState(delta);
 	}
 
 	@Override

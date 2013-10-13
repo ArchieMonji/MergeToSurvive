@@ -10,7 +10,7 @@ public class Entity extends BaseEntity{
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private int health;
 	private Controller controller;
-	private boolean moved = false;
+	//private boolean moved = false;
 	
 	public Entity(EntityData data, World world)
 	{
@@ -36,6 +36,7 @@ public class Entity extends BaseEntity{
 		this.health = data.maxHealth;
 		setRenderer(renderer);
 		setPhysicsBody(body);
+		setSoundComponent(sound);
 	}
 	
 	public void setRenderer(Renderer nRenderer)
@@ -54,19 +55,19 @@ public class Entity extends BaseEntity{
 	@Override
 	public void onUpdate(float delta) {
 		controller.onUpdate(delta);
-		if(moved)
-		{
-			if(getRenderer().getState()==0)
-				getRenderer().setState(1);
-		}
-		else
-		{
-			if(getRenderer().getState()!=0)
-				getRenderer().setState(0);
-				
-		}
+//		if(moved)
+//		{
+//			if(getRenderer().getState()==0)
+//				getRenderer().setState(1);
+//		}
+//		else
+//		{
+//			if(getRenderer().getState()!=0)
+//				getRenderer().setState(0);
+//				
+//		}
 		getPhysicsBody().onUpdate(delta);
-		moved = false;
+		//moved = false;
 	}
 	
 	@Override
@@ -98,14 +99,14 @@ public class Entity extends BaseEntity{
 	{
 		getPosition().add(-data.moveSpeed*delta, 0f);
 		getRenderer().flip(true);
-		moved = true;
+		//moved = true;
 	}
 	
 	public void moveRight(float delta)
 	{
 		getPosition().add(data.moveSpeed*delta, 0f);
 		getRenderer().flip(false);
-		moved = true;
+		//moved = true;
 	}
 
 	public void onEntityCollision(Entity other) {

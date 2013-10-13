@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.Entity;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.Renderer;
+import com.vgdc.merge.SoundComponent;
 import com.vgdc.merge.World;
 import com.vgdc.merge.test.TestPhysicsBody;
 
@@ -115,6 +116,7 @@ public class GameScreen extends AbstractScreen {
 				testEntity.setPhysicsBody(new TestPhysicsBody());
 				testEntity.setRenderer(new Renderer());
 				testEntity.setPosition(new Vector2(-58 + 58*i, -58+58*j));
+				testEntity.setSoundComponent(new SoundComponent());
 				myWorld.getEntityManager().addEntity(testEntity);
 			}
 		}
@@ -122,6 +124,7 @@ public class GameScreen extends AbstractScreen {
 		testEntity.setPhysicsBody(new TestPhysicsBody());
 		testEntity.setRenderer(new Renderer());
 		testEntity.setPosition(new Vector2(58, 58));
+		testEntity.setSoundComponent(new SoundComponent());
 		myWorld.getEntityManager().addEntity(testEntity);
 	}
 

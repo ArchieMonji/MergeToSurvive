@@ -27,6 +27,8 @@ public class SoundComponent {
 		{
 			currentSound.stop(soundId);
 		}
+		if(sounds==null||state >= sounds.size()||sounds.get(state)==null)
+			return;
 		SoundFx sound = sounds.get(state).get((int)(Math.random()*sounds.get(state).size()));
 		currentSound = sound.sound;
 		soundId = currentSound.play();

@@ -1,6 +1,14 @@
 {
 sounds: [
-
+	{
+		name: testthrower,
+		path: data/test/flamethrower.ogg,
+		looping: true
+	},
+	{
+		name: testvine,
+		path: data/test/Vine_attack.ogg
+	}
 ],
 textures: [
 	data/test/animation_sheet.png,

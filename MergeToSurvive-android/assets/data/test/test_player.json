@@ -23,5 +23,13 @@ abilities: [
 animations: [
 	idle,
 	run
+],
+sounds: [
+	[
+		testvine
+	],
+	[
+		testthrower
+	]
 ]
 }

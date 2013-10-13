@@ -1,8 +1,9 @@
 package com.vgdc.merge.test;
 
 import com.vgdc.merge.Controller;
+import com.vgdc.merge.UnitController;
 
-public class TestAIController extends Controller {
+public class TestAIController extends UnitController {
 	
 	private static final float TIME = 2;
 	
@@ -23,9 +24,10 @@ public class TestAIController extends Controller {
 			left = !left;
 		}
 		if(left)
-			getEntity().moveLeft(delta);
+			moveLeft(delta);
 		else
-			getEntity().moveRight(delta);
+			moveRight(delta);
+		stateMachine.affectState(delta);
 	}
 
 }
