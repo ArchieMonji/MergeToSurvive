@@ -16,12 +16,14 @@ import com.vgdc.merge.Ability;
 import com.vgdc.merge.Controller;
 import com.vgdc.merge.Controls;
 import com.vgdc.merge.EntityData;
+import com.vgdc.merge.SoundFx;
 import com.vgdc.merge.test.TestAbility;
 
 public class Assets {
 	public AssetManager manager = new AssetManager();
 	public HashMap<String, EntityData> entityDataMap = new HashMap<String, EntityData>();
 	public HashMap<String, Animation> animationMap = new HashMap<String, Animation>();
+	public HashMap<String, SoundFx> soundMap = new HashMap<String, SoundFx>();
 
 	private Json json = new Json();
 
@@ -30,7 +32,13 @@ public class Assets {
 		Assets a = new Assets();
 		Assets.AssetList l = new AssetList();
 		l.animations = new ArrayList<String>();
-		l.sounds = new ArrayList<String>();
+		l.sounds = new ArrayList<SoundData>();
+		SoundData sd = new SoundData();
+		l.sounds.add(sd);
+		sd.name = "TESTNAME";
+		sd.path = "Test_path.ogg";
+		sd.looping = true;
+		
 		l.textures = new ArrayList<String>();
 		l.entities = new HashMap<String, String>();
 		l.entities.put("player", "player.json");
@@ -39,6 +47,14 @@ public class Assets {
 		abs.add(new TestAbility());
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
 
+		EntityTemplate edt = new EntityTemplate();
+		edt.sounds = new ArrayList<ArrayList<String>>();
+		ArrayList<String> soundNameList = new ArrayList<String>();
+		soundNameList.add("SOUND NAME");
+		edt.sounds.add(soundNameList);
+		
+		System.out.println(a.json.prettyPrint(a.json.toJson(edt)));
+		
 		Controls c = new Controls();
 		c.down = Keys.S;
 		c.up = Keys.W;
@@ -57,8 +73,8 @@ public class Assets {
 	public void loadAssets(String path) {
 		AssetList assets = createObjectFromJson(AssetList.class, path);
 
-		for (String soundPath : assets.sounds) {
-			manager.load(soundPath, Sound.class);
+		for (SoundData soundData : assets.sounds) {
+			manager.load(soundData.path, Sound.class);
 		}
 
 		for (String texturePath : assets.textures) {
@@ -67,7 +83,14 @@ public class Assets {
 
 		// TODO: Change to support asynchronous loading
 		manager.finishLoading();
-
+		
+		for(SoundData soundData : assets.sounds){
+			SoundFx sfx = new SoundFx();
+			sfx.looping = soundData.looping;
+			sfx.sound = manager.get(soundData.path);
+			soundMap.put(soundData.name, sfx);
+		}
+		
 		for (String animationPath : assets.animations) {
 			loadAnimation(animationPath);
 		}
@@ -92,12 +115,25 @@ public class Assets {
 		data.jumpHeight = template.jumpHeight;
 		data.moveSpeed = template.moveSpeed;
 
+		//attach animations
 		data.animations = new ArrayList<Animation>();
 
 		for (String animationName : template.animations) {
 			data.animations.add(animationMap.get(animationName));
 		}
 
+		//attach sounds
+		data.sounds = new ArrayList<ArrayList<SoundFx>>();
+		for(ArrayList<String> soundPathList: template.sounds){
+			ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
+			data.sounds.add(soundList);
+			
+			for(String soundName: soundPathList){
+				soundList.add(soundMap.get(soundName));
+			}
+		}
+		
+		
 		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
 
 		data.controller = template.controller;
@@ -137,10 +173,16 @@ public class Assets {
 	}
 
 	private static class AssetList {
-		public ArrayList<String> sounds; // path
+		public ArrayList<SoundData> sounds; // path
 		public ArrayList<String> textures; // path
 		public ArrayList<String> animations; // path
 		public HashMap<String, String> entities; // name, path
+	}
+	
+	private static class SoundData{
+		public String name;
+		public String path;
+		public boolean looping;
 	}
 
 	private static class EntityTemplate {
@@ -150,5 +192,6 @@ public class Assets {
 		public Controller controller;
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
+		public ArrayList<ArrayList<String>> sounds;
 	}
 }
