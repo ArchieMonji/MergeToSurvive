@@ -1,25 +1,19 @@
-data/entities/dir/entity_type.json,{
+{
+sounds: [
+	data/sounds/dir/path_1.ogg,
+],
 textures: [
 	data/images/dir/path_1.png,
 	data/images/dir/path_2.png,
 	data/images/dir/path_3.png,
 ],
 animations: [	
-	{
-		name: animation_0_name, 
-		path: data/dir/path_0.json
-	},
-	{	
-		name: animation_1_name, 
-		path: data/dir/path_1.json
-	},
-	{
-		name: animation_2_name, 
-		path: data/dir/path_2.json
-	},
+	data/dir/path_0.json, 
+	data/dir/path_1.json,
+	data/dir/path_2.json
 ],
-entities: [	
-	data/entities/dir/entity_type_1.json,
-	data/entities/dir/entity_type_2.json,
-]
+entities: {	
+	player: data/entities/dir/player_entity_data.json,
+	entity_2_name: data/entities/dir/entity_type_2.json,
+}
 }

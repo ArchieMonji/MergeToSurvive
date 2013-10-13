@@ -1,0 +1,15 @@
+{
+sounds: [
+
+],
+textures: [
+	data/test/animation_sheet.png
+],
+animations: [	
+	data/test/idle_animation.json,
+	data/test/run_animation.json
+],
+entities: {
+	player: data/test/player_entity.json
+}
+}

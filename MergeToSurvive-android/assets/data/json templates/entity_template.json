@@ -2,25 +2,28 @@
 maxHealth: 	value,
 jumpHeight: value,
 moveSpeed: 	value,
+
 controller: {
 	class: full.controller.classpath.ClassName,
 	field_name_1: value,
 	field_name_2: value,
-	field_name_3: value,
+	field_name_3: value
 },
+
 abilities: [
 	{
 		class: full.ability.classpath.ClassName,
 		default_ability_1: field,
-	}
+	},
 	{
 		class: full.ability.classpath.ClassName,
 		default_ability_2: field,
 	}
 ],
+
 animations: [
 	animation_name_1, 
 	animation_name_2,
-	animation_name_3, 
+	animation_name_3 
 ]
 }

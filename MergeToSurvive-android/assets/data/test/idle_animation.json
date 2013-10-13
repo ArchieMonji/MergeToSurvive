@@ -1,0 +1,7 @@
+{
+	frameDuration: 0.45,
+	path: data/test/animation_sheet.png,
+	name: idle,
+	cols: 6,
+	rows: 5
+}

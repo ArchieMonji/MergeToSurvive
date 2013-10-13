@@ -1,7 +1,7 @@
 {
-frameDuration: value_in_seconds,
-path: data/images/animations/dir/animation_sheet_path.png,
-name: animation_name,
-cols: value,
-rows: value
+	frameDuration: value_in_seconds,
+	path: data/images/animations/dir/animation_sheet_path.png,
+	name: animation_name,
+	cols: value,
+	rows: value
 }
