@@ -1,6 +1,14 @@
 {
 sounds: [
-	data/sounds/dir/path_1.ogg,
+	{
+		name: looping_sound_name,
+		path: data.sounds/dir/sound_path_1.ogg,
+		looping: true
+	},
+	{
+		name: nonlooping_sound_name,
+		path: data.sounds/dir/sound_path_2.ogg,
+	}
 ],
 textures: [
 	data/images/dir/path_1.png,
