@@ -14,16 +14,18 @@ public class JsonTest {
 	Json json = new Json();
 
 	public void runTest() {
-		loadPersonData("data/Nate.json");
-		loadPersonData("data/Kate.json");
-		loadPersonData("data/Archie.txt");
-
-		loadAndPrintPathArray("data/paths.txt");
-		loadAndPrintPathMap("data/pathMap.json");
+		loadPersonDataList("data/People.json");
 		printPerson(people.get("Nate"));
 		printPerson(people.get("Kate"));
-		printPerson(people.get("Archie"));
+		printPerson(people.get("Archie"));		
+	}
 
+	private void loadPersonDataList(String path) {
+		AssetList list = json.fromJson(AssetList.class, Gdx.files.internal(path));
+		
+		for(String personPath: list.paths){
+			loadPersonData(personPath);
+		}
 	}
 
 	private void loadAndPrintPathArray(String path) {
