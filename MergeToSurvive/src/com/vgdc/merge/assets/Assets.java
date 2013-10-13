@@ -25,20 +25,20 @@ public class Assets {
 
 	private Json json = new Json();
 
-	//Test
+	// Test
 	public static void main(String[] args) {
 		Assets a = new Assets();
 		Assets.AssetList l = new AssetList();
 		l.animations = new ArrayList<String>();
 		l.sounds = new ArrayList<String>();
 		l.textures = new ArrayList<String>();
-		l.entities = new HashMap<String,String>();
-		l.entities.put("player","player.json");
+		l.entities = new HashMap<String, String>();
+		l.entities.put("player", "player.json");
 		System.out.println(a.json.prettyPrint(a.json.toJson(l)));
 		ArrayList<Ability> abs = new ArrayList<Ability>();
 		abs.add(new TestAbility());
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
-		
+
 		Controls c = new Controls();
 		c.down = Keys.S;
 		c.up = Keys.W;
@@ -47,9 +47,9 @@ public class Assets {
 		c.useAbility = Buttons.LEFT;
 		c.toggleAbility = Buttons.LEFT;
 		System.out.println(a.json.prettyPrint(a.json.toJson(c)));
-		
+
 	}
-	
+
 	public <T> T createObjectFromJson(Class<T> type, String path) {
 		return json.fromJson(type, Gdx.files.internal(path));
 	}
@@ -64,9 +64,8 @@ public class Assets {
 		for (String texturePath : assets.textures) {
 			manager.load(texturePath, Texture.class);
 		}
-		
 
-		//TODO: Change to support asynchronous loading
+		// TODO: Change to support asynchronous loading
 		manager.finishLoading();
 
 		for (String animationPath : assets.animations) {
@@ -76,7 +75,7 @@ public class Assets {
 		for (String name : assets.entities.keySet()) {
 			loadEntityData(name, assets.entities.get(name));
 		}
-		
+
 		System.out.println("Loading Finished");
 	}
 
@@ -85,25 +84,26 @@ public class Assets {
 	}
 
 	private void loadEntityData(String name, String path) {
-		EntityTemplate template = createObjectFromJson(EntityTemplate.class, path);
+		EntityTemplate template = createObjectFromJson(EntityTemplate.class,
+				path);
 
 		EntityData data = new EntityData();
 		data.maxHealth = template.maxHealth;
 		data.jumpHeight = template.jumpHeight;
 		data.moveSpeed = template.moveSpeed;
-		
+
 		data.animations = new ArrayList<Animation>();
-		
-		for(String animationName: template.animations){
+
+		for (String animationName : template.animations) {
 			data.animations.add(animationMap.get(animationName));
 		}
-		
+
 		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
-		
+
 		data.controller = template.controller;
-		
+
 		entityDataMap.put(name, data);
-		
+
 		System.out.println("EntityData Loaded : " + name);
 	}
 
@@ -113,9 +113,14 @@ public class Assets {
 
 		Texture sheet = manager.get(data.path, Texture.class);
 
+		TextureRegion[][] tmp = null;
 		// break sheet into individual frames
-		TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()
-				/ data.cols, sheet.getHeight() / data.rows);
+		if (data.frameWidth == 0 || data.frameHeight == 0) {
+			tmp = TextureRegion.split(sheet, sheet.getWidth() / data.cols,
+					sheet.getHeight() / data.rows);
+		} else {
+			tmp = TextureRegion.split(sheet, data.frameWidth, data.frameHeight);
+		}
 
 		// pack into 1D array
 		TextureRegion[] frames = new TextureRegion[data.frameCount];
@@ -127,7 +132,7 @@ public class Assets {
 		}
 
 		animationMap.put(data.name, new Animation(data.frameDuration, frames));
-		
+
 		System.out.println("Animation Loaded : " + data.name);
 	}
 
@@ -137,8 +142,8 @@ public class Assets {
 		public ArrayList<String> animations; // path
 		public HashMap<String, String> entities; // name, path
 	}
-	
-	private static class EntityTemplate{
+
+	private static class EntityTemplate {
 		public int maxHealth;
 		public float jumpHeight;
 		public float moveSpeed;

@@ -7,4 +7,6 @@ public class AnimationData {
 	public int rows;
 	public int cols;
 	public int frameCount;
+	public int frameWidth;
+	public int frameHeight;
 }
