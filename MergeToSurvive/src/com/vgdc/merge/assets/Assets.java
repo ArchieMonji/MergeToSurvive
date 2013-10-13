@@ -118,10 +118,10 @@ public class Assets {
 				/ data.cols, sheet.getHeight() / data.rows);
 
 		// pack into 1D array
-		TextureRegion[] frames = new TextureRegion[data.cols * data.rows];
+		TextureRegion[] frames = new TextureRegion[data.frameCount];
 		int index = 0;
-		for (int i = 0; i < data.rows; i++) {
-			for (int j = 0; j < data.cols; j++) {
+		for (int i = 0; i < data.rows && index < data.frameCount; i++) {
+			for (int j = 0; j < data.cols && index < data.frameCount; j++) {
 				frames[index++] = tmp[i][j];
 			}
 		}

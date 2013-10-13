@@ -6,4 +6,5 @@ public class AnimationData {
 	public float frameDuration;
 	public int rows;
 	public int cols;
+	public int frameCount;
 }
