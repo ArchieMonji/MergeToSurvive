@@ -1,0 +1,25 @@
+data/entities/dir/entity_type.json,{
+textures: [
+	data/images/dir/path_1.png,
+	data/images/dir/path_2.png,
+	data/images/dir/path_3.png,
+],
+animations: [	
+	{
+		name: animation_0_name, 
+		path: data/dir/path_0.json
+	},
+	{	
+		name: animation_1_name, 
+		path: data/dir/path_1.json
+	},
+	{
+		name: animation_2_name, 
+		path: data/dir/path_2.json
+	},
+],
+entities: [	
+	data/entities/dir/entity_type_1.json,
+	data/entities/dir/entity_type_2.json,
+]
+}
