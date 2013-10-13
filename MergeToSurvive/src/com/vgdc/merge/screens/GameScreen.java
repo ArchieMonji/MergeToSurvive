@@ -20,6 +20,7 @@ import com.vgdc.merge.MainGame;
 import com.vgdc.merge.PlayerController;
 import com.vgdc.merge.Renderer;
 import com.vgdc.merge.World;
+import com.vgdc.merge.test.TestAIController;
 import com.vgdc.merge.test.TestAbility;
 import com.vgdc.merge.test.TestPhysicsBody;
 
@@ -106,7 +107,20 @@ public class GameScreen extends AbstractScreen {
 		testData.controller = new PlayerController(controls);
 		testData.animations = animations;
 		
-		Entity testEntity = new Entity(testData);
+		EntityData testEnemy = new EntityData();
+		testEnemy.jumpHeight = 5;
+		testEnemy.moveSpeed = 1;
+		testEnemy.maxHealth = 1;
+		testEnemy.defaultAbilities = abilities;
+		testEnemy.controller = new TestAIController();
+		testEnemy.animations = animations;
+		
+		Entity testEntity = new Entity(testData, myWorld);
+		testEntity.setPhysicsBody(new TestPhysicsBody());
+		testEntity.setRenderer(new Renderer());
+		testEntity.setPosition(new Vector2(x/2, y/2));
+		myWorld.getEntityManager().addEntity(testEntity);
+		testEntity = new Entity(testEnemy, myWorld);
 		testEntity.setPhysicsBody(new TestPhysicsBody());
 		testEntity.setRenderer(new Renderer());
 		testEntity.setPosition(new Vector2(x/2, y/2));

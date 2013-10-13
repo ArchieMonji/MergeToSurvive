@@ -22,6 +22,7 @@ public class World {
 	
 	public void onUpdate()
 	{
+		entityManager.onUpdate();
 		for(BaseEntity e : entityManager.getEntities())
 			e.onUpdate(Gdx.graphics.getDeltaTime());
 	}

@@ -66,10 +66,10 @@ public class TestMainGame implements ApplicationListener{
 		testData.controller = new PlayerController(controls);
 		testData.animations = animations;
 		
-		testEntity = new Entity(testData);
-		testEntity.setPhysicsBody(new TestPhysicsBody());
-		testEntity.setRenderer(new Renderer());
-		testEntity.setPosition(new Vector2(x/2, y/2));
+//		testEntity = new Entity(testData);
+//		testEntity.setPhysicsBody(new TestPhysicsBody());
+//		testEntity.setRenderer(new Renderer());
+//		testEntity.setPosition(new Vector2(x/2, y/2));
 		
 	}
 

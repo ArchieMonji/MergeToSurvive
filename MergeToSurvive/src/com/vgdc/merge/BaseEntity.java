@@ -7,6 +7,7 @@ public abstract class BaseEntity {
 	
 	private PhysicsBody body;
 	private Renderer renderer;
+	private World world;
 	
 	public void setPhysicsBody(PhysicsBody nBody){
 		body = nBody;
@@ -23,6 +24,16 @@ public abstract class BaseEntity {
 	
 	public Renderer getRenderer(){
 		return renderer;
+	}
+	
+	public void setWorld(World world)
+	{
+		this.world = world;
+	}
+	
+	public World getWorld()
+	{
+		return world;
 	}
 	
 	public abstract void onUpdate(float delta);

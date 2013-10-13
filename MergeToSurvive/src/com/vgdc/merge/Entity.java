@@ -12,21 +12,25 @@ public class Entity extends BaseEntity{
 	private Controller controller;
 	private boolean moved = false;
 	
-	public Entity(EntityData data)
+	public Entity(EntityData data, World world)
 	{
 		this.data = data;
-		for(Ability a : data.defaultAbilities)
-			abilities.add(a);
+		setWorld(world);
+		if(data.defaultAbilities!=null)
+			for(Ability a : data.defaultAbilities)
+				abilities.add(a);
 		this.controller = data.controller.copy();
 		controller.setEntity(this);
 		this.health = data.maxHealth;
 	}
 	
-	public Entity(EntityData data, Renderer renderer, PhysicsBody body)
+	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body)
 	{
 		this.data = data;
-		for(Ability a : data.defaultAbilities)
-			abilities.add(a);
+		setWorld(world);
+		if(data.defaultAbilities!=null)
+			for(Ability a : data.defaultAbilities)
+				abilities.add(a);
 		this.controller = data.controller.copy();
 		controller.setEntity(this);
 		this.health = data.maxHealth;
