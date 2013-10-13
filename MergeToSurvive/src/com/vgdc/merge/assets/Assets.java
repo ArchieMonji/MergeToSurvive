@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
+import com.vgdc.merge.Ability;
 import com.vgdc.merge.Controller;
 import com.vgdc.merge.EntityData;
 
@@ -62,6 +63,10 @@ public class Assets {
 			animations.add(animationMap.get(animationName));
 		}
 		
+		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
+		
+		data.controller = template.controller;
+		
 		entityDataMap.put(name, data);
 	}
 
@@ -99,7 +104,7 @@ public class Assets {
 		public float jumpHeight;
 		public float moveSpeed;
 		public Controller controller;
-		public ArrayList<String> abilities;
+		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
 	}
 }
