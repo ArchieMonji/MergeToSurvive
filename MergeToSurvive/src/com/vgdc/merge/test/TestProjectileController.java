@@ -26,9 +26,9 @@ public class TestProjectileController extends Controller{
 			getEntity().getWorld().getEntityManager().removeEntity(getEntity());
 		}
 		if(getEntity().getRenderer().isFlipped())
-			getEntity().moveLeft();
+			getEntity().moveLeft(delta);
 		else
-			getEntity().moveRight();
+			getEntity().moveRight(delta);
 	}
 
 }

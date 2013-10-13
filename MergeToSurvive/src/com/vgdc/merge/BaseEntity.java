@@ -7,6 +7,7 @@ public abstract class BaseEntity {
 	
 	private PhysicsBody body;
 	private Renderer renderer;
+	private SoundComponent sound;
 	private World world;
 	
 	public void setPhysicsBody(PhysicsBody nBody){
@@ -24,6 +25,14 @@ public abstract class BaseEntity {
 	
 	public Renderer getRenderer(){
 		return renderer;
+	}
+	
+	public SoundComponent getSoundComponent(){
+		return sound;
+	}
+	
+	public void setSoundComponent(SoundComponent soundComponent){
+		sound = soundComponent;
 	}
 	
 	public void setWorld(World world)

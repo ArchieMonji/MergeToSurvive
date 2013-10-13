@@ -41,19 +41,19 @@ public class PlayerController extends Controller {
 		if(Gdx.input.isKeyPressed(controls.up))
 		{
 			//this is test, change later
-			getEntity().jump();
+			getEntity().jump(delta);
 			System.out.println("jump!");
 		}
 		if(Gdx.input.isKeyPressed(controls.left))
 		{
 			//this is test, change later
-			getEntity().moveLeft();
+			getEntity().moveLeft(delta);
 			System.out.println("new location " + getEntity().getPosition());
 		}
 		if(Gdx.input.isKeyPressed(controls.right))
 		{
 			//this is test, change later
-			getEntity().moveRight();
+			getEntity().moveRight(delta);
 			System.out.println("new location " + getEntity().getPosition());
 		}
 		if(Gdx.input.isButtonPressed(controls.useAbility))

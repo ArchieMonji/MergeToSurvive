@@ -57,6 +57,9 @@ public class GameScreen extends AbstractScreen {
 		myWorld = new World();
 		myWorld.setCamera(new OrthographicCamera(w, h));
 		myWorld.setAssets(game.getAssets());
+		
+		batch = new SpriteBatch();
+		
 //		ArrayList<Ability> abilities = new ArrayList<Ability>();
 //		abilities.add(new TestAbility());
 //		abilities.add(null);
@@ -113,7 +116,6 @@ public class GameScreen extends AbstractScreen {
 		testEntity.setRenderer(new Renderer());
 		testEntity.setPosition(new Vector2(58, 58));
 		myWorld.getEntityManager().addEntity(testEntity);
-		batch = new SpriteBatch();
 	}
 
 	@Override

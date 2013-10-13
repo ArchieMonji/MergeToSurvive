@@ -24,7 +24,7 @@ public class Entity extends BaseEntity{
 		this.health = data.maxHealth;
 	}
 	
-	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body)
+	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body, SoundComponent sound)
 	{
 		this.data = data;
 		setWorld(world);
@@ -83,27 +83,36 @@ public class Entity extends BaseEntity{
 		return abilities;
 	}
 	
-	public void jump()
+	public void jump(float delta)
 	{
 		//TODO implement this later, when PhysicsBody is more fleshed out
 	}
 	
-	public void moveLeft()
+	public void moveLeft(float delta)
 	{
-		getPosition().add(-data.moveSpeed, 0f);
+		getPosition().add(-data.moveSpeed*delta, 0f);
 		getRenderer().flip(true);
 		moved = true;
 	}
 	
-	public void moveRight()
+	public void moveRight(float delta)
 	{
-		getPosition().add(data.moveSpeed, 0f);
+		getPosition().add(data.moveSpeed*delta, 0f);
 		getRenderer().flip(false);
 		moved = true;
 	}
 
 	public void onEntityCollision(Entity other) {
 		
+	}
+	
+	public void setState(int state){
+		getRenderer().setState(state);
+		getSoundComponent().playSound(state);
+	}
+	
+	public int getState(){
+		return getRenderer().getState();
 	}
 
 }

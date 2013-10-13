@@ -23,9 +23,9 @@ public class TestAIController extends Controller {
 			left = !left;
 		}
 		if(left)
-			getEntity().moveLeft();
+			getEntity().moveLeft(delta);
 		else
-			getEntity().moveRight();
+			getEntity().moveRight(delta);
 	}
 
 }
