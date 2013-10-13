@@ -40,6 +40,7 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
+		
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class GameScreen extends AbstractScreen {
 		float h = Gdx.graphics.getHeight();
 
 		myWorld = new World();
-		myWorld.setCamera(new OrthographicCamera(w, h));
+		myWorld.setCamera(new OrthographicCamera(480,600));
 		myWorld.setAssets(game.getAssets());
 		
 		batch = new SpriteBatch();

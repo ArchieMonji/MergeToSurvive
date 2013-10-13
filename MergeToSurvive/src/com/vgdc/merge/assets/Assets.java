@@ -52,6 +52,7 @@ public class Assets {
 		edt.sounds = new HashMap<UnitStateEnum, ArrayList<String>>();
 		ArrayList<String> soundNameList = new ArrayList<String>();
 		soundNameList.add("SOUND NAME");
+		soundNameList.add("SOUND NAME2");
 		edt.sounds.put(UnitStateEnum.MOVE, soundNameList);
 		edt.sounds.put(UnitStateEnum.ATTACK, soundNameList);
 
@@ -70,6 +71,9 @@ public class Assets {
 		te.state = State.TEST;
 
 		System.out.println(a.json.prettyPrint(a.json.toJson(te)));
+		EntityTemplate temp = a.json.fromJson(EntityTemplate.class, a.json.toJson(edt));
+		System.out.println(temp.sounds.get(UnitStateEnum.MOVE.name()));
+	
 
 	}
 
@@ -127,9 +131,11 @@ public class Assets {
 	}
 
 	private void loadEntityData(String name, String path) {
+		System.out.println("Loading Entity '" + name + "' from " + path);
+		
 		EntityTemplate template = createObjectFromJson(EntityTemplate.class,
 				path);
-
+		
 		EntityData data = new EntityData();
 		data.maxHealth = template.maxHealth;
 		data.jumpHeight = template.jumpHeight;
@@ -144,12 +150,17 @@ public class Assets {
 
 		// attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
-		if (template.sounds == null) {
-			for (UnitStateEnum state : UnitStateEnum.values()) {
-				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
-				data.sounds.add(soundList);
+		for(Object o: template.sounds.keySet()){
+			System.out.println("SOUNDFX: " + o);
+		}
+		for (UnitStateEnum state : UnitStateEnum.values()) {
+			ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
+			data.sounds.add(soundList);
 
-				for (String soundName : template.sounds.get(state)) {
+			json.setElementType(EntityTemplate.class, "sounds", ArrayList.class);
+			ArrayList<String> soundNames = template.sounds.get(state.name());
+			if (soundNames != null) {
+				for (String soundName : soundNames) {
 					soundList.add(soundMap.get(soundName));
 				}
 			}
