@@ -17,6 +17,7 @@ import com.vgdc.merge.Controller;
 import com.vgdc.merge.Controls;
 import com.vgdc.merge.EntityData;
 import com.vgdc.merge.SoundFx;
+import com.vgdc.merge.UnitStateEnum;
 import com.vgdc.merge.test.TestAbility;
 
 public class Assets {
@@ -48,10 +49,11 @@ public class Assets {
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
 
 		EntityTemplate edt = new EntityTemplate();
-		edt.sounds = new ArrayList<ArrayList<String>>();
+		edt.sounds = new HashMap<UnitStateEnum,ArrayList<String>>();
 		ArrayList<String> soundNameList = new ArrayList<String>();
 		soundNameList.add("SOUND NAME");
-		edt.sounds.add(soundNameList);
+		edt.sounds.put(UnitStateEnum.MOVE,soundNameList);
+		edt.sounds.put(UnitStateEnum.ATTACK,soundNameList);
 		
 		System.out.println(a.json.prettyPrint(a.json.toJson(edt)));
 		
@@ -64,8 +66,25 @@ public class Assets {
 		c.toggleAbility = Buttons.LEFT;
 		System.out.println(a.json.prettyPrint(a.json.toJson(c)));
 
+		TestEnum te = new TestEnum();
+		te.state = State.TEST;
+		
+		System.out.println(a.json.prettyPrint(a.json.toJson(te)));
+		
 	}
 
+	public static class TestEnum{
+		State state;
+	}
+	
+	public enum State{
+		TEST(1);
+		int v;
+		private State(int v){
+			this.v = v;
+		}
+	}
+	
 	public <T> T createObjectFromJson(Class<T> type, String path) {
 		return json.fromJson(type, Gdx.files.internal(path));
 	}
@@ -124,11 +143,11 @@ public class Assets {
 
 		//attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
-		for(ArrayList<String> soundPathList: template.sounds){
+		for(UnitStateEnum state: UnitStateEnum.values()){
 			ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
 			data.sounds.add(soundList);
 			
-			for(String soundName: soundPathList){
+			for(String soundName: template.sounds.get(state)){
 				soundList.add(soundMap.get(soundName));
 			}
 		}
@@ -192,6 +211,6 @@ public class Assets {
 		public Controller controller;
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
-		public ArrayList<ArrayList<String>> sounds;
+		public HashMap<UnitStateEnum,ArrayList<String>> sounds;
 	}
 }
