@@ -17,5 +17,5 @@ animations: [
 	idle,
 	run
 ],
-sounds: []
+sounds: {}
 }

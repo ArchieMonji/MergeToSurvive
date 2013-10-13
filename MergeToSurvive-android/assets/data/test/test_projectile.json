@@ -12,5 +12,5 @@ animations: [
 	projectile,
 	projectile
 ],
-sounds: []
+sounds: {}
 }

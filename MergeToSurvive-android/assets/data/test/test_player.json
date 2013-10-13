@@ -24,12 +24,12 @@ animations: [
 	idle,
 	run
 ],
-sounds: [
-	[
+sounds: {
+	IDLE: [
 		testvine
 	],
-	[
+	MOVE: [
 		testthrower
 	]
-]
+}
 }

@@ -39,7 +39,7 @@ public class Assets {
 		sd.name = "TESTNAME";
 		sd.path = "Test_path.ogg";
 		sd.looping = true;
-		
+
 		l.textures = new ArrayList<String>();
 		l.entities = new HashMap<String, String>();
 		l.entities.put("player", "player.json");
@@ -49,14 +49,14 @@ public class Assets {
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
 
 		EntityTemplate edt = new EntityTemplate();
-		edt.sounds = new HashMap<UnitStateEnum,ArrayList<String>>();
+		edt.sounds = new HashMap<UnitStateEnum, ArrayList<String>>();
 		ArrayList<String> soundNameList = new ArrayList<String>();
 		soundNameList.add("SOUND NAME");
-		edt.sounds.put(UnitStateEnum.MOVE,soundNameList);
-		edt.sounds.put(UnitStateEnum.ATTACK,soundNameList);
-		
+		edt.sounds.put(UnitStateEnum.MOVE, soundNameList);
+		edt.sounds.put(UnitStateEnum.ATTACK, soundNameList);
+
 		System.out.println(a.json.prettyPrint(a.json.toJson(edt)));
-		
+
 		Controls c = new Controls();
 		c.down = Keys.S;
 		c.up = Keys.W;
@@ -68,23 +68,24 @@ public class Assets {
 
 		TestEnum te = new TestEnum();
 		te.state = State.TEST;
-		
+
 		System.out.println(a.json.prettyPrint(a.json.toJson(te)));
-		
+
 	}
 
-	public static class TestEnum{
+	public static class TestEnum {
 		State state;
 	}
-	
-	public enum State{
+
+	public enum State {
 		TEST(1);
 		int v;
-		private State(int v){
+
+		private State(int v) {
 			this.v = v;
 		}
 	}
-	
+
 	public <T> T createObjectFromJson(Class<T> type, String path) {
 		return json.fromJson(type, Gdx.files.internal(path));
 	}
@@ -102,14 +103,14 @@ public class Assets {
 
 		// TODO: Change to support asynchronous loading
 		manager.finishLoading();
-		
-		for(SoundData soundData : assets.sounds){
+
+		for (SoundData soundData : assets.sounds) {
 			SoundFx sfx = new SoundFx();
 			sfx.looping = soundData.looping;
 			sfx.sound = manager.get(soundData.path);
 			soundMap.put(soundData.name, sfx);
 		}
-		
+
 		for (String animationPath : assets.animations) {
 			loadAnimation(animationPath);
 		}
@@ -134,25 +135,26 @@ public class Assets {
 		data.jumpHeight = template.jumpHeight;
 		data.moveSpeed = template.moveSpeed;
 
-		//attach animations
+		// attach animations
 		data.animations = new ArrayList<Animation>();
 
 		for (String animationName : template.animations) {
 			data.animations.add(animationMap.get(animationName));
 		}
 
-		//attach sounds
+		// attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
-		for(UnitStateEnum state: UnitStateEnum.values()){
-			ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
-			data.sounds.add(soundList);
-			
-			for(String soundName: template.sounds.get(state)){
-				soundList.add(soundMap.get(soundName));
+		if (data.sounds == null) {
+			for (UnitStateEnum state : UnitStateEnum.values()) {
+				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
+				data.sounds.add(soundList);
+
+				for (String soundName : template.sounds.get(state)) {
+					soundList.add(soundMap.get(soundName));
+				}
 			}
 		}
-		
-		
+
 		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
 
 		data.controller = template.controller;
@@ -197,8 +199,8 @@ public class Assets {
 		public ArrayList<String> animations; // path
 		public HashMap<String, String> entities; // name, path
 	}
-	
-	private static class SoundData{
+
+	private static class SoundData {
 		public String name;
 		public String path;
 		public boolean looping;
@@ -211,6 +213,6 @@ public class Assets {
 		public Controller controller;
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
-		public HashMap<UnitStateEnum,ArrayList<String>> sounds;
+		public HashMap<UnitStateEnum, ArrayList<String>> sounds;
 	}
 }
