@@ -18,6 +18,7 @@ public abstract class BaseEntity {
 	
 	public void setRenderer(Renderer nRenderer){
 		renderer = nRenderer;
+		renderer.setEntity(this);
 	}
 	
 	public Renderer getRenderer(){

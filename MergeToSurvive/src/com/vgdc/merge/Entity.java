@@ -10,6 +10,7 @@ public class Entity extends BaseEntity{
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private int health;
 	private Controller controller;
+	private boolean moved = false;
 	
 	public Entity(EntityData data)
 	{
@@ -37,12 +38,25 @@ public class Entity extends BaseEntity{
 	{
 		super.setRenderer(nRenderer);
 		nRenderer.setAnimations(data.animations);
+		nRenderer.setState(0);
 	}
 	
 	@Override
 	public void onUpdate(float delta) {
 		controller.onUpdate(delta);
+		if(moved)
+		{
+			if(getRenderer().getState()==0)
+				getRenderer().setState(1);
+		}
+		else
+		{
+			if(getRenderer().getState()!=0)
+				getRenderer().setState(0);
+				
+		}
 		getPhysicsBody().onUpdate(delta);
+		moved = false;
 	}
 	
 	@Override
@@ -73,11 +87,15 @@ public class Entity extends BaseEntity{
 	public void moveLeft()
 	{
 		getPosition().add(-data.moveSpeed, 0f);
+		getRenderer().flip(true);
+		moved = true;
 	}
 	
 	public void moveRight()
 	{
 		getPosition().add(data.moveSpeed, 0f);
+		getRenderer().flip(false);
+		moved = true;
 	}
 
 	public void onEntityCollision(Entity other) {
