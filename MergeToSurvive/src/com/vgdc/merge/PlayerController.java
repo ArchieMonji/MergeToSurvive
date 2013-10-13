@@ -1,10 +1,15 @@
 package com.vgdc.merge;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 
 public class PlayerController extends Controller {
 	
 	private Controls controls;
+	
+	private boolean fired = false;
+	private boolean toggled = false;
 	
 	public PlayerController()
 	{
@@ -50,6 +55,37 @@ public class PlayerController extends Controller {
 			//this is test, change later
 			getEntity().moveRight();
 			System.out.println("new location " + getEntity().getPosition());
+		}
+		if(Gdx.input.isButtonPressed(controls.useAbility))
+		{
+			if(!fired)
+			{
+				getEntity().getAbilities().get(0).onUse(getEntity());
+				fired = true;
+			}
+		}
+		else if(fired)
+		{
+			fired = false;
+		}
+		if(Gdx.input.isButtonPressed(controls.toggleAbility))
+		{
+			if(!toggled)
+			{
+				Entity e = getEntity();
+				ArrayList<Ability> abilities = e.getAbilities();
+				if(abilities.size()>=2&&abilities.get(1)!=null)
+				{
+					Ability ability = e.getAbilities().get(0);
+					e.getAbilities().set(0, e.getAbilities().get(1));
+					e.getAbilities().set(1, ability);
+				}
+				toggled = true;
+			}
+		}
+		else if(toggled)
+		{
+			toggled = false;
 		}
 	}
 

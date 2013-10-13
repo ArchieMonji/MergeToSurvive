@@ -3,7 +3,6 @@ package com.vgdc.merge;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class Entity extends BaseEntity{
 	
@@ -11,8 +10,6 @@ public class Entity extends BaseEntity{
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private int health;
 	private Controller controller;
-	private PhysicsBody body;
-	private Renderer renderer;
 	
 	public Entity(EntityData data)
 	{
@@ -22,38 +19,35 @@ public class Entity extends BaseEntity{
 		this.controller = data.controller.copy();
 		controller.setEntity(this);
 		this.health = data.maxHealth;
-		//renderer.setAnimations(data.animations);
+	}
+	
+	public Entity(EntityData data, Renderer renderer, PhysicsBody body)
+	{
+		this.data = data;
+		for(Ability a : data.defaultAbilities)
+			abilities.add(a);
+		this.controller = data.controller.copy();
+		controller.setEntity(this);
+		this.health = data.maxHealth;
+		setRenderer(renderer);
+		setPhysicsBody(body);
 	}
 	
 	public void setRenderer(Renderer nRenderer)
 	{
-		renderer = nRenderer;
-	}
-	
-	public void setPhysicsBody(PhysicsBody nPhysicsBody)
-	{
-		body = nPhysicsBody;
+		super.setRenderer(nRenderer);
+		nRenderer.setAnimations(data.animations);
 	}
 	
 	@Override
 	public void onUpdate(float delta) {
 		controller.onUpdate(delta);
-		body.onUpdate(delta);
+		getPhysicsBody().onUpdate(delta);
 	}
 	
 	@Override
 	public void onRender(SpriteBatch batch, float delta){
-		renderer.onRender(batch, delta);
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		return body.getPosition();
-	}
-
-	@Override
-	public void setPosition(Vector2 nVector) {
-		body.setPosition(nVector);
+		getRenderer().onRender(batch, delta);
 	}
 	
 	public void damage(int amount)
@@ -84,6 +78,10 @@ public class Entity extends BaseEntity{
 	public void moveRight()
 	{
 		getPosition().add(data.moveSpeed, 0f);
+	}
+
+	public void onEntityCollision(Entity other) {
+		
 	}
 
 }

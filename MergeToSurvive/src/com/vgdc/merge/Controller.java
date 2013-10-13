@@ -22,4 +22,11 @@ public abstract class Controller{
 	public abstract Controller copy();
 	
 	public abstract void onUpdate(float delta);
+	
+	public void onCollision(Entity entity)
+	{
+		
+	}
+	
+	
 }

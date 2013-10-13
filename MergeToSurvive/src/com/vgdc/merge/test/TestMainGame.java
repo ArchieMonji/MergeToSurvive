@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.vgdc.merge.Ability;
 import com.vgdc.merge.Controls;
@@ -19,12 +20,15 @@ public class TestMainGame implements ApplicationListener{
 	public void create() {
 		ArrayList<Ability> abilities = new ArrayList<Ability>();
 		abilities.add(new TestAbility());
+		abilities.add(null);
 		
 		Controls controls = new Controls();
 		controls.down = Keys.S;
 		controls.up = Keys.W;
 		controls.left = Keys.A;
 		controls.right = Keys.D;
+		controls.useAbility = Buttons.LEFT;
+		controls.toggleAbility = Buttons.RIGHT;
 		
 		EntityData testData = new EntityData();
 		testData.jumpHeight = 5;
