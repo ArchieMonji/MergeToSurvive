@@ -2,6 +2,11 @@
 maxHealth: 	2,
 jumpHeight: 15,
 moveSpeed: 	5,
+defaultTeam: 1,
+dimensions: {
+	x: 85.333,
+	y: 102
+},
 
 controller: {
 	class: PlayerController,

@@ -60,6 +60,11 @@ public class Entity extends BaseEntity{
 		return new MovingBody();
 	}
 	
+	public boolean isDead()
+	{
+		return health<=0;
+	}
+	
 	public boolean frictionIsApplied(){
 		return !currentlyWalking;
 	}
@@ -99,8 +104,8 @@ public class Entity extends BaseEntity{
 	public void setPhysicsBody(PhysicsBody body)
 	{
 		super.setPhysicsBody(body);
-//		if(data.dimensions!=null)
-//			body.setSize(data.dimensions);
+		if(data.dimensions!=null)
+			body.setSize(data.dimensions);
 	}
 	
 	@Override

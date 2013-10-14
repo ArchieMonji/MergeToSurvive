@@ -32,6 +32,8 @@ public abstract class UnitController extends Controller{
 		if(entity.getTeam()!=getEntity().getTeam())
 		{
 			getEntity().damage(entity.getDamage());
+			if(getEntity().isDead())
+				System.out.println("i am dead");
 		}
 	}
 }
