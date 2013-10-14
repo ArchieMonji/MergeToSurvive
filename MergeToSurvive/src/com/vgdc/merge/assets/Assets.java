@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Logger;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
 import com.vgdc.merge.entities.abilities.Ability;
@@ -26,6 +27,7 @@ public class Assets {
 	public HashMap<String, Animation> animationMap = new HashMap<String, Animation>();
 	public HashMap<String, SoundFx> soundMap = new HashMap<String, SoundFx>();
 
+	private AssetList assets;
 	private Json json = new Json();
 
 	// Test
@@ -93,9 +95,9 @@ public class Assets {
 	public <T> T createObjectFromJson(Class<T> type, String path) {
 		return json.fromJson(type, Gdx.files.internal(path));
 	}
-
+	
 	public void loadAssets(String path) {
-		AssetList assets = createObjectFromJson(AssetList.class, path);
+		assets = createObjectFromJson(AssetList.class, path);
 
 		for (SoundData soundData : assets.sounds) {
 			manager.load(soundData.path, Sound.class);
@@ -106,8 +108,12 @@ public class Assets {
 		}
 
 		// TODO: Change to support asynchronous loading
-		manager.finishLoading();
-
+		manager.finishLoading();	
+		
+		createObjectData();
+	}
+	
+	public void createObjectData(){
 		for (SoundData soundData : assets.sounds) {
 			SoundFx sfx = new SoundFx();
 			sfx.looping = soundData.looping;

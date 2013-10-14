@@ -9,6 +9,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vgdc.merge.MainGame;
+import com.vgdc.merge.utils.tweens.SpriteTween;
 
 public class TitleScreen extends AbstractScreen {
 	public Texture splashTexture;
@@ -24,6 +26,7 @@ public class TitleScreen extends AbstractScreen {
 	public TweenManager tweenManager;
 	public BitmapFont font;
 	public Sprite continueSprite;
+	public OrthographicCamera camera;
 
 	public TitleScreen(MainGame game) {
 		super(game);
@@ -39,6 +42,9 @@ public class TitleScreen extends AbstractScreen {
 			return;
 		}
 
+		batch.setProjectionMatrix(camera.combined);
+		camera.update();
+
 		tweenManager.update(delta);
 
 		batch.begin();
@@ -51,17 +57,24 @@ public class TitleScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		//camera.viewportWidth = width;
+		//camera.viewportHeight = height;
 	}
 
 	@Override
 	public void show() {
+		int w = Gdx.graphics.getWidth();
+		int h = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
+		camera = new OrthographicCamera(w, h);
 
 		splashTexture = new Texture(
 				Gdx.files.internal("data/images/splashscreen.png"));
 		splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		splashSprite = new Sprite(splashTexture);
+
+		camera.position.x = splashTexture.getWidth() / 2;
+		camera.position.y = splashTexture.getHeight() / 2;
 
 		tweenManager = new TweenManager();
 		Tween.registerAccessor(Sprite.class, new SpriteTween());
@@ -85,10 +98,11 @@ public class TitleScreen extends AbstractScreen {
 				.start(tweenManager);
 
 		continueSprite = new Sprite();
-		font = new BitmapFont(Gdx.files.internal("data/fonts/consolas.fnt"), false);
+		font = new BitmapFont(Gdx.files.internal("data/fonts/consolas.fnt"),
+				false);
 		TextBounds textBounds = font.getBounds("Press any key to continue");
-		continueSprite.setPosition(Gdx.graphics.getWidth() / 2
-				- textBounds.width / 2, Gdx.graphics.getHeight() / 5);
+		continueSprite.setPosition(splashTexture.getWidth() / 2
+				- textBounds.width / 2, splashTexture.getHeight() / 5);
 		continueSprite.setColor(1, 1, 1, 0);
 	}
 

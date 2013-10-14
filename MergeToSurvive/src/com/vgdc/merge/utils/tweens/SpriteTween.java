@@ -1,4 +1,4 @@
-package com.vgdc.merge.screens;
+package com.vgdc.merge.utils.tweens;
 
 import aurelienribon.tweenengine.TweenAccessor;
 
