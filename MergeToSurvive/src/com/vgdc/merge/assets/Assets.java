@@ -17,12 +17,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
+import com.vgdc.merge.entities.BaseEntityData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
 import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.abilities.ProjectileAbility;
 import com.vgdc.merge.entities.audio.SoundFx;
-import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.Controls;
 
 public class Assets {
@@ -165,6 +165,9 @@ public class Assets {
 		data.maxHealth = template.maxHealth;
 		data.jumpHeight = template.jumpHeight;
 		data.moveSpeed = template.moveSpeed;
+		data.damage = template.damage;
+		data.defaultTeam = template.defaultTeam;
+		data.dimensions = template.dimensions;
 
 		// attach animations
 		data.animations = new ArrayList<Animation>();
@@ -243,11 +246,11 @@ public class Assets {
 		public boolean looping;
 	}
 
-	private static class EntityTemplate {
-		public int maxHealth;
-		public float jumpHeight;
-		public float moveSpeed;
-		public Controller controller;
+	private static class EntityTemplate extends BaseEntityData{
+//		public int maxHealth;
+//		public float jumpHeight;
+//		public float moveSpeed;
+//		public Controller controller;
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
 		public HashMap<UnitStateEnum, ArrayList<String>> sounds;

@@ -4,7 +4,7 @@ jumpHeight: 15,
 moveSpeed: 	5,
 
 controller: {
-	class: com.vgdc.merge.entities.controllers.PlayerController,
+	class: PlayerController,
 	controls: {
 		up: 51,
 		down: 47,
@@ -16,14 +16,14 @@ controller: {
 
 abilities: [
 	{
-		class: com.vgdc.merge.entities.abilities.ProjectileAbility,
+		class: ProjectileAbility,
 		projectile: testprojectile
 	}
 ],
 
 animations: [
-	proto,
-	proto
+	idle,
+	run
 ],
 sounds: {
 	IDLE: [

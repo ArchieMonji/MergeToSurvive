@@ -31,6 +31,7 @@ public class ProjectileAbility extends Ability {
 	public void onUse(Entity entity) {
 		EntityData testData = entity.getWorld().getAssets().entityDataMap.get(projectile);
 		Entity projectile = new Entity(testData, entity.getWorld());
+		projectile.setTeam(entity.getTeam());
 		projectile.setPosition(new Vector2(entity.getPosition().x, entity.getPosition().y));
 		projectile.getRenderer().flip(entity.getRenderer().isFlipped());
 		entity.getWorld().getEntityManager().addEntity(projectile);

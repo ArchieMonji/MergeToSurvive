@@ -3,7 +3,7 @@ moveSpeed: 	10,
 jumpHeight: 30,
 
 controller: {
-	class: com.vgdc.merge.entities.controllers.ProjectileController
+	class: ProjectileController
 },
 
 abilities: [

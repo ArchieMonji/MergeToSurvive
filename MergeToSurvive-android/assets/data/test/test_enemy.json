@@ -9,7 +9,7 @@ controller: {
 
 abilities: [
 	{
-		class: com.vgdc.merge.entities.abilities.ProjectileAbility,
+		class: ProjectileAbility,
 		projectile: testprojectile
 	}
 ],
