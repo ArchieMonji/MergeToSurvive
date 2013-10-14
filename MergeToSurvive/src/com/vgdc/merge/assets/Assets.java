@@ -33,7 +33,7 @@ public class Assets {
 	public static void main(String[] args) {
 		Assets a = new Assets();
 		Assets.AssetList l = new AssetList();
-		l.animations = new ArrayList<String>();
+		//l.animations = new ArrayList<String>();
 		l.sounds = new ArrayList<SoundData>();
 		SoundData sd = new SoundData();
 		l.sounds.add(sd);
@@ -120,8 +120,8 @@ public class Assets {
 			soundMap.put(soundData.name, sfx);
 		}
 
-		for (String animationPath : assets.animations) {
-			loadAnimation(animationPath);
+		for (String name : assets.animations.keySet()) {
+			loadAnimation(name, assets.animations.get(name));
 		}
 
 		for (String name : assets.entities.keySet()) {
@@ -174,6 +174,8 @@ public class Assets {
 		}
 
 		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
+		
+		
 
 		data.controller = template.controller;
 
@@ -182,7 +184,7 @@ public class Assets {
 		System.out.println("EntityData Loaded : " + name);
 	}
 
-	private void loadAnimation(String path) {
+	private void loadAnimation(String name, String path) {
 		AnimationData data = json.fromJson(AnimationData.class,
 				Gdx.files.internal(path));
 
@@ -206,15 +208,15 @@ public class Assets {
 			}
 		}
 
-		animationMap.put(data.name, new Animation(data.frameDuration, frames));
+		animationMap.put(name, new Animation(data.frameDuration, frames));
 
-		System.out.println("Animation Loaded : " + data.name);
+		System.out.println("Animation Loaded : " + name);
 	}
 
 	private static class AssetList {
 		public ArrayList<SoundData> sounds; // path
 		public ArrayList<String> textures; // path
-		public ArrayList<String> animations; // path
+		public HashMap<String, String> animations; // name, path
 		public HashMap<String, String> entities; // name, path
 	}
 

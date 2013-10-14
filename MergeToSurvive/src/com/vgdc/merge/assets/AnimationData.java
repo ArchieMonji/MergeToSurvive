@@ -1,7 +1,6 @@
 package com.vgdc.merge.assets;
 
-public class AnimationData {	
-	public String name;
+public class AnimationData {
 	public String path;
 	public float frameDuration;
 	public int rows;
