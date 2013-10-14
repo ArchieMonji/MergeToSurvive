@@ -38,6 +38,7 @@ public class Entity extends BaseEntity{
 		this.health = data.maxHealth;
 		setRenderer(new Renderer());
 		setSoundComponent(new SoundComponent());
+		setPhysicsBody(createPhysicsBody());
 	}
 	
 	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body, SoundComponent sound)
@@ -106,21 +107,9 @@ public class Entity extends BaseEntity{
 	public void onUpdate(float delta) {
 		currentlyWalking = false;
 		controller.onUpdate(delta);
-//		if(moved)
-//		{
-//			if(getRenderer().getState()==0)
-//				getRenderer().setState(1);
-//		}
-//		else
-//		{
-//			if(getRenderer().getState()!=0)
-//				getRenderer().setState(0);
-//				
-//		}
 		getPhysicsBody().onUpdate(delta);
 		if(halfJumpDir>0)
 			halfJumpDir-=delta;
-		//moved = false;
 	}
 	
 	@Override

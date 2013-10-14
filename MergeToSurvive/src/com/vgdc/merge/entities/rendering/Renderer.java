@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.vgdc.merge.entities.BaseEntity;
 
-public class Renderer {
+public class Renderer extends BaseRenderer{
 	public ArrayList<Animation> animations = new ArrayList<Animation>();
 	
 	public float stateTime;

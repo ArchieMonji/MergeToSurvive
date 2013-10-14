@@ -4,19 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.audio.SoundComponent;
 import com.vgdc.merge.entities.physics.PhysicsBody;
-import com.vgdc.merge.entities.rendering.Renderer;
+import com.vgdc.merge.entities.rendering.BaseRenderer;
 import com.vgdc.merge.world.World;
 
 public abstract class BaseEntity {
 	
 	private PhysicsBody body;
-	private Renderer renderer;
+	private BaseRenderer renderer;
 	private SoundComponent sound;
 	private World world;
 	
-	public BaseEntity(){
-		setPhysicsBody(createPhysicsBody());
-	}
+//	public BaseEntity(){
+//		setPhysicsBody(createPhysicsBody());
+//	}
 	
 	protected PhysicsBody createPhysicsBody(){
 		return new PhysicsBody();
@@ -31,12 +31,12 @@ public abstract class BaseEntity {
 		return body;
 	}
 	
-	public void setRenderer(Renderer nRenderer){
+	public void setRenderer(BaseRenderer nRenderer){
 		renderer = nRenderer;
 		renderer.setEntity(this);
 	}
 	
-	public Renderer getRenderer(){
+	public BaseRenderer getRenderer(){
 		return renderer;
 	}
 	

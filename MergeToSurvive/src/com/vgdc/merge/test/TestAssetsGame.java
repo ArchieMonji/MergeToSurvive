@@ -40,7 +40,7 @@ public class TestAssetsGame implements ApplicationListener{
 		//testEntity.setPhysicsBody(new TestPhysicsBody());
 		System.out.println(assets.entityDataMap.get("player").animations);
 		testEntity.setRenderer(new Renderer());
-		testEntity.getRenderer().setAnimations(assets.entityDataMap.get("player").animations);
+		//testEntity.getRenderer().setAnimations(assets.entityDataMap.get("player").animations);
 		testEntity.setPosition(new Vector2(100, 100));
 		
 	}
