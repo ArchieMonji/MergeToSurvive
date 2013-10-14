@@ -1,16 +1,16 @@
-package com.vgdc.merge.test;
+package com.vgdc.merge.entities.abilities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
-import com.vgdc.merge.entities.abilities.Ability;
-import com.vgdc.merge.entities.rendering.Renderer;
 
-public class TestAbility extends Ability {
+public class ProjectileAbility extends Ability {
 	
 	//private EntityData projectileData = new EntityData();
 	
-	public TestAbility()
+	private String projectile;
+	
+	public ProjectileAbility()
 	{
 //		Texture texture = new Texture(Gdx.files.internal("data/colorboxes.png"));
 //		TextureRegion[] frames = new TextureRegion[4];
@@ -29,11 +29,12 @@ public class TestAbility extends Ability {
 
 	@Override
 	public void onUse(Entity entity) {
-		EntityData testData = entity.getWorld().getAssets().entityDataMap.get("testprojectile");
+		EntityData testData = entity.getWorld().getAssets().entityDataMap.get(projectile);
 		Entity projectile = new Entity(testData, entity.getWorld());
 		projectile.setPosition(new Vector2(entity.getPosition().x, entity.getPosition().y));
 		projectile.getRenderer().flip(entity.getRenderer().isFlipped());
 		entity.getWorld().getEntityManager().addEntity(projectile);
+		projectile.getMovingBody().setVelocity(new Vector2(0, testData.jumpHeight));
 	}
 	
 	

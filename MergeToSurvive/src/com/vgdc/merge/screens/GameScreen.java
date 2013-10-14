@@ -63,15 +63,9 @@ public class GameScreen extends AbstractScreen {
 		batch = new SpriteBatch();
 		
 		Entity testEntity = null;
-		for(int i = 0; i < 8; i++)
-		{
-			for(int j = 0; j < 8; j++)
-			{
-				testEntity = new Entity(game.getAssets().entityDataMap.get("testenemy"), myWorld);
-				testEntity.setPosition(new Vector2(-58 + 58*i, -58+58*j));
-				myWorld.getEntityManager().addEntity(testEntity);
-			}
-		}
+		testEntity = new Entity(game.getAssets().entityDataMap.get("testenemy"), myWorld);
+		testEntity.setPosition(new Vector2(300, -58));
+		myWorld.getEntityManager().addEntity(testEntity);
 		testEntity = new Entity(game.getAssets().entityDataMap.get("testplayer"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
 		myWorld.getEntityManager().addEntity(testEntity);

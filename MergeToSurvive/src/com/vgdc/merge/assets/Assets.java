@@ -12,14 +12,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Logger;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
 import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.abilities.ProjectileAbility;
 import com.vgdc.merge.entities.audio.SoundFx;
 import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.Controls;
-import com.vgdc.merge.test.TestAbility;
 
 public class Assets {
 	public AssetManager manager = new AssetManager();
@@ -47,7 +46,7 @@ public class Assets {
 		l.entities.put("player", "player.json");
 		System.out.println(a.json.prettyPrint(a.json.toJson(l)));
 		ArrayList<Ability> abs = new ArrayList<Ability>();
-		abs.add(new TestAbility());
+		abs.add(new ProjectileAbility());
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
 
 		EntityTemplate edt = new EntityTemplate();

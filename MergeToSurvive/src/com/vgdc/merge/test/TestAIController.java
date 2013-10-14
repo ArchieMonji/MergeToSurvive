@@ -1,5 +1,6 @@
 package com.vgdc.merge.test;
 
+import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.UnitController;
 
@@ -28,6 +29,10 @@ public class TestAIController extends UnitController {
 		else
 			moveRight(delta);
 		stateMachine.affectState(delta);
+	}
+	
+	public void onEntityCollision(Entity entity){
+		System.out.println("it isn't happening!");
 	}
 
 }

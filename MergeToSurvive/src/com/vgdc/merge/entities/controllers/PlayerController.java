@@ -95,5 +95,9 @@ public class PlayerController extends UnitController {
 		controller.setControls(controls);
 		return controller;
 	}
+	
+	public void onEntityCollision(Entity entity){
+		System.out.println("its happening!");
+	}
 
 }

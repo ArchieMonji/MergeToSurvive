@@ -1,9 +1,8 @@
-package com.vgdc.merge.test;
+package com.vgdc.merge.entities.controllers;
 
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.entities.controllers.Controller;
 
-public class TestProjectileController extends Controller{
+public class ProjectileController extends Controller{
 	
 	private float timeAlive = 1;
 	
@@ -15,7 +14,7 @@ public class TestProjectileController extends Controller{
 
 	@Override
 	public Controller copy() {
-		return new TestProjectileController();
+		return new ProjectileController();
 	}
 
 	@Override

@@ -1,15 +1,15 @@
 {
 moveSpeed: 	1000,
+jumpHeight: 30,
 
 controller: {
-	class: com.vgdc.merge.test.TestProjectileController
+	class: com.vgdc.merge.entities.controllers.ProjectileController
 },
 
 abilities: [
 ],
 
 animations: [
-	projectile,
 	projectile
 ],
 sounds: {}

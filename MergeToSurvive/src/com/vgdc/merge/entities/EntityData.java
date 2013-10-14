@@ -9,6 +9,8 @@ import com.vgdc.merge.entities.controllers.Controller;
 
 public class EntityData {
 	public int maxHealth;
+	public int damage;
+	public int defaultTeam;
 	public float jumpHeight;
 	public float moveSpeed;
 	public Controller controller;

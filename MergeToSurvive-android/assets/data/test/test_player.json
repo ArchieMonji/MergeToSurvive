@@ -16,7 +16,8 @@ controller: {
 
 abilities: [
 	{
-		class: com.vgdc.merge.test.TestAbility,
+		class: com.vgdc.merge.entities.abilities.ProjectileAbility,
+		projectile: testprojectile
 	}
 ],
 
