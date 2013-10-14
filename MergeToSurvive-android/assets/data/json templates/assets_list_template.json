@@ -15,11 +15,11 @@ textures: [
 	data/images/dir/path_2.png,
 	data/images/dir/path_3.png,
 ],
-animations: [	
-	data/dir/path_0.json, 
-	data/dir/path_1.json,
-	data/dir/path_2.json
-],
+animations: {	
+	name0: data/dir/path_0.json, 
+	name1: data/dir/path_1.json,
+	name2: data/dir/path_2.json
+},
 entities: {	
 	player: data/entities/dir/player_entity_data.json,
 	entity_2_name: data/entities/dir/entity_type_2.json,
