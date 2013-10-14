@@ -3,6 +3,7 @@ package com.vgdc.merge.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.entities.BaseEntity;
 
@@ -12,6 +13,8 @@ public class World {
 	private OrthographicCamera camera;
 	
 	private Assets assets;
+	
+	public Vector2 dimensions = new Vector2(800,600);
 	
 	public EntityManager getEntityManager(){
 		return entityManager;

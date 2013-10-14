@@ -14,6 +14,14 @@ public abstract class BaseEntity {
 	private SoundComponent sound;
 	private World world;
 	
+	public BaseEntity(){
+		setPhysicsBody(createPhysicsBody());
+	}
+	
+	protected PhysicsBody createPhysicsBody(){
+		return new PhysicsBody();
+	}
+	
 	public void setPhysicsBody(PhysicsBody nBody){
 		body = nBody;
 	}
@@ -59,5 +67,6 @@ public abstract class BaseEntity {
 	{
 		body.setPosition(nVector);
 	}
-	
+
+	public abstract EntityType getEntityType();
 }

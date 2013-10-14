@@ -31,9 +31,7 @@ public class TestAbility extends Ability {
 	public void onUse(Entity entity) {
 		EntityData testData = entity.getWorld().getAssets().entityDataMap.get("testprojectile");
 		Entity projectile = new Entity(testData, entity.getWorld());
-		projectile.setPhysicsBody(new TestPhysicsBody());
 		projectile.setPosition(new Vector2(entity.getPosition().x, entity.getPosition().y));
-		projectile.setRenderer(new Renderer());
 		projectile.getRenderer().flip(entity.getRenderer().isFlipped());
 		entity.getWorld().getEntityManager().addEntity(projectile);
 	}

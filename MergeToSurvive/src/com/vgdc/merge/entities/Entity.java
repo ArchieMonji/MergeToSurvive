@@ -11,7 +11,6 @@ import com.vgdc.merge.entities.rendering.Renderer;
 import com.vgdc.merge.world.World;
 
 public class Entity extends BaseEntity{
-	
 	private final EntityData data;
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private int health;
@@ -28,6 +27,8 @@ public class Entity extends BaseEntity{
 		this.controller = data.controller.copy();
 		controller.setEntity(this);
 		this.health = data.maxHealth;
+		setRenderer(new Renderer());
+		setSoundComponent(new SoundComponent());
 	}
 	
 	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body, SoundComponent sound)
@@ -43,6 +44,10 @@ public class Entity extends BaseEntity{
 		setRenderer(renderer);
 		setPhysicsBody(body);
 		setSoundComponent(sound);
+	}
+	
+	public EntityType getEntityType(){
+		return EntityType.Entity;
 	}
 	
 	public void setRenderer(Renderer nRenderer)
@@ -115,8 +120,11 @@ public class Entity extends BaseEntity{
 		//moved = true;
 	}
 
-	public void onEntityCollision(Entity other) {
-		controller.onCollision(other);
+	public void onEntityCollision(Entity other){
+		controller.onEntityCollision(other);
+	}
+	public void onPlatformCollision(Platform other){
+		controller.onPlatformCollision(other);
 	}
 	
 	public void setState(int state){

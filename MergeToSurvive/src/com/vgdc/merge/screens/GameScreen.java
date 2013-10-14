@@ -7,9 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.entities.audio.SoundComponent;
-import com.vgdc.merge.entities.rendering.Renderer;
-import com.vgdc.merge.test.TestPhysicsBody;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
@@ -114,18 +111,12 @@ public class GameScreen extends AbstractScreen {
 			for(int j = 0; j < 8; j++)
 			{
 				testEntity = new Entity(game.getAssets().entityDataMap.get("testenemy"), myWorld);
-				testEntity.setPhysicsBody(new TestPhysicsBody());
-				testEntity.setRenderer(new Renderer());
 				testEntity.setPosition(new Vector2(-58 + 58*i, -58+58*j));
-				testEntity.setSoundComponent(new SoundComponent());
 				myWorld.getEntityManager().addEntity(testEntity);
 			}
 		}
 		testEntity = new Entity(game.getAssets().entityDataMap.get("testplayer"), myWorld);
-		testEntity.setPhysicsBody(new TestPhysicsBody());
-		testEntity.setRenderer(new Renderer());
 		testEntity.setPosition(new Vector2(58, 58));
-		testEntity.setSoundComponent(new SoundComponent());
 		myWorld.getEntityManager().addEntity(testEntity);
 	}
 
