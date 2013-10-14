@@ -42,17 +42,14 @@ public class PlayerController extends UnitController {
 		}
 		if(Gdx.input.isKeyPressed(controls.up))
 		{
-			//this is test, change later
-			getEntity().jump(delta);
+			tryJump(delta);
 		}
 		if(Gdx.input.isKeyPressed(controls.left))
 		{
-			//this is test, change later
 			moveLeft(delta);
 		}
 		if(Gdx.input.isKeyPressed(controls.right))
 		{
-			//this is test, change later
 			moveRight(delta);
 		}
 		if(Gdx.input.isButtonPressed(controls.useAbility))
@@ -94,10 +91,6 @@ public class PlayerController extends UnitController {
 		PlayerController controller = new PlayerController();
 		controller.setControls(controls);
 		return controller;
-	}
-	
-	public void onEntityCollision(Entity entity){
-		System.out.println("its happening!");
 	}
 
 }

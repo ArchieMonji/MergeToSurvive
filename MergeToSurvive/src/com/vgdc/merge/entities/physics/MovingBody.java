@@ -27,7 +27,7 @@ public class MovingBody extends PhysicsBody{
 	public void setAcceleration(Vector2 a){acceleration = a;}
 	public Vector2 getAcceleration(){return acceleration;}
 	public void setFriction(float f){friction = f;}
-	public float getFriction(){return friction;}
+	public float getFriction(){return ((Entity)host).frictionIsApplied() ? friction : 0;}
 	public void setElasticity(float e){elasticity = e;}
 	public float getElasticity(){return elasticity;}
 	
@@ -49,10 +49,10 @@ public class MovingBody extends PhysicsBody{
 	private void applyHorizontalCollision(){
 		if(Math.abs(velocity.x) < 2)
 			setVelocity(new Vector2(velocity.x,0));
-		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-friction)));
+		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-getFriction())));
 	}
 	private void applyVerticalCollision(){
-		setVelocity(new Vector2(getVelocity().x*(1-friction),getVelocity().y*-elasticity));
+		setVelocity(new Vector2(getVelocity().x*(1-getFriction()),getVelocity().y*-elasticity));
 		if(Math.abs(velocity.y) < 2)
 			setVelocity(new Vector2(velocity.x,0));
 	}
@@ -142,13 +142,14 @@ public class MovingBody extends PhysicsBody{
 	/////Entity Collisions
 	public void onEntityCollision(Entity entity){
 		((Entity)host).onEntityCollision(entity);
-		entity.onEntityCollision((Entity)host);
 	}
 	public void checkEntityCollisions(){
 		ArrayList<BaseEntity> entities = host.getWorld().getEntityManager().getEntities();
 		for(int i = entities.indexOf(host)+1;i < entities.size();i++){
-			if(entities.get(i).getEntityType() == EntityType.Entity && checkCollidingWithEntity((MovingBody)entities.get(i).getPhysicsBody()))
+			if(entities.get(i).getEntityType() == EntityType.Entity && checkCollidingWithEntity((MovingBody)entities.get(i).getPhysicsBody())){
 				onEntityCollision((Entity)entities.get(i));
+				((Entity)entities.get(i)).getMovingBody().onEntityCollision((Entity)host);
+			}
 		}
 	}
 	

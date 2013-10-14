@@ -22,6 +22,7 @@ public class Entity extends BaseEntity{
 	private int health;
 	private Controller controller;
 	private float halfJumpDir;
+	private boolean currentlyWalking;
 	//private boolean moved = false;
 	
 	public Entity(EntityData data, World world)
@@ -57,6 +58,10 @@ public class Entity extends BaseEntity{
 		return new MovingBody();
 	}
 	
+	public boolean frictionIsApplied(){
+		return !currentlyWalking;
+	}
+	
 	public EntityType getEntityType(){
 		return EntityType.Entity;
 	}
@@ -76,6 +81,7 @@ public class Entity extends BaseEntity{
 	
 	@Override
 	public void onUpdate(float delta) {
+		currentlyWalking = false;
 		controller.onUpdate(delta);
 //		if(moved)
 //		{
@@ -114,20 +120,18 @@ public class Entity extends BaseEntity{
 		return abilities;
 	}
 	
-	public void jump(float delta)
-	{
-		//TODO implement this later, when PhysicsBody is more fleshed out
-		if(getMovingBody().checkTouchingGround()&&halfJumpDir<=0)
+	public void tryJump(float delta){
+		if(getMovingBody().checkTouchingGround() && halfJumpDir <= 0)//Jumping up
 		{
-			Vector2 velocity = getMovingBody().getVelocity();
-			getMovingBody().setVelocity(new Vector2((getMovingBody().getPosition().x-getMovingBody().getLastPosition().x)/delta*60/*velocity.x*/, data.jumpHeight));
-			System.out.println(""+getMovingBody().getVelocity().x);
+			//Vector2 velocity = getMovingBody().getVelocity();
+			//getMovingBody().setVelocity(new Vector2((getMovingBody().getPosition().x-getMovingBody().getLastPosition().x)/delta*60/*velocity.x*/, data.jumpHeight));
+			getMovingBody().setVelocity(new Vector2(getMovingBody().getVelocity().x,data.jumpHeight));
+			System.out.println("jump velocity x: "+getMovingBody().getVelocity().x);
 			halfJumpDir = HALF_JUMP_DIR;
 		}
-		else if(halfJumpDir>0)
+		else if(halfJumpDir>0)//Staying up
 		{
 			getMovingBody().setVelocity(new Vector2(getMovingBody().getVelocity().x, data.jumpHeight));
-			System.out.println(halfJumpDir);
 		}
 	}
 	
@@ -140,22 +144,41 @@ public class Entity extends BaseEntity{
 	static final float WALKFORCE = .2f;
 	public void moveLeft(float delta)
 	{
+		currentlyWalking = true;
+		float walkspeed = -data.moveSpeed;
+		if(!getMovingBody().checkTouchingGround())
+			walkspeed *= JUMPCONTROL;
+		if(getMovingBody().getVelocity().x > walkspeed)
+			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
+
+		getRenderer().flip(true);
+		/*
 		if(!getMovingBody().checkTouchingGround())
 			delta*=JUMPCONTROL;
 		//Vector2 velo = getMovingBody().getVelocity();
 		//getMovingBody().setVelocity(new Vector2(getMovingBody().getVelocity().x*(1-WALKFORCE)+-data.moveSpeed/30*WALKFORCE,getMovingBody().getVelocity().y));
 		getPosition().add(-data.moveSpeed*delta, 0f);
-		getRenderer().flip(true);
 		//moved = true;
+		 */
 	}
 	
 	public void moveRight(float delta)
 	{
+		currentlyWalking = true;
+
+		float walkspeed = data.moveSpeed;
+		if(!getMovingBody().checkTouchingGround())
+			walkspeed *= JUMPCONTROL;
+		if(getMovingBody().getVelocity().x < walkspeed)
+			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
+
+		getRenderer().flip(false);
+		/*
 		if(!getMovingBody().checkTouchingGround())
 			delta*=JUMPCONTROL;
+			
 		getPosition().add(data.moveSpeed*delta, 0f);
-		getRenderer().flip(false);
-		//moved = true;
+		//moved = true;*/
 	}
 
 	public void onEntityCollision(Entity other){

@@ -24,4 +24,7 @@ public abstract class UnitController extends Controller{
 		stateMachine.movedRecently = true;
 	}
 
+	public void tryJump(float delta){
+		getEntity().tryJump(delta);
+	}
 }

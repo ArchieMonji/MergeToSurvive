@@ -2,7 +2,6 @@
 	frameCount: 4,
 	frameDuration: 0.10,
 	path: data/test/colorboxes.png,
-	name: projectile,
 	frameWidth: 8,
 	frameHeight: 8,
 	cols: 4,
