@@ -1,7 +1,12 @@
 package com.vgdc.merge.assets;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -29,11 +34,26 @@ public class Assets {
 	private AssetList assets;
 	private Json json = new Json();
 
+	public Assets() {
+		try {
+			for (Class<?> c : getClasses("com.vgdc.merge.entities.controllers")) {
+				json.addClassTag(c.getSimpleName(), c);
+			}
+			for (Class<?> c : getClasses("com.vgdc.merge.entities.abilities")) {
+				json.addClassTag(c.getSimpleName(), c);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// Test
 	public static void main(String[] args) {
 		Assets a = new Assets();
 		Assets.AssetList l = new AssetList();
-		//l.animations = new ArrayList<String>();
+		// l.animations = new ArrayList<String>();
 		l.sounds = new ArrayList<SoundData>();
 		SoundData sd = new SoundData();
 		l.sounds.add(sd);
@@ -94,7 +114,7 @@ public class Assets {
 	public <T> T createObjectFromJson(Class<T> type, String path) {
 		return json.fromJson(type, Gdx.files.internal(path));
 	}
-	
+
 	public void loadAssets(String path) {
 		assets = createObjectFromJson(AssetList.class, path);
 
@@ -107,12 +127,12 @@ public class Assets {
 		}
 
 		// TODO: Change to support asynchronous loading
-		manager.finishLoading();	
-		
+		manager.finishLoading();
+
 		createObjectData();
 	}
-	
-	public void createObjectData(){
+
+	public void createObjectData() {
 		for (SoundData soundData : assets.sounds) {
 			SoundFx sfx = new SoundFx();
 			sfx.looping = soundData.looping;
@@ -167,15 +187,12 @@ public class Assets {
 						soundList.add(soundMap.get(soundName));
 					}
 				}
-			}
-			else{
+			} else {
 				data.sounds.add(null);
 			}
 		}
 
 		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
-		
-		
 
 		data.controller = template.controller;
 
@@ -234,5 +251,67 @@ public class Assets {
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
 		public HashMap<UnitStateEnum, ArrayList<String>> sounds;
+	}
+
+	/**
+	 * Scans all classes accessible from the context class loader which belong
+	 * to the given package and subpackages.
+	 * 
+	 * @param packageName
+	 *            The base package
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	private static Class[] getClasses(String packageName)
+			throws ClassNotFoundException, IOException {
+		ClassLoader classLoader = Thread.currentThread()
+				.getContextClassLoader();
+		assert classLoader != null;
+		String path = packageName.replace('.', '/');
+		Enumeration<URL> resources = classLoader.getResources(path);
+		List<File> dirs = new ArrayList<File>();
+		while (resources.hasMoreElements()) {
+			URL resource = resources.nextElement();
+			dirs.add(new File(resource.getFile()));
+		}
+		ArrayList<Class> classes = new ArrayList<Class>();
+		for (File directory : dirs) {
+			classes.addAll(findClasses(directory, packageName));
+		}
+		return classes.toArray(new Class[classes.size()]);
+	}
+
+	/**
+	 * Recursive method used to find all classes in a given directory and
+	 * subdirs.
+	 * 
+	 * @param directory
+	 *            The base directory
+	 * @param packageName
+	 *            The package name for classes found inside the base directory
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 */
+	private static List<Class> findClasses(File directory, String packageName)
+			throws ClassNotFoundException {
+		List<Class> classes = new ArrayList<Class>();
+		if (!directory.exists()) {
+			return classes;
+		}
+		File[] files = directory.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				assert !file.getName().contains(".");
+				classes.addAll(findClasses(file,
+						packageName + "." + file.getName()));
+			} else if (file.getName().endsWith(".class")) {
+				classes.add(Class.forName(packageName
+						+ '.'
+						+ file.getName().substring(0,
+								file.getName().length() - 6)));
+			}
+		}
+		return classes;
 	}
 }
