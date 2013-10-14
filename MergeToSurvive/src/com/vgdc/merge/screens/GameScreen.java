@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.Platform;
+import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
@@ -68,7 +70,16 @@ public class GameScreen extends AbstractScreen {
 		myWorld.getEntityManager().addEntity(testEntity);
 		testEntity = new Entity(game.getAssets().entityDataMap.get("testplayer"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
+		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
+
+		for(Vector2 pos : new Vector2[]{new Vector2(150,100),new Vector2(450,100),new Vector2(300,250),new Vector2(100,400)}){
+			Platform platform = new Platform(myWorld);
+			platform.setRenderer(new PlatformRenderer("data/test/Steel.png",5,5,26,26));
+			platform.getPhysicsBody().setPosition(pos);
+			platform.getPhysicsBody().setSize(new Vector2(5,5));
+			myWorld.getEntityManager().addEntity(platform);
+		}
 	}
 
 	@Override

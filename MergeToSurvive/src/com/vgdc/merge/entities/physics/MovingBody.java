@@ -163,6 +163,7 @@ public class MovingBody extends PhysicsBody{
 		lastPosition = new Vector2(position.x,position.y);
 		setPosition(getPosition().add(VectorMath.mul(getVelocity(),delta)));
 		setVelocity(getVelocity().add(VectorMath.mul(getAcceleration(),delta)));
+		checkBoundaryCollisions();
 		checkEntityCollisions();
 		checkPlatformCollisions();
 		checkBoundaryCollisions();
