@@ -32,7 +32,7 @@ public class TestAIController extends UnitController {
 	}
 	
 	public void onEntityCollision(Entity entity){
-		System.out.println("it isn't happening!");
+		
 	}
 
 }

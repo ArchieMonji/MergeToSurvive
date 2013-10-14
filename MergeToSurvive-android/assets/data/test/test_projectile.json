@@ -1,5 +1,5 @@
 {
-moveSpeed: 	1000,
+moveSpeed: 	10,
 jumpHeight: 30,
 
 controller: {

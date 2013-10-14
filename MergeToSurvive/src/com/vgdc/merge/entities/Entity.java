@@ -10,7 +10,6 @@ import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.physics.MovingBody;
 import com.vgdc.merge.entities.physics.PhysicsBody;
 import com.vgdc.merge.entities.rendering.Renderer;
-import com.vgdc.merge.math.VectorMath;
 import com.vgdc.merge.world.World;
 
 public class Entity extends BaseEntity{
@@ -21,6 +20,7 @@ public class Entity extends BaseEntity{
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private int health;
 	private Controller controller;
+	private int team;
 	private float halfJumpDir;
 	private boolean currentlyWalking;
 	//private boolean moved = false;
@@ -28,6 +28,7 @@ public class Entity extends BaseEntity{
 	public Entity(EntityData data, World world)
 	{
 		this.data = data;
+		this.team = data.defaultTeam;
 		setWorld(world);
 		if(data.defaultAbilities!=null)
 			for(Ability a : data.defaultAbilities)
@@ -66,6 +67,21 @@ public class Entity extends BaseEntity{
 		return EntityType.Entity;
 	}
 	
+	public int getDamage()
+	{
+		return data.damage;
+	}
+	
+	public int getTeam()
+	{
+		return team;
+	}
+	
+	public void setTeam(int team)
+	{
+		this.team = team;
+	}
+	
 	public void setRenderer(Renderer nRenderer)
 	{
 		super.setRenderer(nRenderer);
@@ -77,6 +93,13 @@ public class Entity extends BaseEntity{
 	{
 		super.setSoundComponent(sound);
 		sound.setSounds(data.sounds);
+	}
+	
+	public void setPhysicsBody(PhysicsBody body)
+	{
+		super.setPhysicsBody(body);
+//		if(data.dimensions!=null)
+//			body.setSize(data.dimensions);
 	}
 	
 	@Override

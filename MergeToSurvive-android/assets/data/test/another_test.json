@@ -12,11 +12,13 @@ sounds: [
 ],
 textures: [
 	data/test/animation_sheet.png,
-	data/test/colorboxes.png
+	data/test/colorboxes.png,
+	data/test/Proto_Sprites.png
 ],
 animations: {
 	idle: data/test/idle_animation.json,
 	run: data/test/run_animation.json,
+	proto: data/test/proto_test_anim.json,
 	projectile: data/test/projectile_animation.json
 },
 entities: {

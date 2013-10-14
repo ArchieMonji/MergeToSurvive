@@ -27,4 +27,11 @@ public abstract class UnitController extends Controller{
 	public void tryJump(float delta){
 		getEntity().tryJump(delta);
 	}
+	
+	public void onEntityCollision(Entity entity){
+		if(entity.getTeam()!=getEntity().getTeam())
+		{
+			getEntity().damage(entity.getDamage());
+		}
+	}
 }
