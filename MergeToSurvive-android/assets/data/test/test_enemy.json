@@ -1,7 +1,7 @@
 {
 maxHealth: 	2,
 jumpHeight: 5,
-moveSpeed: 	100,
+moveSpeed: 	1,
 
 controller: {
 	class: com.vgdc.merge.test.TestAIController

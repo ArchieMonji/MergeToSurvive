@@ -2,6 +2,13 @@
 maxHealth: 	value,
 jumpHeight: value,
 moveSpeed: 	value,
+damage: value,
+defaultTeam: value,
+
+dimensions: {
+	x: value,
+	y: value
+},
 
 controller: {
 	class: full.controller.classpath.ClassName,
@@ -21,11 +28,11 @@ abilities: [
 	}
 ],
 
-animations: [
-	animation_name_1, 
-	animation_name_2,
-	animation_name_3 
-],
+animations: {
+	name1: animation_name_1, 
+	name2: animation_name_2,
+	name3: animation_name_3 
+},
 
 sounds: {
 	UnitStateEnum.ENUM_1: [
