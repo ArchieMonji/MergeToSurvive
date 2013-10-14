@@ -55,55 +55,12 @@ public class GameScreen extends AbstractScreen {
 
 		myWorld = new World();
 		myWorld.setCamera(new OrthographicCamera(480,600));
+		myWorld.getCamera().position.x = 240;
+		myWorld.getCamera().position.y = 300;
 		myWorld.setAssets(game.getAssets());
+		myWorld.setDimensions(480, 600);
 		
 		batch = new SpriteBatch();
-		
-//		ArrayList<Ability> abilities = new ArrayList<Ability>();
-//		abilities.add(new TestAbility());
-//		abilities.add(null);
-//		
-//		Texture animTexture = new Texture(Gdx.files.internal("data/animation_sheet.png"));
-//		TextureRegion[] regions = new TextureRegion[30];
-//		int x = animTexture.getWidth()/6;
-//		int y = animTexture.getHeight()/5;
-//		for(int i = 0; i < 5; i++)
-//		{
-//			for(int j = 0; j < 6; j++)
-//			{
-//				regions[i*6 + j] = new TextureRegion(animTexture, j*x, i*y, x, y);
-//			}
-//		}
-//		Animation idle = new Animation(10, new TextureRegion(animTexture, 0, 0, x, y));
-//		Animation run = new Animation(0.01f, regions);
-//		
-//		ArrayList<Animation> animations = new ArrayList<Animation>();
-//		animations.add(idle);
-//		animations.add(run);
-//		
-//		Controls controls = new Controls();
-//		controls.down = Keys.S;
-//		controls.up = Keys.W;
-//		controls.left = Keys.A;
-//		controls.right = Keys.D;
-//		controls.useAbility = Buttons.LEFT;
-//		controls.toggleAbility = Buttons.RIGHT;
-//		
-//		EntityData testData = new EntityData();
-//		testData.jumpHeight = 5;
-//		testData.moveSpeed = 5;
-//		testData.maxHealth = 1;
-//		testData.defaultAbilities = abilities;
-//		testData.controller = new PlayerController(controls);
-//		testData.animations = animations;
-//		
-//		EntityData testEnemy = new EntityData();
-//		testEnemy.jumpHeight = 5;
-//		testEnemy.moveSpeed = 1;
-//		testEnemy.maxHealth = 1;
-//		testEnemy.defaultAbilities = abilities;
-//		testEnemy.controller = new TestAIController();
-//		testEnemy.animations = animations;
 		
 		Entity testEntity = null;
 		for(int i = 0; i < 8; i++)

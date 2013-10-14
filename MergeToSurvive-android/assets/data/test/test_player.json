@@ -1,6 +1,6 @@
 {
 maxHealth: 	2,
-jumpHeight: 5,
+jumpHeight: 15,
 moveSpeed: 	500,
 
 controller: {

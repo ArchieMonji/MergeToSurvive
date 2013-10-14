@@ -44,7 +44,6 @@ public class PlayerController extends UnitController {
 		{
 			//this is test, change later
 			getEntity().jump(delta);
-			System.out.println("jump!");
 		}
 		if(Gdx.input.isKeyPressed(controls.left))
 		{

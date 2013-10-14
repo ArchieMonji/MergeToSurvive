@@ -24,6 +24,7 @@ public abstract class BaseEntity {
 	
 	public void setPhysicsBody(PhysicsBody nBody){
 		body = nBody;
+		body.setHost(this);
 	}
 	
 	public PhysicsBody getPhysicsBody(){

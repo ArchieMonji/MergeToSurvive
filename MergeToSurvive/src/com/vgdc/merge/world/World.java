@@ -30,6 +30,7 @@ public class World {
 	public void onUpdate()
 	{
 		entityManager.onUpdate();
+		camera.update();
 		for(BaseEntity e : entityManager.getEntities())
 			e.onUpdate(Gdx.graphics.getDeltaTime());
 	}
@@ -47,6 +48,12 @@ public class World {
 	public OrthographicCamera getCamera()
 	{
 		return camera;
+	}
+	
+	public void setDimensions(int width, int height)
+	{
+		dimensions.x = width;
+		dimensions.y = height;
 	}
 	
 	public void setCamera(OrthographicCamera camera)

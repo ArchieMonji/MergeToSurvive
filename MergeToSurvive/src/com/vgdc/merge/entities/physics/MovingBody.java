@@ -31,6 +31,8 @@ public class MovingBody extends PhysicsBody{
 	public void setElasticity(float e){elasticity = e;}
 	public float getElasticity(){return elasticity;}
 	
+	public Vector2 getLastPosition(){return lastPosition;}
+	
 	//////////Collisions
 	private boolean touchingGround;
 	public boolean checkTouchingGround(){return touchingGround;}
