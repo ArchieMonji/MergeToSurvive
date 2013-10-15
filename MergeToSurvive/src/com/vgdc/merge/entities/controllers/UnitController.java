@@ -29,11 +29,15 @@ public abstract class UnitController extends Controller{
 	}
 	
 	public void onEntityCollision(Entity entity){
-		if(entity.getTeam()!=getEntity().getTeam())
+		if(entity.getTeam()!=getEntity().getTeam()&&entity.getDamage()>0)
 		{
-			getEntity().damage(entity.getDamage());
-			if(getEntity().isDead())
-				System.out.println("i am dead");
+			onDamage(entity);
 		}
+	}
+	
+	public void onDamage(Entity entity){
+		getEntity().damage(entity.getDamage());
+		if(getEntity().isDead())
+			System.out.println("i am dead");
 	}
 }

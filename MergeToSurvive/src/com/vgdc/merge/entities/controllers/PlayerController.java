@@ -3,12 +3,19 @@ package com.vgdc.merge.entities.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.abilities.Ability;
 
 public class PlayerController extends UnitController {
 	
 	private Controls controls;
+	private float invulnerableTime = 1f;
+	private int numFlashes = 6;
+	private float alpha = 0.5f;
+	
+	private float alphaToggle;
+	private int num;
 	
 	private boolean fired = false;
 	private boolean toggled = false;
@@ -35,6 +42,7 @@ public class PlayerController extends UnitController {
 
 	@Override
 	public void onUpdate(float delta) {
+		Entity e = getEntity();
 		if(Gdx.input.isKeyPressed(controls.down))
 		{
 			//this is test, change later
@@ -68,7 +76,6 @@ public class PlayerController extends UnitController {
 		{
 			if(!toggled)
 			{
-				Entity e = getEntity();
 				ArrayList<Ability> abilities = e.getAbilities();
 				if(abilities.size()>=2&&abilities.get(1)!=null)
 				{
@@ -84,12 +91,43 @@ public class PlayerController extends UnitController {
 			toggled = false;
 		}
 		stateMachine.affectState(delta);
+		if(alphaToggle>0)
+		{
+			alphaToggle-=delta;
+			if(alphaToggle<=0&&num>0)
+			{
+				alphaToggle+=invulnerableTime/numFlashes/2;
+				Color c = e.getRenderer().getColor();
+				if(c.a!=1.0f)
+				{
+					e.getRenderer().setColor(c.r, c.g, c.b, 1.0f);
+					num--;
+				}
+				else
+				{
+					e.getRenderer().setColor(c.r, c.g, c.b, alpha);
+				}
+			}
+		}
+	}
+	
+	
+	public void onDamage(Entity entity)
+	{
+		if(alphaToggle>0)
+			return;
+		super.onDamage(entity);
+		alphaToggle = invulnerableTime/numFlashes/2;
+		num = numFlashes;
 	}
 
 	@Override
 	public Controller copy() {
 		PlayerController controller = new PlayerController();
 		controller.setControls(controls);
+		controller.invulnerableTime = invulnerableTime;
+		controller.numFlashes = numFlashes;
+		controller.alpha = alpha;
 		return controller;
 	}
 

@@ -2,6 +2,7 @@ package com.vgdc.merge.entities.rendering;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,7 +22,10 @@ public class Renderer extends BaseRenderer{
 		TextureRegion frame = currentAnimation.getKeyFrame(stateTime, true);
 		int hh = frame.getRegionHeight()/2;
 		int hw = frame.getRegionWidth()/2;
+		Color temp = batch.getColor();
+		batch.setColor(color);
 		batch.draw(frame, entity.getPosition().x-hw, entity.getPosition().y-hh, hw, hh, frame.getRegionWidth(), frame.getRegionHeight(), (flip ? -1 : 1), 1, 0);
+		batch.setColor(temp);
 		stateTime += delta;
 	}
 	public void setAnimations(ArrayList<Animation> animations){

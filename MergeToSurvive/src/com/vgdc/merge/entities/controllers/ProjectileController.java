@@ -1,6 +1,7 @@
 package com.vgdc.merge.entities.controllers;
 
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.Platform;
 
 public class ProjectileController extends Controller{
 	
@@ -28,6 +29,10 @@ public class ProjectileController extends Controller{
 			getEntity().moveLeft(delta);
 		else
 			getEntity().moveRight(delta);
+	}
+	
+	public void onPlatformCollision(Platform platform){
+		getEntity().getWorld().getEntityManager().removeEntity(getEntity());
 	}
 
 }
