@@ -37,7 +37,6 @@ public abstract class UnitController extends Controller{
 	
 	public void onDamage(Entity entity){
 		getEntity().damage(entity.getDamage());
-		if(getEntity().isDead())
-			System.out.println("i am dead");
+		System.out.println(getEntity().getHealth());
 	}
 }

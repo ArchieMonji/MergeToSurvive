@@ -31,8 +31,11 @@ public class TestAIController extends UnitController {
 		stateMachine.affectState(delta);
 	}
 	
-	public void onEntityCollision(Entity entity){
-		
+	public void onDamage(Entity entity){
+		super.onDamage(entity);
+		if(getEntity().isDead()){
+			getEntity().getWorld().getEntityManager().removeEntity(getEntity());
+		}
 	}
 
 }

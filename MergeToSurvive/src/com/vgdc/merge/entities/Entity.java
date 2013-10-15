@@ -122,6 +122,10 @@ public class Entity extends BaseEntity{
 		getRenderer().onRender(batch, delta);
 	}
 	
+	public int getHealth(){
+		return health;
+	}
+	
 	public void damage(int amount)
 	{
 		health-=amount;

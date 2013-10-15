@@ -27,5 +27,6 @@ public abstract class Controller{
 	public void onEntityCollision(Entity entity){
 	}
 	public void onPlatformCollision(Platform platform){
+		
 	}
 }

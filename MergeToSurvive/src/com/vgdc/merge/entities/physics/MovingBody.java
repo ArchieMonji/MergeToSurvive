@@ -142,7 +142,7 @@ public class MovingBody extends PhysicsBody{
 	/////Entity Collisions
 	public void onEntityCollision(Entity entity){
 		((Entity)host).onEntityCollision(entity);
-		entity.onEntityCollision((Entity)host);
+		//entity.onEntityCollision((Entity)host);
 	}
 	public void checkEntityCollisions(){
 		ArrayList<BaseEntity> entities = host.getWorld().getEntityManager().getEntities();
