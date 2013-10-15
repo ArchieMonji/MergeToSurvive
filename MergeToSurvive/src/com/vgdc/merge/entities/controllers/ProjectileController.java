@@ -15,7 +15,9 @@ public class ProjectileController extends Controller{
 
 	@Override
 	public Controller copy() {
-		return new ProjectileController();
+		ProjectileController controller = new ProjectileController();
+		controller.timeAlive = timeAlive;
+		return controller;
 	}
 
 	@Override
@@ -25,10 +27,10 @@ public class ProjectileController extends Controller{
 		{
 			getEntity().getWorld().getEntityManager().removeEntity(getEntity());
 		}
-		if(getEntity().getRenderer().isFlipped())
-			getEntity().moveLeft(delta);
-		else
-			getEntity().moveRight(delta);
+//		if(getEntity().getRenderer().isFlipped())
+//			getEntity().moveLeft(delta);
+//		else
+//			getEntity().moveRight(delta);
 	}
 	
 	public void onPlatformCollision(Platform platform){
