@@ -40,7 +40,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.onRender(batch);
 		batch.end();
 		if(SHOWHITBOXES)
-			hrenderer.onRender(batch,delta);
+			hrenderer.onRender(myWorld.getCamera());
 	}
 
 	@Override
@@ -69,8 +69,10 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setAssets(game.getAssets());
 		myWorld.setDimensions(800, 600);
 
-		if(SHOWHITBOXES)
+		if(SHOWHITBOXES){
 			hrenderer = new HitboxRenderer(myWorld);
+			hrenderer.renderEntityPositions(true);
+		}
 		
 		batch = new SpriteBatch();
 		

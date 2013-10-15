@@ -36,13 +36,12 @@ public class Assets {
 	private Json json = new Json();
 
 	public Assets() {
-		ArrayList<String> packages = new ArrayList<String>();
-		packages.add("com.vgdc.merge.entities.controllers");
-		packages.add("com.vgdc.merge.entities.abilities");
+		String[] packages = new String[] {
+				"com.vgdc.merge.entities.controllers",
+				"com.vgdc.merge.entities.abilities" };
 
 		for (String packageName : packages) {
 			for (Class<?> c : ClassFinder.getClassesInPackage(packageName)) {
-				System.out.println(c);
 				json.addClassTag(c.getSimpleName(), c);
 			}
 		}
@@ -68,7 +67,7 @@ public class Assets {
 		abs.add(new ProjectileAbility());
 		System.out.println(a.json.prettyPrint(a.json.toJson(abs)));
 
-		EntityTemplate edt = new EntityTemplate();
+		BaseEntityLoadData edt = new BaseEntityLoadData();
 		edt.sounds = new HashMap<UnitStateEnum, ArrayList<String>>();
 		ArrayList<String> soundNameList = new ArrayList<String>();
 		soundNameList.add("SOUND NAME");
@@ -91,9 +90,9 @@ public class Assets {
 		te.state = State.TEST;
 
 		System.out.println(a.json.prettyPrint(a.json.toJson(te)));
-		EntityTemplate temp = a.json.fromJson(EntityTemplate.class,
+		BaseEntityLoadData loadData = a.json.fromJson(BaseEntityLoadData.class,
 				a.json.toJson(edt));
-		System.out.println(temp.sounds.get(UnitStateEnum.MOVE.name()));
+		System.out.println(loadData.sounds.get(UnitStateEnum.MOVE.name()));
 
 	}
 
@@ -157,29 +156,29 @@ public class Assets {
 	private void loadEntityData(String name, String path) {
 		System.out.println("Loading Entity '" + name + "' from " + path);
 
-		EntityTemplate template = createObjectFromJson(EntityTemplate.class,
+		BaseEntityLoadData loadData = createObjectFromJson(BaseEntityLoadData.class,
 				path);
 
 		EntityData data = new EntityData();
-		data.maxHealth = template.maxHealth;
-		data.jumpHeight = template.jumpHeight;
-		data.moveSpeed = template.moveSpeed;
-		data.damage = template.damage;
-		data.defaultTeam = template.defaultTeam;
-		data.dimensions = template.dimensions;
+		data.maxHealth = loadData.maxHealth;
+		data.jumpHeight = loadData.jumpHeight;
+		data.moveSpeed = loadData.moveSpeed;
+		data.damage = loadData.damage;
+		data.defaultTeam = loadData.defaultTeam;
+		data.dimensions = loadData.dimensions;
 
 		// attach animations
 		data.animations = new ArrayList<Animation>();
 
-		for (String animationName : template.animations) {
+		for (String animationName : loadData.animations) {
 			data.animations.add(animationMap.get(animationName));
 		}
 
 		// attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
 		for (UnitStateEnum state : UnitStateEnum.values()) {
-			json.setElementType(EntityTemplate.class, "sounds", ArrayList.class);
-			ArrayList<String> soundNames = template.sounds.get(state.name());
+			json.setElementType(BaseEntityLoadData.class, "sounds", ArrayList.class);
+			ArrayList<String> soundNames = loadData.sounds.get(state.name());
 			if (soundNames != null) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
 				data.sounds.add(soundList);
@@ -194,9 +193,9 @@ public class Assets {
 			}
 		}
 
-		data.defaultAbilities = new ArrayList<Ability>(template.abilities);
+		data.defaultAbilities = new ArrayList<Ability>(loadData.abilities);
 
-		data.controller = template.controller;
+		data.controller = loadData.controller;
 
 		entityDataMap.put(name, data);
 
@@ -245,11 +244,11 @@ public class Assets {
 		public boolean looping;
 	}
 
-	private static class EntityTemplate extends BaseEntityData{
-//		public int maxHealth;
-//		public float jumpHeight;
-//		public float moveSpeed;
-//		public Controller controller;
+	private static class BaseEntityLoadData extends BaseEntityData {
+		// public int maxHealth;
+		// public float jumpHeight;
+		// public float moveSpeed;
+		// public Controller controller;
 		public ArrayList<Ability> abilities;
 		public ArrayList<String> animations;
 		public HashMap<UnitStateEnum, ArrayList<String>> sounds;
