@@ -4,7 +4,7 @@ jumpHeight: 5,
 moveSpeed: 	1,
 damage: 1,
 dimensions: {
-	x: 85.333,
+	x: 65,
 	y: 102
 },
 

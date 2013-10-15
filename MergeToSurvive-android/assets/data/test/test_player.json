@@ -4,7 +4,7 @@ jumpHeight: 15,
 moveSpeed: 	5,
 defaultTeam: 1,
 dimensions: {
-	x: 85.333,
+	x: 65,
 	y: 102
 },
 
