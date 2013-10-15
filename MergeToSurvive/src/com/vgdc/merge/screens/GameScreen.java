@@ -14,7 +14,7 @@ import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
-	public static final boolean showHitboxes = true;
+	public static final boolean SHOWHITBOXES = false;
 	
 	private SpriteBatch batch;
 	
@@ -39,7 +39,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.onUpdate();
 		myWorld.onRender(batch);
 		batch.end();
-		if(showHitboxes)
+		if(SHOWHITBOXES)
 			hrenderer.onRender(batch,delta);
 	}
 
@@ -63,20 +63,20 @@ public class GameScreen extends AbstractScreen {
 		float h = Gdx.graphics.getHeight();
 
 		myWorld = new World();
-		myWorld.setCamera(new OrthographicCamera(480,600));
-		myWorld.getCamera().position.x = 240;
+		myWorld.setCamera(new OrthographicCamera(800,600));
+		myWorld.getCamera().position.x = 400;
 		myWorld.getCamera().position.y = 300;
 		myWorld.setAssets(game.getAssets());
-		myWorld.setDimensions(480, 600);
+		myWorld.setDimensions(800, 600);
 
-		if(showHitboxes)
+		if(SHOWHITBOXES)
 			hrenderer = new HitboxRenderer(myWorld);
 		
 		batch = new SpriteBatch();
 		
 		Entity testEntity = null;
 		testEntity = new Entity(game.getAssets().entityDataMap.get("testenemy"), myWorld);
-		testEntity.setPosition(new Vector2(300, -58));
+		testEntity.setPosition(new Vector2(500, 0));
 		myWorld.getEntityManager().addEntity(testEntity);
 		testEntity = new Entity(game.getAssets().entityDataMap.get("testplayer"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
@@ -89,12 +89,12 @@ public class GameScreen extends AbstractScreen {
 		platform.getPhysicsBody().setSize(new Vector2(100,400));
 		myWorld.getEntityManager().addEntity(platform);*/
 		//*
-		for(Vector2 pos : new Vector2[]{new Vector2(150,100),new Vector2(350,100),new Vector2(250,100),new Vector2(100,400)}){
+		for(Vector2 pos : new Vector2[]{new Vector2(250,50),new Vector2(650,50),new Vector2(450,200),new Vector2(650,400)}){
 			Platform platform = new Platform(myWorld);
 			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-			platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png",1,1,1,1));
+			platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png",13,13,13,13));
 			platform.getPhysicsBody().setPosition(pos);
-			platform.getPhysicsBody().setSize(new Vector2(100,50));
+			platform.getPhysicsBody().setSize(new Vector2(200,50));
 			myWorld.getEntityManager().addEntity(platform);
 		}//*/
 	}
