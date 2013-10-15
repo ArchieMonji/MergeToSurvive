@@ -4,6 +4,7 @@ jumpHeight: value,
 moveSpeed: 	value,
 damage: value,
 defaultTeam: value,
+mergeable: boolean,
 
 dimensions: {
 	x: value,
@@ -11,7 +12,7 @@ dimensions: {
 },
 
 controller: {
-	class: full.controller.classpath.ClassName,
+	class: ClassName,
 	field_name_1: value,
 	field_name_2: value,
 	field_name_3: value
@@ -19,11 +20,11 @@ controller: {
 
 abilities: [
 	{
-		class: full.ability.classpath.ClassName,
+		class: ClassName,
 		default_ability_1: field,
 	},
 	{
-		class: full.ability.classpath.ClassName,
+		class: ClassName,
 		default_ability_2: field,
 	}
 ],

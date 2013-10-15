@@ -1,13 +1,7 @@
 package com.vgdc.merge.assets;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -160,12 +154,14 @@ public class Assets {
 				path);
 
 		EntityData data = new EntityData();
-		data.maxHealth = loadData.maxHealth;
-		data.jumpHeight = loadData.jumpHeight;
-		data.moveSpeed = loadData.moveSpeed;
-		data.damage = loadData.damage;
-		data.defaultTeam = loadData.defaultTeam;
-		data.dimensions = loadData.dimensions;
+		
+		loadData.copyInto(data);
+//		data.maxHealth = loadData.maxHealth;
+//		data.jumpHeight = loadData.jumpHeight;
+//		data.moveSpeed = loadData.moveSpeed;
+//		data.damage = loadData.damage;
+//		data.defaultTeam = loadData.defaultTeam;
+//		data.dimensions = loadData.dimensions;
 
 		// attach animations
 		data.animations = new ArrayList<Animation>();
@@ -195,7 +191,7 @@ public class Assets {
 
 		data.defaultAbilities = new ArrayList<Ability>(loadData.abilities);
 
-		data.controller = loadData.controller;
+//		data.controller = loadData.controller;
 
 		entityDataMap.put(name, data);
 

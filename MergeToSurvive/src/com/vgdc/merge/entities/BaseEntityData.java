@@ -10,5 +10,18 @@ public class BaseEntityData {
 	public Vector2 dimensions;
 	public float jumpHeight;
 	public float moveSpeed;
+	public boolean mergeable;
 	public Controller controller;
+	
+	public void copyInto(BaseEntityData other)
+	{
+		other.maxHealth = maxHealth;
+		other.damage = damage;
+		other.defaultTeam = defaultTeam;
+		other.dimensions = dimensions;
+		other.jumpHeight = jumpHeight;
+		other.moveSpeed = moveSpeed;
+		other.mergeable = mergeable;
+		other.controller = controller;
+	}
 }
