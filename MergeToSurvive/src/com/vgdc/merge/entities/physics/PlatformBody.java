@@ -34,8 +34,8 @@ public class PlatformBody extends PhysicsBody{
 	}
 	float raycast_horizontalborder(Vector2 p1,Vector2 p2,float y){
 		Vector2 collision = VectorMath.getLineCollision_Horizontal(p1,p2,y);
-		System.out.println("collision: "+collision);
-		System.out.println("p1: "+p1+" : p2: "+p2+" : y: "+y);
+		//System.out.println("collision: "+collision);
+		//System.out.println("p1: "+p1+" : p2: "+p2+" : y: "+y);
 		if(collision.y > position.y+size.y/2 || collision.y < position.y-size.y/2)
 			return NULLDIST;
 		return VectorMath.distance(p1,collision);
@@ -80,7 +80,7 @@ public class PlatformBody extends PhysicsBody{
 		boolean collide_down = deltaposition.y > 0 && biggerY ? (bottom <= btop && bottom >= bbottom) : btop >= bottom && btop <= top;
 		if(!collide_up && !collide_down) return null;//The MovingBody isn't within the y coordinates
 		
-		System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
+		//System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
 
 		float hitup = NULLDIST,hitdown = NULLDIST,hitleft = NULLDIST,hitright = NULLDIST;
 		
@@ -88,11 +88,11 @@ public class PlatformBody extends PhysicsBody{
 
 		if(collide_up){
 			for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
-				System.out.println(""+body.lastPosition+":"+body.position);
+				//System.out.println(""+body.lastPosition+":"+body.position);
 				hitup = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,-bhalfsizey)),
 						VectorMath.add(body.position,new Vector2(x,-bhalfsizey)),
 						top);
-				System.out.println("hitup: "+hitup);
+				//System.out.println("hitup: "+hitup);
 				if(hitup != NULLDIST) break;
 			}
 			if(hitup == NULLDIST){
@@ -145,16 +145,16 @@ public class PlatformBody extends PhysicsBody{
 			}
 			
 			if((collide_up ? hitup : hitdown) < (collide_left ? hitleft : hitright)){
-				System.out.println("vert");
+				//System.out.println("vert");
 				collide_left = false;
 				collide_right = false;
 			}else{
-				System.out.println("hori");
+				//System.out.println("hori");
 				collide_up = false;
 				collide_down = false;
 			}
 
-			System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
+			//System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
 
 			if(collide_up)
 				return new CollisionData(top,CollisionSide.Up);

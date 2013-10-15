@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.entities.physics.PlatformType;
 import com.vgdc.merge.entities.Platform;
+import com.vgdc.merge.entities.physics.PlatformType;
+import com.vgdc.merge.entities.rendering.HitboxRenderer;
 import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
+	public static final boolean showHitboxes = true;
+	
 	private SpriteBatch batch;
 	
 	private World myWorld;
@@ -36,6 +39,8 @@ public class GameScreen extends AbstractScreen {
 		myWorld.onUpdate();
 		myWorld.onRender(batch);
 		batch.end();
+		if(showHitboxes)
+			hrenderer.onRender(batch,delta);
 	}
 
 	@Override
@@ -51,6 +56,7 @@ public class GameScreen extends AbstractScreen {
 	public void resume() {
 	}
 
+	HitboxRenderer hrenderer;
 	@Override
 	public void show() {
 		float w = Gdx.graphics.getWidth();
@@ -62,6 +68,9 @@ public class GameScreen extends AbstractScreen {
 		myWorld.getCamera().position.y = 300;
 		myWorld.setAssets(game.getAssets());
 		myWorld.setDimensions(480, 600);
+
+		if(showHitboxes)
+			hrenderer = new HitboxRenderer(myWorld);
 		
 		batch = new SpriteBatch();
 		
@@ -82,8 +91,8 @@ public class GameScreen extends AbstractScreen {
 		//*
 		for(Vector2 pos : new Vector2[]{new Vector2(150,100),new Vector2(350,100),new Vector2(250,100),new Vector2(100,400)}){
 			Platform platform = new Platform(myWorld);
-			platform.getPlatformBody().setPlatformType(PlatformType.Jumpable);
-			platform.setRenderer(new PlatformRenderer("data/test/Steel.png",5,5,26,26));
+			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
+			platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png",1,1,1,1));
 			platform.getPhysicsBody().setPosition(pos);
 			platform.getPhysicsBody().setSize(new Vector2(100,50));
 			myWorld.getEntityManager().addEntity(platform);

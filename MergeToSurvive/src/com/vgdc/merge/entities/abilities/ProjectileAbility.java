@@ -32,10 +32,10 @@ public class ProjectileAbility extends Ability {
 		EntityData testData = entity.getWorld().getAssets().entityDataMap.get(projectile);
 		Entity projectile = new Entity(testData, entity.getWorld());
 		projectile.setTeam(entity.getTeam());
-		projectile.setPosition(new Vector2(entity.getPosition().x, entity.getPosition().y));
+		projectile.setPosition(new Vector2(entity.getPosition()));
 		projectile.getRenderer().flip(entity.getRenderer().isFlipped());
 		entity.getWorld().getEntityManager().addEntity(projectile);
-		projectile.getMovingBody().setVelocity(new Vector2(0, testData.jumpHeight));
+		projectile.getMovingBody().setVelocity(new Vector2(0,testData.jumpHeight));
 	}
 	
 	

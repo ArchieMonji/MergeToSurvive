@@ -1,6 +1,7 @@
 {
 moveSpeed: 	10,
 jumpHeight: 30,
+dimensions: {x:50,y:50},
 
 controller: {
 	class: ProjectileController
