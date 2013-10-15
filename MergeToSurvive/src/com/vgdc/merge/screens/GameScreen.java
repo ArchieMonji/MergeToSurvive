@@ -14,7 +14,7 @@ import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
-	public static final boolean SHOWHITBOXES = false;
+	public static final boolean SHOWHITBOXES = true;
 	
 	private SpriteBatch batch;
 	
