@@ -48,13 +48,13 @@ public class MovingBody extends PhysicsBody{
 	}
 	private void applyHorizontalCollision(){
 		if(Math.abs(velocity.x) < 2)
-			setVelocity(new Vector2(velocity.x,0));
+			setVelocity(new Vector2(0,getVelocity().y));
 		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-getFriction())));
 	}
 	private void applyVerticalCollision(){
 		setVelocity(new Vector2(getVelocity().x*(1-getFriction()),getVelocity().y*-elasticity));
 		if(Math.abs(velocity.y) < 2)
-			setVelocity(new Vector2(velocity.x,0));
+			setVelocity(new Vector2(getVelocity().x,0));
 	}
 	/////Boundary Collisions
 	void checkBoundaryCollisions(){

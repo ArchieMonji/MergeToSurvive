@@ -3,9 +3,6 @@ package com.vgdc.merge.entities.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.math.VectorMath;
 
-//For not, just a rectangle
-enum PlatformType{Rectangle}//,Jumpable,TopRightRamp,TopLeftRamp,BottomLeftRamp,BottomRightRamp}
-
 enum CollisionSide{Right,Up,Left,Down}
 
 class CollisionData{
@@ -71,16 +68,19 @@ public class PlatformBody extends PhysicsBody{
 		float btop = body.position.y+bhalfsizey;
 		float bbottom = body.position.y-bhalfsizey;
 		float bleft = body.position.x-bhalfsizex;
+		
+		Vector2 deltaposition = VectorMath.sub(body.position,body.lastPosition);
 
 		boolean biggerX = size.x < body.size.x;
 		boolean biggerY = size.y < body.size.y;
-		boolean collide_left = biggerX ? (left <= bright && left >= bleft) : bright >= left && bright <= right;
-		boolean collide_right = biggerX ? (right >= bleft && right <= bright) : bleft <= right && bleft >= left;
-		boolean collide_up = biggerY ? (top >= bbottom && top <= btop) : bbottom <= top && bbottom >= bottom;
-		boolean collide_down = biggerY ? (bottom <= btop && bottom >= bbottom) : btop >= bottom && btop <= top;
+		boolean collide_left = deltaposition.x > 0 && biggerX ? (left <= bright && left >= bleft) : bright >= left && bright <= right;
+		boolean collide_right = deltaposition.x < 0 && biggerX ? (right >= bleft && right <= bright) : bleft <= right && bleft >= left;
+		if(!collide_left && !collide_right) return null;//The MovingBody isn't within the x coordinates to be able to hit the platform
+		boolean collide_up = deltaposition.y < 0 && biggerY ? (top >= bbottom && top <= btop) : bbottom <= top && bbottom >= bottom;
+		boolean collide_down = deltaposition.y > 0 && biggerY ? (bottom <= btop && bottom >= bbottom) : btop >= bottom && btop <= top;
+		if(!collide_up && !collide_down) return null;//The MovingBody isn't within the y coordinates
 		
 		System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
-		if(!((collide_left || collide_right) && (collide_down || collide_up))) return null;
 
 		float hitup = NULLDIST,hitdown = NULLDIST,hitleft = NULLDIST,hitright = NULLDIST;
 		
@@ -96,7 +96,6 @@ public class PlatformBody extends PhysicsBody{
 				if(hitup != NULLDIST) break;
 			}
 			if(hitup == NULLDIST){
-				System.out.println("?");
 				float cornerposy = position.y+halfsizey;
 				for(float x = -halfsizex; x <= halfsizex; x += size.x){
 					hitup = raycast_horizontalborder_other(body,
@@ -104,68 +103,72 @@ public class PlatformBody extends PhysicsBody{
 							VectorMath.sub(new Vector2(x,cornerposy),bpositionchange),
 							position.y+halfsizey);
 				}
-				if(hitup != NULLDIST)
-					System.out.println("!");
 			}
 			collide_up = hitup != NULLDIST;
 		}
-		if(collide_down){
-			for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
-				hitdown = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,bhalfsizey)),
-						VectorMath.add(body.position,new Vector2(x,bhalfsizey)),
-						bottom);
-				if(hitdown != NULLDIST) break;
+		if(getPlatformType() == PlatformType.Rectangle){//Jumpable platforms don't need side or bottom collision
+			if(collide_down){
+				for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
+					hitdown = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,bhalfsizey)),
+							VectorMath.add(body.position,new Vector2(x,bhalfsizey)),
+							bottom);
+					if(hitdown != NULLDIST) break;
+				}
+				collide_down = hitdown != NULLDIST;
 			}
-			collide_down = hitdown != NULLDIST;
-		}
-		if(collide_right){
-			for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
-				hitright = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(-bhalfsizex,y)),
-						VectorMath.add(body.position,new Vector2(-bhalfsizex,y)),
-						right);
-				if(hitright != NULLDIST) break;
+			if(collide_right){
+				for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
+					hitright = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(-bhalfsizex,y)),
+							VectorMath.add(body.position,new Vector2(-bhalfsizex,y)),
+							right);
+					if(hitright != NULLDIST) break;
+				}
+				collide_right = hitright != NULLDIST;
 			}
-			collide_right = hitright != NULLDIST;
-		}
-		if(collide_left){
-			for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
-				hitleft = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(bhalfsizex,y)),
-						VectorMath.add(body.position,new Vector2(bhalfsizex,y)),
-						left);
-				if(hitleft != NULLDIST) break;
+			if(collide_left){
+				for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
+					hitleft = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(bhalfsizex,y)),
+							VectorMath.add(body.position,new Vector2(bhalfsizex,y)),
+							left);
+					if(hitleft != NULLDIST) break;
+				}
+				collide_left = hitleft != NULLDIST;
 			}
-			collide_left = hitleft != NULLDIST;
-		}
-		//*
-		if(collide_left && collide_right){
-			collide_right = hitright < hitleft;
-			collide_left = !collide_right;
-		}
-		if(collide_up && collide_down){
-			collide_up = hitup < hitdown;
-			collide_down = !collide_up;
-		}
+
+			if(collide_left && collide_right){
+				collide_right = hitright < hitleft;
+				collide_left = !collide_right;
+			}
+			if(collide_up && collide_down){
+				collide_up = hitup < hitdown;
+				collide_down = !collide_up;
+			}
+			
+			if((collide_up ? hitup : hitdown) < (collide_left ? hitleft : hitright)){
+				System.out.println("vert");
+				collide_left = false;
+				collide_right = false;
+			}else{
+				System.out.println("hori");
+				collide_up = false;
+				collide_down = false;
+			}
+
+			System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
+
+			if(collide_up)
+				return new CollisionData(top,CollisionSide.Up);
+			if(collide_down)
+				return new CollisionData(bottom,CollisionSide.Down);
+			if(collide_left)
+				return new CollisionData(left,CollisionSide.Left);
+			if(collide_right)
+				return new CollisionData(right,CollisionSide.Right);
+		}else if(!collide_up)
+			return null;//Jumpable platforms only need collide_up
+		else
+			return new CollisionData(top,CollisionSide.Up);//Jumpables
 		
-		if((collide_up ? hitup : hitdown) < (collide_left ? hitleft : hitright)){
-			System.out.println("vert");
-			collide_left = false;
-			collide_right = false;
-		}else{
-			System.out.println("hori");
-			collide_up = false;
-			collide_down = false;
-		}//*/
-
-		System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
-
-		if(collide_down)
-			return new CollisionData(bottom,CollisionSide.Down);
-		if(collide_up)
-			return new CollisionData(top,CollisionSide.Up);
-		if(collide_left)
-			return new CollisionData(left,CollisionSide.Left);
-		if(collide_right)
-			return new CollisionData(right,CollisionSide.Right);
 		return null;
 	}
 	
