@@ -148,7 +148,7 @@ public class Assets {
 	}
 
 	private void loadEntityData(String name, String path) {
-		System.out.println("Loading Entity '" + name + "' from " + path);
+		System.out.println("Loading Entity '" + name + "' from " + path + " ...");
 
 		BaseEntityLoadData loadData = createObjectFromJson(
 				BaseEntityLoadData.class, path);
@@ -175,7 +175,6 @@ public class Assets {
 		for (UnitStateEnum state : UnitStateEnum.values()) {
 			json.setElementType(BaseEntityLoadData.class, "sounds",
 					ArrayList.class);
-			System.out.println(loadData.sounds);
 			ArrayList<String> soundNames = loadData.sounds.get(state.name());
 			if (soundNames != null) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
@@ -198,7 +197,7 @@ public class Assets {
 
 		entityDataMap.put(name, data);
 
-		System.out.println("EntityData Loaded : " + name);
+		System.out.println("    ...EntityData Loaded : " + name);
 	}
 
 	private void loadAnimation(String name, String path) {
