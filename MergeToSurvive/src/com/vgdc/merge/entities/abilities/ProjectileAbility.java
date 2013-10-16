@@ -16,9 +16,9 @@ public class ProjectileAbility extends Ability {
 	}
 
 	@Override
-	public void onUse(Entity entity) {
+	public void onUse(Entity entity, boolean retrievable) {
 		EntityData data = entity.getWorld().getAssets().entityDataMap.get(projectile);
-		Entity projectile = createEntity(data, entity);
+		Entity projectile = createEntity(data, entity, retrievable);
 		projectile.getMovingBody().setVelocity(new Vector2((projectile.getRenderer().isFlipped()? -data.moveSpeed : data.moveSpeed),data.jumpHeight));
 	}
 	

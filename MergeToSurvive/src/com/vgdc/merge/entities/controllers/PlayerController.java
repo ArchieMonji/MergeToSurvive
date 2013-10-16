@@ -64,7 +64,16 @@ public class PlayerController extends UnitController {
 		{
 			if(!fired)
 			{
-				getEntity().getAbilities().get(0).onUse(getEntity());
+				ArrayList<Ability> abilities = e.getAbilities();
+				if(abilities.size()>0&&abilities.get(0)!=null)
+				{
+					abilities.get(0).onUse(getEntity(), getEntity().canMerge());
+					abilities.set(0, null);
+				}
+				else
+				{
+					e.getData().defaultAbilities.get(0).onUse(e);
+				}
 				fired = true;
 			}
 		}

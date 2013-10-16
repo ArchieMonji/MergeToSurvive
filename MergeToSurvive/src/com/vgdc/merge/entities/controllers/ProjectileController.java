@@ -3,7 +3,7 @@ package com.vgdc.merge.entities.controllers;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.Platform;
 
-public class ProjectileController extends Controller{
+public class ProjectileController extends AbilityController{
 	
 	private float timeAlive = 1;
 	
@@ -25,7 +25,7 @@ public class ProjectileController extends Controller{
 		timeAlive-=delta;
 		if(timeAlive<=0)
 		{
-			getEntity().getWorld().getEntityManager().removeEntity(getEntity());
+			onDeath();
 		}
 //		if(getEntity().getRenderer().isFlipped())
 //			getEntity().moveLeft(delta);
@@ -36,13 +36,13 @@ public class ProjectileController extends Controller{
 	@Override
 	public void onPlatformCollision(Platform platform){
 		System.out.println("Collision!");
-		getEntity().getWorld().getEntityManager().removeEntity(getEntity());
+		onDeath();
 	}
 
 	@Override
 	public void onEntityCollision(Entity entity){
 		if(entity.getTeam()!=getEntity().getTeam())
-			getEntity().getWorld().getEntityManager().removeEntity(getEntity());
+			onDeath();
 	}
 
 }

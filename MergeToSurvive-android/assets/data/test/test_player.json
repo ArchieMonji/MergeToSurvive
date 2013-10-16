@@ -22,8 +22,26 @@ controller: {
 
 abilities: [
 	{
-		class: ProjectileAbility,
-		projectile: testprojectile
+		class: HitBoxAbility,
+		offset: {
+			x: 40,
+			y: 28
+		},
+		data:{
+			damage: 1,
+			dimensions: {
+				x: 30,
+				y: 30
+			},
+			controller: {
+				class: HitBoxController,
+				duration: 0.2,
+				knockback: {
+					x: 20,
+					y: 20
+				}
+			}
+		}
 	}
 ],
 

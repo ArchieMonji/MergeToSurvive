@@ -27,27 +27,23 @@ public class Entity extends BaseEntity{
 	
 	public Entity(EntityData data, World world)
 	{
-		this.data = data;
-		this.team = data.defaultTeam;
-		setWorld(world);
-		if(data.defaultAbilities!=null)
-			for(Ability a : data.defaultAbilities)
-				abilities.add(a);
-		this.controller = data.controller.copy();
-		controller.setEntity(this);
-		this.health = data.maxHealth;
-		setRenderer(new Renderer());
-		setSoundComponent(new SoundComponent());
-		setPhysicsBody(createPhysicsBody());
+		this(data, world, new Renderer(), new MovingBody(), new SoundComponent());
 	}
 	
 	public Entity(EntityData data, World world, Renderer renderer, PhysicsBody body, SoundComponent sound)
 	{
 		this.data = data;
+		this.team = data.defaultTeam;
 		setWorld(world);
 		if(data.defaultAbilities!=null)
-			for(Ability a : data.defaultAbilities)
-				abilities.add(a);
+		{
+			if(!data.mergeable)
+				for(Ability a : data.defaultAbilities)
+					abilities.add(a);
+			else
+				for(Ability a : data.defaultAbilities)
+					abilities.add(null);
+		}
 		this.controller = data.controller.copy();
 		controller.setEntity(this);
 		this.health = data.maxHealth;
@@ -106,7 +102,8 @@ public class Entity extends BaseEntity{
 	{
 		super.setRenderer(nRenderer);
 		nRenderer.setAnimations(data.animations);
-		nRenderer.setState(0);
+		if(data.animations!=null)
+			nRenderer.setState(0);
 	}
 	
 	public void setSoundComponent(SoundComponent sound)

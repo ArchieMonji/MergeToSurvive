@@ -5,7 +5,7 @@ import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.rendering.BlankRenderer;
 
-public class HitboxAbility extends Ability {
+public class HitBoxAbility extends Ability {
 	
 	//these 3 variables might be unneccessary, solve later
 //	private float duration;
@@ -16,8 +16,8 @@ public class HitboxAbility extends Ability {
 	private EntityData data;
 
 	@Override
-	public void onUse(Entity entity) {
-		Entity hitbox = createEntity(data, entity);
+	public void onUse(Entity entity, boolean retrievable) {
+		Entity hitbox = createEntity(data, entity, retrievable);
 		hitbox.setRenderer(new BlankRenderer());
 		hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
 	}
