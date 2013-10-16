@@ -1,0 +1,7 @@
+{
+	frameCount: 1,
+	frameDuration: 1,
+	path: data/test/item_icon.png,
+	cols: 1,
+	rows: 1
+}

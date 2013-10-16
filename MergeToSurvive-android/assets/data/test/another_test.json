@@ -13,17 +13,20 @@ sounds: [
 textures: [
 	data/test/animation_sheet.png,
 	data/test/colorboxes.png,
-	data/test/Proto_Sprites.png
+	data/test/Proto_Sprites.png,
+	data/test/item_icon.png
 ],
 animations: {
 	idle: data/test/idle_animation.json,
 	run: data/test/run_animation.json,
 	proto: data/test/proto_test_anim.json,
-	projectile: data/test/projectile_animation.json
+	projectile: data/test/projectile_animation.json,
+	item: data/test/item_animation.json
 },
 entities: {
 	testplayer: data/test/test_player.json,
 	testenemy: data/test/test_enemy.json,
-	testprojectile: data/test/test_projectile.json
+	testprojectile: data/test/test_projectile.json,
+	testitem: data/test/test_item.json
 }
 }
