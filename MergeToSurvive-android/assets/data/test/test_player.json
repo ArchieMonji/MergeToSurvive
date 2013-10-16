@@ -3,6 +3,7 @@ maxHealth: 	2,
 jumpHeight: 15,
 moveSpeed: 	5,
 defaultTeam: 1,
+mergeable: true,
 dimensions: {
 	x: 64,
 	y: 96

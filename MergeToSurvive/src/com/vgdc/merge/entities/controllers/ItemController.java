@@ -35,7 +35,7 @@ public class ItemController extends Controller {
 	
 	@Override
 	public void onEntityCollision(Entity entity) {
-		if(entity.getTeam() == BaseEntity.PLAYER_TEAM){
+		if(entity.canMerge()){
 			System.out.println("Item picked up");
 			//Ability ability = getEntity().getAbilities().get(0);
 			//entity.getAbilities().set(0,ability);

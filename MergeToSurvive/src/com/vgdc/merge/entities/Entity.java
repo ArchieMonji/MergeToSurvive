@@ -65,6 +65,16 @@ public class Entity extends BaseEntity{
 		return health<=0;
 	}
 	
+	public EntityData getData()
+	{
+		return data;
+	}
+	
+	public boolean canMerge()
+	{
+		return data.mergeable;
+	}
+	
 	public boolean frictionIsApplied(){
 		return !currentlyWalking;
 	}
