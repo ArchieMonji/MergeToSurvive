@@ -35,7 +35,7 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		if (delta < 0.5f) {
+		if (delta < 0.05f) {
 			batch.begin();
 			myWorld.onUpdate();
 			myWorld.onRender(batch);
