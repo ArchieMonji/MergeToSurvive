@@ -85,6 +85,11 @@ public class GameScreen extends AbstractScreen {
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 
+		Entity item = new Entity(game.getAssets().entityDataMap.get("testitem"), myWorld);
+		item.setPosition(new Vector2(450, 275));
+		item.getMovingBody().setElasticity(0);
+		myWorld.getEntityManager().addEntity(item);
+		
 		/*Platform platform = new Platform(myWorld);
 		platform.setRenderer(new PlatformRenderer("data/test/Steel.png",5,5,26,26));
 		platform.getPhysicsBody().setPosition(new Vector2(400,200));

@@ -15,7 +15,11 @@ import com.vgdc.merge.world.World;
 
 public class HitboxRenderer {
 	private World world;
-	public BitmapFont font;
+	private BitmapFont font;
+	private ShapeRenderer sr = new ShapeRenderer();
+	private SpriteBatch batch = new SpriteBatch();
+	private boolean shouldRenderPositions;
+	private int decimalPlaces;
 
 	public HitboxRenderer(World world) {
 		this.world = world;
@@ -23,11 +27,10 @@ public class HitboxRenderer {
 				false);
 
 		font.setColor(Color.RED);
-	}
 
-	private ShapeRenderer sr = new ShapeRenderer();
-	private SpriteBatch batch = new SpriteBatch();
-	private boolean shouldRenderPositions;
+		decimalPlaces = 2;
+		shouldRenderPositions = true;
+	}
 
 	public void onRender(Camera camera) {
 		sr.setProjectionMatrix(camera.combined);
@@ -42,17 +45,21 @@ public class HitboxRenderer {
 			sr.rect(x - w / 2, y - h / 2, w, h);
 		}
 		sr.end();
-		
-		if(shouldRenderPositions){
+
+		if (shouldRenderPositions) {
 			renderEntityPositions(camera);
 		}
 	}
-	
-	public void renderEntityPositions(boolean shouldRenderPositions){
+
+	public void renderEntityPositions(boolean shouldRenderPositions) {
 		this.shouldRenderPositions = shouldRenderPositions;
 	}
-	
-	private void renderEntityPositions(Camera camera){
+
+	public void setDecimalPlaces(int decimalPlaces) {
+		this.decimalPlaces = decimalPlaces;
+	}
+
+	private void renderEntityPositions(Camera camera) {
 		this.batch.setProjectionMatrix(camera.combined);
 		this.batch.begin();
 		for (BaseEntity entity : world.getEntityManager().getEntities()) {
@@ -61,17 +68,19 @@ public class HitboxRenderer {
 			float y = body.getPosition().y;
 			float h = body.getSize().y;
 
-			CharSequence msg = "[" + x + ", " + y + "]";
+			CharSequence msg = String.format("[%." + decimalPlaces + "f, %."
+					+ decimalPlaces + "f]", x, y);
 
 			TextBounds bounds = font.getBounds(msg);
-			font.draw(this.batch, msg, x - bounds.width / 2, y - h/2);
+			font.draw(this.batch, msg, x - bounds.width / 2, y - h / 2);
 		}
 		float mouseX = Gdx.input.getX();
 		float mouseY = Gdx.input.getY();
 		Vector3 mCoord = new Vector3(mouseX, mouseY, 0);
 		camera.unproject(mCoord);
 
-		CharSequence msg = "[" + mCoord.x + ", " + mCoord.y + "]";
+		CharSequence msg = String.format("[%." + decimalPlaces + "f, %."
+				+ decimalPlaces + "f]", mCoord.x, mCoord.y);
 		TextBounds bounds = font.getBounds(msg);
 		font.draw(this.batch, msg, mCoord.x, mCoord.y + bounds.height);
 

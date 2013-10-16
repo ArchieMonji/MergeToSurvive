@@ -33,11 +33,13 @@ public class ProjectileController extends Controller{
 //			getEntity().moveRight(delta);
 	}
 	
+	@Override
 	public void onPlatformCollision(Platform platform){
 		System.out.println("Collision!");
 		getEntity().getWorld().getEntityManager().removeEntity(getEntity());
 	}
-	
+
+	@Override
 	public void onEntityCollision(Entity entity){
 		if(entity.getTeam()!=getEntity().getTeam())
 			getEntity().getWorld().getEntityManager().removeEntity(getEntity());

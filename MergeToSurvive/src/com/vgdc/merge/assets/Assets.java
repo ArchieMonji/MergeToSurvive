@@ -150,18 +150,18 @@ public class Assets {
 	private void loadEntityData(String name, String path) {
 		System.out.println("Loading Entity '" + name + "' from " + path);
 
-		BaseEntityLoadData loadData = createObjectFromJson(BaseEntityLoadData.class,
-				path);
+		BaseEntityLoadData loadData = createObjectFromJson(
+				BaseEntityLoadData.class, path);
 
 		EntityData data = new EntityData();
-		
+
 		loadData.copyInto(data);
-//		data.maxHealth = loadData.maxHealth;
-//		data.jumpHeight = loadData.jumpHeight;
-//		data.moveSpeed = loadData.moveSpeed;
-//		data.damage = loadData.damage;
-//		data.defaultTeam = loadData.defaultTeam;
-//		data.dimensions = loadData.dimensions;
+		// data.maxHealth = loadData.maxHealth;
+		// data.jumpHeight = loadData.jumpHeight;
+		// data.moveSpeed = loadData.moveSpeed;
+		// data.damage = loadData.damage;
+		// data.defaultTeam = loadData.defaultTeam;
+		// data.dimensions = loadData.dimensions;
 
 		// attach animations
 		data.animations = new ArrayList<Animation>();
@@ -173,7 +173,9 @@ public class Assets {
 		// attach sounds
 		data.sounds = new ArrayList<ArrayList<SoundFx>>();
 		for (UnitStateEnum state : UnitStateEnum.values()) {
-			json.setElementType(BaseEntityLoadData.class, "sounds", ArrayList.class);
+			json.setElementType(BaseEntityLoadData.class, "sounds",
+					ArrayList.class);
+			System.out.println(loadData.sounds);
 			ArrayList<String> soundNames = loadData.sounds.get(state.name());
 			if (soundNames != null) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
@@ -187,11 +189,12 @@ public class Assets {
 			} else {
 				data.sounds.add(null);
 			}
+
 		}
 
 		data.defaultAbilities = new ArrayList<Ability>(loadData.abilities);
 
-//		data.controller = loadData.controller;
+		// data.controller = loadData.controller;
 
 		entityDataMap.put(name, data);
 

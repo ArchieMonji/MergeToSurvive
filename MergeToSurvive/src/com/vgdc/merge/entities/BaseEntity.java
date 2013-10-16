@@ -9,6 +9,8 @@ import com.vgdc.merge.world.World;
 
 public abstract class BaseEntity {
 	
+	public static final int PLAYER_TEAM = 1;
+	
 	private PhysicsBody body;
 	private BaseRenderer renderer;
 	private SoundComponent sound;

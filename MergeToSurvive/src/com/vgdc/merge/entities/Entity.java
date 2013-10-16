@@ -78,6 +78,10 @@ public class Entity extends BaseEntity{
 		return data.damage;
 	}
 	
+	public float getMoveSpeed(){
+		return data.moveSpeed;
+	}
+	
 	public int getTeam()
 	{
 		return team;

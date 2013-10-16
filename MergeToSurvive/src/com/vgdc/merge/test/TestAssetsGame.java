@@ -1,24 +1,13 @@
 package com.vgdc.merge.test;
 
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.entities.EntityData;
-import com.vgdc.merge.entities.abilities.Ability;
-import com.vgdc.merge.entities.controllers.Controls;
-import com.vgdc.merge.entities.controllers.PlayerController;
 import com.vgdc.merge.entities.rendering.Renderer;
 
 public class TestAssetsGame implements ApplicationListener{
