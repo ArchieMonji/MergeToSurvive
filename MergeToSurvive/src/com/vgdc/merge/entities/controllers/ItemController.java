@@ -27,6 +27,20 @@ public class ItemController extends Controller {
 
 		//System.out.println(body.getVelocity());
 		// decrement lifespan
+		/**
+		MovingBody body = e.getMovingBody();
+		if(body.getVelocity().y > 0){
+			if(body.getPosition().y - spawnLocation.y > floatRange){
+				body.setVelocity(body.getVelocity().mul(0, -1));
+			}
+		}
+		else{
+			if(body.getPosition().y - spawnLocation.y < -floatRange){
+				body.setVelocity(body.getVelocity().mul(0, -1));
+			}
+		}
+		**/
+		
 		if(Math.abs(e.getPosition().y - spawnLocation.y) > floatRange){
 			MovingBody body = e.getMovingBody();
 			body.setVelocity(body.getVelocity().mul(0, -1));
