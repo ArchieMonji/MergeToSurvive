@@ -3,6 +3,7 @@ package com.vgdc.merge.entities.abilities;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.Projectile;
 import com.vgdc.merge.entities.rendering.BlankRenderer;
 
 public class HitBoxAbility extends Ability {
@@ -17,7 +18,7 @@ public class HitBoxAbility extends Ability {
 
 	@Override
 	public void onUse(Entity entity, boolean retrievable) {
-		Entity hitbox = createEntity(data, entity, retrievable);
+		Projectile hitbox = createProjectile(data, entity, retrievable);
 		hitbox.setRenderer(new BlankRenderer());
 		hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
 	}

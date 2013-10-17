@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.vgdc.merge.entities.BaseEntity;
+import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.physics.MovingBody;
 import com.vgdc.merge.entities.physics.PhysicsBody;
 import com.vgdc.merge.world.World;
 
@@ -33,8 +35,18 @@ public class HitboxRenderer {
 	}
 
 	public void onRender(Camera camera) {
+
+		renderHitBoxes(camera);
+
+		if (shouldRenderPositions) {
+			renderEntityPositions(camera);
+		}
+	}
+
+	private void renderHitBoxes(Camera camera) {
 		sr.setProjectionMatrix(camera.combined);
 		sr.begin(ShapeType.Rectangle);
+
 		sr.setColor(Color.RED);
 		for (BaseEntity entity : world.getEntityManager().getEntities()) {
 			PhysicsBody body = entity.getPhysicsBody();
@@ -42,13 +54,10 @@ public class HitboxRenderer {
 			float y = body.getPosition().y;
 			float w = body.getSize().x;
 			float h = body.getSize().y;
+			
 			sr.rect(x - w / 2, y - h / 2, w, h);
 		}
 		sr.end();
-
-		if (shouldRenderPositions) {
-			renderEntityPositions(camera);
-		}
 	}
 
 	public void renderEntityPositions(boolean shouldRenderPositions) {

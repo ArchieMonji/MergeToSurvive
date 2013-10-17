@@ -186,12 +186,19 @@ public class MovingBody extends PhysicsBody {
 		ArrayList<BaseEntity> entities = host.getWorld().getEntityManager()
 				.getEntities();
 		for (int i = entities.indexOf(host) + 1; i < entities.size(); i++) {
-			if (entities.get(i).getEntityType() == EntityType.Entity
-					&& checkCollidingWithEntity((MovingBody) entities.get(i)
+			BaseEntity e = entities.get(i);
+			if (canCollideWith(e.getEntityType())
+					&& e.getPhysicsBody().canCollideWith(host.getEntityType())) {
+				EntityType type = e.getEntityType();
+				if (type == EntityType.Entity || type == EntityType.Item
+						|| type == EntityType.Projectile) {
+					if (checkCollidingWithEntity((MovingBody) e
 							.getPhysicsBody())) {
-				onEntityCollision((Entity) entities.get(i));
-				((Entity) entities.get(i)).getMovingBody().onEntityCollision(
-						(Entity) host);
+						onEntityCollision((Entity) e);
+						((Entity) e).getMovingBody().onEntityCollision(
+								(Entity) host);
+					}
+				}
 			}
 		}
 	}
