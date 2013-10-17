@@ -12,6 +12,7 @@ public class BaseEntityData {
 	public float moveSpeed;
 	public boolean mergeable;
 	public Controller controller;
+	public String itemDrop;
 	
 	public void copyInto(BaseEntityData other)
 	{
@@ -23,5 +24,6 @@ public class BaseEntityData {
 		other.moveSpeed = moveSpeed;
 		other.mergeable = mergeable;
 		other.controller = controller;
+		other.itemDrop = itemDrop;
 	}
 }
