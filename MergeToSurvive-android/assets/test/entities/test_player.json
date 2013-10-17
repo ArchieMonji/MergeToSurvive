@@ -1,0 +1,65 @@
+{
+maxHealth: 	2,
+jumpHeight: 15,
+moveSpeed: 	5,
+defaultTeam: 1,
+mergeable: true,
+dimensions: {
+	x: 64,
+	y: 96
+},
+
+controller: {
+	class: PlayerController,
+	controls: {
+		up: 51,
+		down: 47,
+		left: 29,
+		right: 32,
+		useAbility: 0
+	}
+},
+
+abilities: [
+	{
+		class: HitBoxAbility,
+		offset: {
+			x: 40,
+			y: 28
+		},
+		data:{
+			damage: 1,
+			dimensions: {
+				x: 30,
+				y: 30
+			},
+			controller: {
+				class: HitBoxController,
+				duration: 0.2,
+				knockback: {
+					x: 20,
+					y: 20
+				}
+			}
+		}
+	}
+],
+
+animations: [
+	idle_animation,
+	run_animation
+],
+sounds: {
+	IDLE: [
+		{
+			path: Vine_attack
+		}
+	],
+	MOVE: [
+		{
+			path: flamethrower,
+			looping: true
+		}
+	]
+}
+}

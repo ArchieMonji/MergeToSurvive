@@ -1,0 +1,27 @@
+{
+maxHealth: 	4,
+jumpHeight: 5,
+moveSpeed: 	1,
+damage: 1,
+dimensions: {
+	x: 65,
+	y: 102
+},
+
+controller: {
+	class: com.vgdc.merge.test.TestAIController
+},
+
+abilities: [
+	{
+		class: ProjectileAbility,
+		projectile: test_projectile
+	}
+],
+
+animations: [
+	idle_animation,
+	run_animation
+],
+sounds: {}
+}

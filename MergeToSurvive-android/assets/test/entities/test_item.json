@@ -1,0 +1,27 @@
+{
+maxHealth: 	1,
+jumpHeight: 1,
+moveSpeed: 	1,
+dimensions: {
+	x: 32,
+	y: 32
+},
+
+controller: {
+	class: ItemController
+},
+
+abilities: [
+	{
+		class: ProjectileAbility,
+		projectile: item_projectile
+	}
+],
+
+animations: [
+	item
+],
+
+sounds: {}
+
+}

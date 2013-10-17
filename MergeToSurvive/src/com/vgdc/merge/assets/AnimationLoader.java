@@ -5,77 +5,64 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
-//TODO: Fix next 
-public class AnimationLoader extends
-		AsynchronousAssetLoader<Animation, AnimationLoader.AnimationParameter> {
-
+public class AnimationLoader extends AsynchronousAssetLoader<Animation, AnimationLoader.AnimationDataParameter> {
+	
+	private Json json;
+	
 	private AnimationData data;
-
-	public AnimationLoader(FileHandleResolver resolver) {
+	
+	public AnimationLoader(FileHandleResolver resolver, Json json) {
 		super(resolver);
+		this.json = json;
 	}
 
-	static public class AnimationParameter extends
-			AssetLoaderParameters<Animation> {
-		public AnimationData animationData;
-	}
-
-	@Override
-	public void loadAsync(AssetManager manager, String fileName,
-			AnimationParameter parameter) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Animation loadSync(AssetManager manager, String fileName,
-			AnimationParameter parameter) {
-		FileHandle handle = resolve(fileName);
-
-		Texture sheet = manager.get(data.path, Texture.class);
-
-		// break sheet into individual frames
-		TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()
-				/ data.cols, sheet.getHeight() / data.rows);
-
-		// repack into 1D array
-		TextureRegion[] frames = new TextureRegion[data.cols * data.rows];
-		int index = 0;
-		for (int i = 0; i < data.rows; i++) {
-			for (int j = 0; j < data.cols; j++) {
-				frames[index++] = tmp[i][j];
-			}
-		}
-
-		return new Animation(data.frameDuration, frames);
+	static public class AnimationDataParameter extends
+		AssetLoaderParameters<Animation> {
+		
 	}
 
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
-			AnimationParameter parameter) {
+			AnimationDataParameter parameter) {
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
-		if (parameter != null && parameter.animationData != null) {
-			data = parameter.animationData;
-			return deps;
-		}
-		FileHandle handle = resolve(fileName);
-		data = new Json().fromJson(AnimationData.class, fileName);
-		deps.add(new AssetDescriptor(data.path, AnimationData.class));
+		data = json.fromJson(AnimationData.class, resolve(fileName));
+		deps.add(new AssetDescriptor<Texture>(data.path, Texture.class));
 		return deps;
 	}
 
-	private static class AnimationData {
-		public String name;
-		public String path;
-		public float frameDuration;
-		public int rows;
-		public int cols;
+	@Override
+	public void loadAsync(AssetManager manager, String fileName,
+			AnimationDataParameter parameter) {
+		
+	}
+
+	@Override
+	public Animation loadSync(AssetManager manager, String fileName,
+			AnimationDataParameter parameter) {
+		Texture sheet = manager.get(data.path, Texture.class);
+
+		TextureRegion[][] tmp = null;
+		if (data.frameWidth == 0 || data.frameHeight == 0) {
+			tmp = TextureRegion.split(sheet, sheet.getWidth() / data.cols,
+					sheet.getHeight() / data.rows);
+		} else {
+			tmp = TextureRegion.split(sheet, data.frameWidth, data.frameHeight);
+		}
+
+		// pack into 1D array
+		TextureRegion[] frames = new TextureRegion[data.frameCount];
+		int index = 0;
+		for (int i = 0; i < data.rows && index < data.frameCount; i++) {
+			for (int j = 0; j < data.cols && index < data.frameCount; j++) {
+				frames[index++] = tmp[i][j];
+			}
+		}
+		return new Animation(data.frameDuration, frames);
 	}
 }
