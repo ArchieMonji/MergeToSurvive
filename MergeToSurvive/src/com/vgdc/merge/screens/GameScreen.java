@@ -28,14 +28,16 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		myWorld.dispose();
 	}
 
 	float max;
+
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (delta < 0.05f) {
+			Gdx.gl.glClearColor(1, 1, 1, 1);
+			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 			batch.begin();
 			myWorld.onUpdate();
 			myWorld.onRender(batch);

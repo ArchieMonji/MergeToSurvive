@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.Projectile;
 
 public abstract class Ability {
 	
@@ -17,9 +18,9 @@ public abstract class Ability {
 	
 	public abstract void onUse(Entity entity, boolean retrievable);
 	
-	public Entity createEntity(EntityData data, Entity entity, boolean retrievable)
+	public Projectile createProjectile(EntityData data, Entity entity, boolean retrievable)
 	{
-		Entity projectile = new Entity(data, entity.getWorld());
+		Projectile projectile = new Projectile(data, entity.getWorld());
 		ArrayList<Ability> abilities = projectile.getAbilities();
 		if(retrievable)
 		{
