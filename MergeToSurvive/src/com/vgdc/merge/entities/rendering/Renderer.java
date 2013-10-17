@@ -17,6 +17,7 @@ public class Renderer extends BaseRenderer{
 	public BaseEntity entity;
 	private int state; 
 	private boolean flip;
+	private float angle;
 	
 	public void onRender(SpriteBatch batch, float delta){
 		TextureRegion frame = currentAnimation.getKeyFrame(stateTime, true);
@@ -24,7 +25,7 @@ public class Renderer extends BaseRenderer{
 		int hw = frame.getRegionWidth()/2;
 		Color temp = batch.getColor();
 		batch.setColor(color);
-		batch.draw(frame, entity.getPosition().x-hw, entity.getPosition().y-hh, hw, hh, frame.getRegionWidth(), frame.getRegionHeight(), (flip ? -1 : 1), 1, 0);
+		batch.draw(frame, entity.getPosition().x-hw, entity.getPosition().y-hh, hw, hh, frame.getRegionWidth(), frame.getRegionHeight(), (flip ? -1 : 1), 1, angle);
 		batch.setColor(temp);
 		stateTime += delta;
 	}
@@ -48,6 +49,14 @@ public class Renderer extends BaseRenderer{
 	
 	public int getState(){
 		return state;
+	}
+	
+	public void setRotation(float angle){
+		this.angle = angle;
+	}
+	
+	public float getRotation() {
+		return angle;
 	}
 	
 	public void setEntity(BaseEntity entity)
