@@ -22,8 +22,7 @@ public class Entity extends BaseEntity{
 	private Controller controller;
 	private int team;
 	private float halfJumpDir;
-	private boolean currentlyWalking;
-	//private boolean moved = false;
+	private boolean currentlyWalking,currentlyJumping;
 	
 	public Entity(EntityData data, World world)
 	{
@@ -122,10 +121,15 @@ public class Entity extends BaseEntity{
 	@Override
 	public void onUpdate(float delta) {
 		currentlyWalking = false;
+		currentlyJumping = false;
 		controller.onUpdate(delta);
 		getPhysicsBody().onUpdate(delta);
-		if(halfJumpDir>0)
-			halfJumpDir-=delta;
+		if(halfJumpDir>0){
+			if(!currentlyJumping)
+				halfJumpDir = 0;
+			else
+				halfJumpDir-=delta;
+		}
 	}
 	
 	@Override
@@ -153,6 +157,7 @@ public class Entity extends BaseEntity{
 	}
 	
 	public void tryJump(float delta){
+		currentlyJumping = true;
 		if(getMovingBody().checkTouchingGround() && halfJumpDir <= 0)//Jumping up
 		{
 			//Vector2 velocity = getMovingBody().getVelocity();
@@ -184,14 +189,6 @@ public class Entity extends BaseEntity{
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
 		getRenderer().flip(true);
-		/*
-		if(!getMovingBody().checkTouchingGround())
-			delta*=JUMPCONTROL;
-		//Vector2 velo = getMovingBody().getVelocity();
-		//getMovingBody().setVelocity(new Vector2(getMovingBody().getVelocity().x*(1-WALKFORCE)+-data.moveSpeed/30*WALKFORCE,getMovingBody().getVelocity().y));
-		getPosition().add(-data.moveSpeed*delta, 0f);
-		//moved = true;
-		 */
 	}
 	
 	public void moveRight(float delta)
@@ -205,12 +202,6 @@ public class Entity extends BaseEntity{
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
 		getRenderer().flip(false);
-		/*
-		if(!getMovingBody().checkTouchingGround())
-			delta*=JUMPCONTROL;
-			
-		getPosition().add(data.moveSpeed*delta, 0f);
-		//moved = true;*/
 	}
 
 	public void onEntityCollision(Entity other){

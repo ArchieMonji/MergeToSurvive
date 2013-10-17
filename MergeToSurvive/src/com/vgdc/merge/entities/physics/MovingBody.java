@@ -59,99 +59,76 @@ public class MovingBody extends PhysicsBody {
 		return lastPosition;
 	}
 
-	// ////////Collisions
+	public float getFrictionAgainst(PlatformBody other){
+		return other.getFrictionForce() == 0 ? getFriction() : other.getFriction()*other.getFrictionForce()+getFriction()*(1-other.getFrictionForce());
+	}
+	public float getElasticityAgainst(PlatformBody other){
+		return other.getElasticityForce() == 0 ? getElasticity() : other.getElasticity()*other.getElasticityForce()+getElasticity()*(1-other.getElasticityForce());
+	}
+
+	//////////Collisions
 	private boolean touchingGround;
-
-	public boolean checkTouchingGround() {
-		return touchingGround;
+	public boolean checkTouchingGround(){return touchingGround;}
+	/////General Collisions
+	private void applySideCollision(CollisionSide side){
+		applySideCollision(side,friction,elasticity);
 	}
-
-	// ///General Collisions
-	private void applySideCollision(CollisionSide side) {// up means this object
-															// hit the top of
-															// the other object
-															// with the bottom
-															// of this object
-		if (side == CollisionSide.Up) {
-			applyVerticalCollision();
+	private void applySideCollision(CollisionSide side,float friction,float elasticity){//up means this object hit the top of the other object with the bottom of this object
+		if(side == CollisionSide.Up){
+			applyVerticalCollision(friction,elasticity);
 			touchingGround = true;
-		} else if (side == CollisionSide.Down)
-			applyVerticalCollision();
+		}else if(side == CollisionSide.Down)
+			applyVerticalCollision(friction,elasticity);
 		else
-			applyHorizontalCollision();
+			applyHorizontalCollision(friction,elasticity);
+	}
+	private void applyHorizontalCollision(float friction,float elasticity){
+		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-getFriction())));
+		if(Math.abs(velocity.x) < 2)
+			setVelocity(new Vector2(0,getVelocity().y));
+	}
+	private void applyVerticalCollision(float friction,float elasticity){
+		setVelocity(new Vector2(getVelocity().x*(1-getFriction()),getVelocity().y*-elasticity));
+		if(Math.abs(velocity.y) < 2)
+			setVelocity(new Vector2(getVelocity().x,0));
 	}
 
-	private void applyHorizontalCollision() {
-		if (Math.abs(velocity.x) < 2)
-			setVelocity(new Vector2(0, getVelocity().y));
-		setVelocity(new Vector2(getVelocity().x * -elasticity, getVelocity().y
-				* (1 - getFriction())));
-	}
-
-	private void applyVerticalCollision() {
-		setVelocity(new Vector2(getVelocity().x * (1 - getFriction()),
-				getVelocity().y * -elasticity));
-		if (Math.abs(velocity.y) < 2)
-			setVelocity(new Vector2(getVelocity().x, 0));
-	}
-
-	// ///Boundary Collisions
-	void checkBoundaryCollisions() {
+	/////Boundary Collisions
+	void checkBoundaryCollisions(){
 		Vector2 pos = getPosition();
 		Vector2 siz = getSize();
 		World world = host.getWorld();
-		if (pos.x < siz.x / 2) {
-			pos.x = siz.x / 2;
+		if(pos.x < siz.x/2){
+			pos.x = siz.x/2;
 			applySideCollision(CollisionSide.Left);
-		} else if (pos.x > world.dimensions.x - siz.x / 2) {
-			pos.x = world.dimensions.x - siz.x / 2;
+		}else if(pos.x > world.dimensions.x-siz.x/2){
+			pos.x = world.dimensions.x-siz.x/2;
 			applySideCollision(CollisionSide.Right);
 		}
-		if (pos.y < siz.y / 2) {
-			pos.y = siz.y / 2;
-			applyVerticalCollision();
+		if(pos.y < siz.y/2){
+			pos.y = siz.y/2;
 			applySideCollision(CollisionSide.Up);
-		} else if (pos.y > world.dimensions.y - siz.y / 2) {
-			pos.y = world.dimensions.y - siz.y / 2;
+		}else if(pos.y > world.dimensions.y-siz.y/2){
+			pos.y = world.dimensions.y-siz.y/2;
 			applySideCollision(CollisionSide.Down);
 		}
 	}
 
-	// ///Platform Collisions
-	public void onPlatformCollision(Platform platform, CollisionData collision) {
-		((Entity) host).onPlatformCollision(platform);
-		Vector2 finalposition = position;
+	/////Platform Collisions
+	public void onPlatformCollision(Platform platform,CollisionData collision){
+		((Entity)host).onPlatformCollision(platform);
 
-		if (collision.side == CollisionSide.Down
-				|| collision.side == CollisionSide.Up) {
-			if (collision.side == CollisionSide.Up) {
-				touchingGround = true;
-				setPosition(new Vector2(position.x, collision.position + size.y
-						/ 2 + .1f));
-			} else {
-				setPosition(new Vector2(position.x, collision.position - size.y
-						/ 2 - .1f));
-			}
-		} else if (collision.side == CollisionSide.Left
-				|| collision.side == CollisionSide.Right) {
-
-			if (collision.side == CollisionSide.Right)
-				setPosition(new Vector2(collision.position + size.x / 2 + .1f,
-						position.y));
-			else
-				setPosition(new Vector2(collision.position - size.x / 2 - .1f,
-						position.y));
-		}
-		System.out.println("Collision: " + collision.side);
-		applySideCollision(collision.side);
-		/*
-		 * Vector2 lp = lastPosition; for(float lerp = 0; lerp <= 1; lerp +=
-		 * 1f/10){
-		 * setPosition(VectorMath.lerp(lastPosition,finalposition,lerp));
-		 * if(platform.getPlatformBody().getCollision(this) != null){
-		 * setPosition(lp); break; } lp = position; }
-		 */
-		// setPosition(VectorMath.add(position,velocity));
+		if(collision.side == CollisionSide.Up){
+			touchingGround = true;
+			setPosition(new Vector2(position.x,collision.position+size.y/2+.1f));
+		}else if(collision.side == CollisionSide.Down)
+				setPosition(new Vector2(position.x,collision.position-size.y/2-.1f));
+		else if(collision.side == CollisionSide.Right)
+			setPosition(new Vector2(collision.position+size.x/2+.1f,position.y));
+		else
+			setPosition(new Vector2(collision.position-size.x/2-.1f,position.y));
+		//System.out.println("Collision: "+collision.side);
+		applySideCollision(collision.side,getFrictionAgainst(platform.getPlatformBody()),getElasticityAgainst(platform.getPlatformBody()));
 	}
 
 	static final float MINCHECKDIST = 10;// If the object is going faster than
