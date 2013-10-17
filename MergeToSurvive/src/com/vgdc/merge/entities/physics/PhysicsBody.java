@@ -2,6 +2,7 @@ package com.vgdc.merge.entities.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.BaseEntity;
+import com.vgdc.merge.entities.EntityType;
 import com.vgdc.merge.math.VectorMath;
 
 
@@ -54,4 +55,66 @@ public class PhysicsBody{
 	
 	/////Update
 	public void onUpdate(float delta){}
+	
+	/////Collision Toggling
+	
+	private int collisionMask = 0xffffffff;
+	
+	public boolean canCollideWith(EntityType type) {
+		return (collisionMask & type.mask) != 0;
+	}
+
+	public void setCollidableWith(EntityType type, boolean flag) {
+		if(flag){
+			collisionMask = collisionMask | type.mask;
+		}
+		else{
+			collisionMask = collisionMask ^ type.mask;
+		}
+	}
+	/**
+	 * with switch
+	 * 
+	private boolean entityCollidable = true;
+
+	private boolean platformCollidable = true;
+
+	private boolean projectileCollidable = true;
+
+	private boolean itemCollidable = true;
+	
+	public boolean canCollideWith(EntityType type) {
+		switch (type) {
+		case Entity:
+			return entityCollidable;
+		case Platform:
+			return platformCollidable;
+		case Projectile:
+			return projectileCollidable;
+		case Item:
+			return itemCollidable;
+		default:
+			return false;
+		}
+	}
+
+	public void setCollidableWith(EntityType type, boolean flag) {
+		switch (type) {
+		case Entity:
+			entityCollidable = flag;
+			break;
+		case Platform:
+			platformCollidable = flag;
+			break;
+		case Projectile:
+			projectileCollidable = flag;
+			break;
+		case Item:
+			itemCollidable = flag;
+			break;
+		default:
+			break;
+		}
+	}
+	**/
 }

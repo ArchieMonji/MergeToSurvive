@@ -1,6 +1,7 @@
 package com.vgdc.merge.test;
 
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.UnitController;
 import com.vgdc.merge.world.World;
@@ -39,7 +40,7 @@ public class TestAIController extends UnitController {
 			String itemDropName = getEntity().getData().itemDrop;
 			if (itemDropName != null) {
 				World world = getEntity().getWorld();
-				Entity itemDrop = new Entity(world.getAssets().entityDataMap.get(itemDropName),	world);
+				Item itemDrop = new Item(world.getAssets().entityDataMap.get(itemDropName),	world);
 				itemDrop.getPhysicsBody().setPosition(getEntity().getPosition());
 				getEntity().getWorld().getEntityManager().addEntity(itemDrop);
 			}

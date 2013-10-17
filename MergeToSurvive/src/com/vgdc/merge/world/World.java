@@ -60,5 +60,9 @@ public class World {
 	{
 		this.camera = camera;
 	}
+
+	public void dispose() {
+		assets.dispose();
+	}
 	
 }
