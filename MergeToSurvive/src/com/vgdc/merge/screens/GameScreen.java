@@ -83,7 +83,6 @@ public class GameScreen extends AbstractScreen {
 
 		if (SHOWHITBOXES) {
 			hrenderer = new HitboxRenderer(myWorld);
-			hrenderer.renderEntityPositions(true);
 		}
 		
 		hpr = new HealthBarRenderer(myWorld);

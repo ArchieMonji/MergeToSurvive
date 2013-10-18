@@ -24,7 +24,7 @@ public class HealthBarRenderer extends BaseRenderer {
 	private Vector2 barSize = new Vector2(64, 8);
 	private Vector2 borderSize = new Vector2(2, 2);
 	private float hoverHeight = 8;
-	private float minPipWidth = 30;
+	private float minPipWidth = 16;
 	private boolean useFixedPipWidth = false;
 
 	public HealthBarRenderer(World world) {

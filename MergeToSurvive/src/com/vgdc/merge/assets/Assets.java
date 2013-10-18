@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -114,8 +115,10 @@ public class Assets {
 			manager.load(soundData.path, Sound.class);
 		}
 
+		TextureParameter texParameter = new TextureParameter();
+		texParameter.minFilter = Texture.TextureFilter.Linear;
 		for (String texturePath : assets.textures) {
-			manager.load(texturePath, Texture.class);
+			manager.load(texturePath, Texture.class,texParameter);
 		}
 
 		// TODO: Change to support asynchronous loading

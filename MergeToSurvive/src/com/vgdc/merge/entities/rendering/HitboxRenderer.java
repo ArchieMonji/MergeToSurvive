@@ -22,6 +22,7 @@ public class HitboxRenderer {
 	private SpriteBatch batch = new SpriteBatch();
 	private boolean shouldRenderPositions;
 	private int decimalPlaces;
+	private boolean shouldRenderFPS;
 
 	public HitboxRenderer(World world) {
 		this.world = world;
@@ -32,14 +33,21 @@ public class HitboxRenderer {
 
 		decimalPlaces = 2;
 		shouldRenderPositions = true;
+		shouldRenderFPS = true;
 	}
 
 	public void onRender(Camera camera) {
 
 		renderHitBoxes(camera);
 
+		batch.setProjectionMatrix(camera.combined);
+		
 		if (shouldRenderPositions) {
 			renderEntityPositions(camera);
+		}
+		
+		if (shouldRenderFPS) {
+			renderFPS(camera);
 		}
 	}
 
@@ -54,7 +62,7 @@ public class HitboxRenderer {
 			float y = body.getPosition().y;
 			float w = body.getSize().x;
 			float h = body.getSize().y;
-			
+
 			sr.rect(x - w / 2, y - h / 2, w, h);
 		}
 		sr.end();
@@ -62,6 +70,10 @@ public class HitboxRenderer {
 
 	public void renderEntityPositions(boolean shouldRenderPositions) {
 		this.shouldRenderPositions = shouldRenderPositions;
+	}
+	
+	public void renderFPS(boolean shouldRenderFPS) {
+		this.shouldRenderFPS = shouldRenderFPS;
 	}
 
 	public void setDecimalPlaces(int decimalPlaces) {
@@ -94,6 +106,15 @@ public class HitboxRenderer {
 		font.draw(this.batch, msg, mCoord.x, mCoord.y + bounds.height);
 
 		this.batch.end();
+	}
+
+	private void renderFPS(Camera camera) {
+		batch.begin();
+		Vector3 coord = new Vector3(0, Gdx.graphics.getHeight(), 0);
+		//camera.unproject(coord);
+		//render fps topleft
+		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond(), coord.x, coord.y);
+		batch.end();
 	}
 
 	public void dispose() {
