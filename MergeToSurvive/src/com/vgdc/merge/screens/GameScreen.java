@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.Platform;
 import com.vgdc.merge.entities.physics.PlatformType;
+import com.vgdc.merge.entities.rendering.HealthBarRenderer;
 import com.vgdc.merge.entities.rendering.HitboxRenderer;
 import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
@@ -33,6 +35,8 @@ public class GameScreen extends AbstractScreen {
 
 	float max;
 
+	HealthBarRenderer hpr;
+	
 	@Override
 	public void render(float delta) {
 		if (delta < 0.05f) {
@@ -41,9 +45,12 @@ public class GameScreen extends AbstractScreen {
 			batch.begin();
 			myWorld.onUpdate();
 			myWorld.onRender(batch);
+			
+			hpr.onRender(batch,delta);
 			batch.end();
 			if (SHOWHITBOXES)
 				hrenderer.onRender(myWorld.getCamera());
+			
 		}
 	}
 
@@ -78,6 +85,8 @@ public class GameScreen extends AbstractScreen {
 			hrenderer = new HitboxRenderer(myWorld);
 			hrenderer.renderEntityPositions(true);
 		}
+		
+		hpr = new HealthBarRenderer(myWorld);
 
 		batch = new SpriteBatch();
 
@@ -92,7 +101,7 @@ public class GameScreen extends AbstractScreen {
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 
-		Entity item = new Entity(
+		Item item = new Item(
 				game.getAssets().entityDataMap.get("testitem"), myWorld);
 		item.setPosition(new Vector2(450, 275));
 		item.getMovingBody().setElasticity(0);

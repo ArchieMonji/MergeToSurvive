@@ -73,8 +73,8 @@ public class ItemController extends Controller {
 	float rotTime = 1.5f;
 	float time;
 
-	float cosineInterpolation(float a, float b, float time) {
-		float t2 = (1 - MathUtils.cos(time * MathUtils.PI)) / 2;
+	float cosineInterpolation(float a, float b, float t) {
+		float t2 = (1 - MathUtils.cos(t * MathUtils.PI)) / 2;
 		return (a * (1 - t2) + b * t2);
 	}
 

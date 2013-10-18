@@ -8,6 +8,7 @@ public class Projectile extends Entity{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public EntityType getEntityType(){
 		return EntityType.Projectile;
 	}
