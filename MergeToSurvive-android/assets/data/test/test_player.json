@@ -12,7 +12,7 @@ dimensions: {
 controller: {
 	class: PlayerController,
 	controls: {
-		up: 51,
+		up: 62,
 		down: 47,
 		left: 29,
 		right: 32,
@@ -46,8 +46,8 @@ abilities: [
 ],
 
 animations: [
-	idle,
-	run
+	proto_idle,
+	proto_run
 ],
 sounds: {
 	IDLE: [

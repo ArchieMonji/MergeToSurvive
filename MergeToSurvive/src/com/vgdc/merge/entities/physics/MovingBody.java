@@ -71,7 +71,7 @@ public class MovingBody extends PhysicsBody {
 	public boolean checkTouchingGround(){return touchingGround;}
 	/////General Collisions
 	private void applySideCollision(CollisionSide side){
-		applySideCollision(side,friction,elasticity);
+		applySideCollision(side,getFriction(),getElasticity());
 	}
 	private void applySideCollision(CollisionSide side,float friction,float elasticity){//up means this object hit the top of the other object with the bottom of this object
 		if(side == CollisionSide.Up){
@@ -83,12 +83,12 @@ public class MovingBody extends PhysicsBody {
 			applyHorizontalCollision(friction,elasticity);
 	}
 	private void applyHorizontalCollision(float friction,float elasticity){
-		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-getFriction())));
+		setVelocity(new Vector2(getVelocity().x*-elasticity,getVelocity().y*(1-friction)));
 		if(Math.abs(velocity.x) < 2)
 			setVelocity(new Vector2(0,getVelocity().y));
 	}
 	private void applyVerticalCollision(float friction,float elasticity){
-		setVelocity(new Vector2(getVelocity().x*(1-getFriction()),getVelocity().y*-elasticity));
+		setVelocity(new Vector2(getVelocity().x*(1-friction),getVelocity().y*-elasticity));
 		if(Math.abs(velocity.y) < 2)
 			setVelocity(new Vector2(getVelocity().x,0));
 	}
@@ -131,9 +131,7 @@ public class MovingBody extends PhysicsBody {
 		applySideCollision(collision.side,getFrictionAgainst(platform.getPlatformBody()),getElasticityAgainst(platform.getPlatformBody()));
 	}
 
-	static final float MINCHECKDIST = 10;// If the object is going faster than
-											// this, it will do extra collision
-											// detection calculations
+	static final float MINCHECKDIST = 50;//The smallest platformsize+entitysize for accurate collisions at high speeds
 
 	private void checkSinglePlatformCollision(BaseEntity entity) {
 		if (entity.getEntityType() == EntityType.Platform) {
@@ -145,17 +143,6 @@ public class MovingBody extends PhysicsBody {
 	}
 
 	private void checkAllPlatformCollisions() {
-		// Issue was, when new entity was created, its collision was only being
-		// checked with entities created after itself. This means, when a new
-		// projectile is created, it will never check platform collision with
-		// platforms already present in the world -- Archie
-		/**
-		 * ArrayList<BaseEntity> entities =
-		 * host.getWorld().getEntityManager().getEntities();
-		 * 
-		 * for(int j = entities.indexOf(host)+1;j < entities.size();j++){
-		 * checkSinglePlatformCollision(entities.get(j)); }
-		 **/
 		for (BaseEntity e : host.getWorld().getEntityManager().getEntities()) {
 			checkSinglePlatformCollision(e);
 		}

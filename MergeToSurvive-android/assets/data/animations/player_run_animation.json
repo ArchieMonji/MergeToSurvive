@@ -1,0 +1,7 @@
+{
+	frameCount: 4,
+	frameDuration: 0.1,
+	path: data/animations/proto_run.png,
+	cols: 4,
+	rows: 1
+}

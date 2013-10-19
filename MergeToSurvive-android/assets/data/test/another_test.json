@@ -15,7 +15,9 @@ textures: [
 	data/test/colorboxes.png,
 	data/test/Proto_Sprites.png,
 	data/test/item_icon.png,
-	data/test/purple_attack.png
+	data/test/purple_attack.png,
+	data/animations/proto_run.png,
+	data/animations/proto_idle.png,
 ],
 animations: {
 	idle: data/test/idle_animation.json,
@@ -23,7 +25,9 @@ animations: {
 	proto: data/test/proto_test_anim.json,
 	projectile: data/test/projectile_animation.json,
 	item: data/test/item_animation.json,
-	item_projectile: data/test/item_projectile_animation.json
+	item_projectile: data/test/item_projectile_animation.json,
+	proto_run: data/animations/player_run_animation.json,
+	proto_idle: data/animations/player_idle_animation.json,
 },
 entities: {
 	testplayer: data/test/test_player.json,

@@ -1,0 +1,7 @@
+{
+	frameCount: 2,
+	frameDuration: 0.3,
+	path: data/animations/proto_idle.png,
+	cols: 2,
+	rows: 1
+}

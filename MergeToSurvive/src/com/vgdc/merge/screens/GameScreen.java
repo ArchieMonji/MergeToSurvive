@@ -106,25 +106,28 @@ public class GameScreen extends AbstractScreen {
 		item.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(item);
 
-		/*
-		 * Platform platform = new Platform(myWorld); platform.setRenderer(new
-		 * PlatformRenderer("data/test/Steel.png",5,5,26,26));
-		 * platform.getPhysicsBody().setPosition(new Vector2(400,200));
-		 * platform.getPhysicsBody().setSize(new Vector2(100,400));
-		 * myWorld.getEntityManager().addEntity(platform);
-		 */
-		// *
-		for (Vector2 pos : new Vector2[] { new Vector2(250, 50),
-				new Vector2(650, 50), new Vector2(450, 200),
-				new Vector2(650, 400) }) {
-			Platform platform = new Platform(myWorld);
-			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-			platform.setRenderer(new PlatformRenderer(
-					"data/test/PlatformTest.png", 13, 13, 13, 13));
-			platform.getPhysicsBody().setPosition(pos);
-			platform.getPhysicsBody().setSize(new Vector2(200, 50));
-			myWorld.getEntityManager().addEntity(platform);
-		}// */
+		for(Vector2 pos : new Vector2[] {
+				new Vector2(250, 50),
+	            new Vector2(650, 50),
+	            new Vector2(750, 500),
+	            new Vector2(-50/*650*/, 300)
+			}){
+	        Platform platform = new Platform(myWorld);
+	        platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
+	        platform.setRenderer(new PlatformRenderer(
+	                "data/test/PlatformTest.png", 13, 13, 13, 13));
+	        platform.getPhysicsBody().setPosition(pos);
+	        platform.getPhysicsBody().setSize(new Vector2(200, 50));
+	        myWorld.getEntityManager().addEntity(platform);
+	    }
+		//Tall platform
+        Platform platform = new Platform(myWorld);
+        platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
+        platform.setRenderer(new PlatformRenderer(
+                "data/test/PlatformTest.png", 13, 13, 13, 13));
+        platform.getPhysicsBody().setPosition(new Vector2(400,125));
+        platform.getPhysicsBody().setSize(new Vector2(50, 200));
+        myWorld.getEntityManager().addEntity(platform);
 	}
 
 	@Override

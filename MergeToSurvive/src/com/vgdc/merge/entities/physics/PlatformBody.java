@@ -45,25 +45,25 @@ public class PlatformBody extends PhysicsBody{
 	static final int NULLDIST = 9999;
 	float raycast_verticalborder(Vector2 p1,Vector2 p2,float x){
 		Vector2 collision = VectorMath.getLineCollision_Vertical(p1,p2,x);
-		if(collision.y > position.y+size.y/2 || collision.y < position.y-size.y/2)
+		if(collision.y > position.y+size.y/2 || collision.y < position.y-size.y/2 || collision.y < Math.min(p1.y,p2.y) || collision.y > Math.max(p1.y,p2.y))
 			return NULLDIST;
 		return VectorMath.distance(p1,collision);
 	}
 	float raycast_horizontalborder(Vector2 p1,Vector2 p2,float y){
 		Vector2 collision = VectorMath.getLineCollision_Horizontal(p1,p2,y);
-		if(collision.x > position.x+size.x/2 || collision.x < position.x-size.x/2)
+		if(collision.x > position.x+size.x/2 || collision.x < position.x-size.x/2 || collision.x < Math.min(p1.x,p2.x) || collision.x > Math.max(p1.x,p2.x))
 			return NULLDIST;
 		return VectorMath.distance(p1,collision);
 	}
 	float raycast_verticalborder_other(MovingBody body,Vector2 p1,Vector2 p2,float x){
 		Vector2 collision = VectorMath.getLineCollision_Vertical(p1,p2,x);
-		if(collision.y > body.lastPosition.y+body.size.y/2 || collision.y < body.lastPosition.y-body.size.y/2)
+		if(collision.y > body.lastPosition.y+body.size.y/2 || collision.y < body.lastPosition.y-body.size.y/2 || collision.y < Math.min(p1.y,p2.y) || collision.y > Math.max(p1.y,p2.y))
 			return NULLDIST;
 		return VectorMath.distance(p1,collision);
 	}
 	float raycast_horizontalborder_other(MovingBody body,Vector2 p1,Vector2 p2,float y){
 		Vector2 collision = VectorMath.getLineCollision_Horizontal(p1,p2,y);
-		if(collision.x > body.position.x+body.size.x/2 || collision.x < body.position.x-body.size.x/2)
+		if(collision.x > body.position.x+body.size.x/2 || collision.x < body.position.x-body.size.x/2 || collision.y < Math.min(p1.y,p2.y) || collision.y > Math.max(p1.y,p2.y))
 			return NULLDIST;
 		return VectorMath.distance(p1,collision);
 	}
@@ -86,38 +86,47 @@ public class PlatformBody extends PhysicsBody{
 		
 		Vector2 deltaposition = VectorMath.sub(body.position,body.lastPosition);
 
-		boolean bbiggerX = size.x < body.size.x;
-		boolean bbiggerY = size.y < body.size.y;
-		boolean collide_left = deltaposition.x >= 0 && (bbiggerX ? (left <= bright && left >= bleft) : (bright >= left && bright <= right));
-		boolean collide_right = deltaposition.x <= 0 && (bbiggerX ? (right >= bleft && right <= bright) : (bleft <= right && bleft >= left));
-		//if(!collide_left && !collide_right) return null;//This line causes problems.
-		boolean collide_up = deltaposition.y <= 0 && (bbiggerY ? (top >= bbottom && top <= btop) : (bbottom <= top && bbottom >= bottom));
-		boolean collide_down = deltaposition.y >= 0 && (bbiggerY ? (bottom <= btop && bottom >= bbottom) : (btop >= bottom && btop <= top));
-		if(!collide_up && !collide_down) return null;//The MovingBody isn't within the y coordinates
-		
-		//System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
+		boolean bbiggerX = bhalfsizex > halfsizex; 
+		boolean bbiggerY = bhalfsizey > halfsizey;
+		//*
+		//boolean collide_left = deltaposition.x > 0 && (bbiggerY ? (left <= bright && left >= bleft) : (bright >= left && bright <= right));
+		boolean collide_left = deltaposition.x >= 0 && (left <= bright && left >= bleft) || (bright >= left && bright <= right);
+		//boolean collide_right = deltaposition.x < 0 && (bbiggerY ? (right >= bleft && right <= bright) : (bleft <= right && bleft >= left));
+		boolean collide_right = deltaposition.x <= 0 && (right >= bleft && right <= bright) || (bleft <= right && bleft >= left);
+		//System.out.println("collide_right: "+collide_right);
+		if(!collide_left && !collide_right) return null;//This line may cause some problems?
+		//boolean collide_up = deltaposition.y <= 0 && (bbiggerX ? (top >= bbottom && top <= btop) : (bbottom <= top && bbottom >= bottom));
+		boolean collide_up = deltaposition.y <= 0 && (top >= bbottom && top <= btop) || (bbottom <= top && bbottom >= bottom);
+		//boolean collide_down = deltaposition.y >= 0 && (bbiggerX ? (bottom <= btop && bottom >= bbottom) : (btop >= bottom && btop <= top));
+		boolean collide_down = deltaposition.y >= 0 && (bottom <= btop && bottom >= bbottom) || (btop >= bottom && btop <= top);
+		if(!collide_up && !collide_down) return null;//Check if the MovingBody isn't within the y coordinates
 
 		float hitup = NULLDIST,hitdown = NULLDIST,hitleft = NULLDIST,hitright = NULLDIST;
 
 		if(collide_up){
-			for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
-				hitup = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,-bhalfsizey)),
-						VectorMath.add(body.position,new Vector2(x,-bhalfsizey)),
-						top);
-				if(hitup != NULLDIST) break;
-			}
-			if(hitup == NULLDIST){
+			if(bbiggerX){
 				float cornerposy = position.y+halfsizey;
 				for(float x = position.x-halfsizex; x <= position.x+halfsizex; x += size.x){
 					hitup = raycast_horizontalborder_other(body,
 							new Vector2(x,cornerposy),
 							VectorMath.sub(new Vector2(x,cornerposy),deltaposition),
 							position.y+halfsizey);
+					if(hitup != NULLDIST) break;
+				}
+			}else{
+				for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
+					hitup = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,-bhalfsizey)),
+							VectorMath.add(body.position,new Vector2(x,-bhalfsizey)),
+							top);
+					if(hitup != NULLDIST) break;
 				}
 			}
 			collide_up = hitup != NULLDIST;
 		}
-		if(getPlatformType() == PlatformType.Rectangle){//Jumpable platforms don't need side or bottom collision
+		if(getPlatformType() == PlatformType.Jumpable){
+			if(collide_up)
+				return new CollisionData(top,CollisionSide.Up);
+		}else{//Jumpable platforms don't need side or bottom collision
 			if(collide_down){
 				for(float x = -bhalfsizex; x <= bhalfsizex; x += body.size.x){
 					hitdown = raycast_horizontalborder(VectorMath.add(body.lastPosition,new Vector2(x,bhalfsizey)),
@@ -128,36 +137,39 @@ public class PlatformBody extends PhysicsBody{
 				collide_down = hitdown != NULLDIST;
 			}
 			if(collide_right){
-				for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
-					hitright = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(-bhalfsizex,y)),
-							VectorMath.add(body.position,new Vector2(-bhalfsizex,y)),
-							right);
-					if(hitright != NULLDIST) break;
-				}
-				if(hitright == NULLDIST){
-					float sideposx = right;
+				if(bbiggerY){
 					for(float y = bottom; y <= top; y += size.y){
 						hitright = raycast_verticalborder_other(body,
-								new Vector2(sideposx,y),
-								VectorMath.sub(new Vector2(sideposx,y),deltaposition),
+								new Vector2(right,y),
+								new Vector2(right-deltaposition.x,y-deltaposition.y),
 								body.lastPosition.x-bhalfsizex);
+						if(hitright != NULLDIST) break;
+					}
+				}else{
+					for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y/2){
+						hitright = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(-bhalfsizex,y)),
+								VectorMath.add(body.position,new Vector2(-bhalfsizex,y)),
+								right);
+						if(hitright != NULLDIST) break;
 					}
 				}
 				collide_right = hitright != NULLDIST;
-			}else if(collide_left){
-				for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
-					hitleft = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(bhalfsizex,y)),
-							VectorMath.add(body.position,new Vector2(bhalfsizex,y)),
-							left);
-					if(hitleft != NULLDIST) break;
-				}
-				if(hitleft == NULLDIST){
-					float sideposx = left;
+			}
+			if(collide_left){
+				if(bbiggerY){
 					for(float y = bottom; y <= top; y += size.y){
 						hitleft = raycast_verticalborder_other(body,
-								new Vector2(sideposx,y),
-								new Vector2(sideposx-deltaposition.x,y-deltaposition.y),
+								new Vector2(left,y),
+								new Vector2(left-deltaposition.x,y-deltaposition.y),
 								body.lastPosition.x+bhalfsizex);
+						if(hitleft != NULLDIST) break;
+					}
+				}else{
+					for(float y = -bhalfsizey; y <= bhalfsizey; y += body.size.y){
+						hitleft = raycast_verticalborder(VectorMath.add(body.lastPosition,new Vector2(bhalfsizex,y)),
+								VectorMath.add(body.position,new Vector2(bhalfsizex,y)),
+								left);
+						if(hitleft != NULLDIST) break;
 					}
 				}
 				collide_left = hitleft != NULLDIST;
@@ -171,18 +183,14 @@ public class PlatformBody extends PhysicsBody{
 				collide_up = hitup < hitdown;
 				collide_down = !collide_up;
 			}
-			
+
 			if((collide_up ? hitup : hitdown) < (collide_left ? hitleft : hitright)){
-				//System.out.println("vert");
 				collide_left = false;
 				collide_right = false;
 			}else{
-				//System.out.println("hori");
 				collide_up = false;
 				collide_down = false;
 			}
-
-			//System.out.println(""+collide_left+":"+collide_right+":"+collide_up+":"+collide_down);
 
 			if(collide_up)
 				return new CollisionData(top,CollisionSide.Up);
@@ -192,10 +200,7 @@ public class PlatformBody extends PhysicsBody{
 				return new CollisionData(left,CollisionSide.Left);
 			if(collide_right)
 				return new CollisionData(right,CollisionSide.Right);
-		}else if(!collide_up)
-			return null;//Jumpable platforms only need collide_up
-		else
-			return new CollisionData(top,CollisionSide.Up);//Jumpables
+		}
 		
 		return null;
 	}
