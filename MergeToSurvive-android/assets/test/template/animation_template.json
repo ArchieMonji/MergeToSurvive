@@ -1,0 +1,7 @@
+{
+	frameCount: num_frames,
+	frameDuration: value_in_seconds,
+	path: animation_sheet_path,
+	cols: value,
+	rows: value
+}

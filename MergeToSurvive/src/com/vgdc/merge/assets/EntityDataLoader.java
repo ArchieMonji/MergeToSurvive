@@ -2,6 +2,8 @@ package com.vgdc.merge.assets;
 
 import java.util.ArrayList;
 
+import org.python.core.PyObject;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,6 +17,7 @@ import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
 import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.audio.SoundFx;
+import com.vgdc.merge.entities.controllers.Controller;
 
 public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, EntityDataLoader.EntityLoadDataParameter> {
 	
@@ -31,6 +34,7 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 	AssetLoaderParameters<EntityData> {
 }
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			EntityLoadDataParameter parameter) {
@@ -38,16 +42,22 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
 		for(String s : loadData.animations)
 			deps.add(new AssetDescriptor(s, Animation.class));
-		for(ArrayList<EntityLoadData.SoundFxData> a : loadData.sounds.values())
-			for(EntityLoadData.SoundFxData s : a)
-				deps.add(new AssetDescriptor(s.path, Sound.class));
+		for(String s : loadData.sounds.keys())
+		{
+			for(SoundFxData a : loadData.sounds.get(s))
+				deps.add(new AssetDescriptor(a.path, Sound.class));
+		}
+		if(loadData.abilities!=null)
+			for(String s : loadData.abilities)
+				deps.add(new AssetDescriptor(s, PyObject.class));
+		if(loadData.controller!=null)
+			deps.add(new AssetDescriptor(loadData.controller, PyObject.class));
 		return deps;
 	}
 
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
 			EntityLoadDataParameter parameter) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -69,13 +79,13 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		for (UnitStateEnum state : UnitStateEnum.values()) {
 			//json.setElementType(BaseEntityLoadData.class, "sounds",
 			//		ArrayList.class);
-			ArrayList<EntityLoadData.SoundFxData> soundNames = loadData.sounds.get(state.name());
+			Array<SoundFxData> soundNames = loadData.sounds.get(state.name());
 			if (soundNames != null) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
 				data.sounds.add(soundList);
 
 				if (soundNames != null) {
-					for (EntityLoadData.SoundFxData soundFxData : soundNames) {
+					for (SoundFxData soundFxData : soundNames) {
 						SoundFx sound = new SoundFx();
 						sound.sound = manager.get(soundFxData.path, Sound.class);
 						sound.looping = soundFxData.looping;
@@ -87,8 +97,18 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			}
 
 		}
-
-		data.defaultAbilities = new ArrayList<Ability>(loadData.abilities);
+		
+		PyObject object = manager.get(loadData.controller, PyObject.class).__call__();
+		data.controller = (Controller) (object.__tojava__(Controller.class));
+		
+		data.defaultAbilities = new ArrayList<Ability>();
+		if(loadData.abilities!=null) {
+			for(String s : loadData.abilities) {
+				object = manager.get(s, PyObject.class).__call__();
+				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
+			}
+		}
+		
 		return data;
 	}
 

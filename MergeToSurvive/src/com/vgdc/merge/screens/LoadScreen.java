@@ -4,19 +4,17 @@ import com.vgdc.merge.MainGame;
 import com.vgdc.merge.assets.AssetsHandler;
 
 public class LoadScreen extends AbstractScreen {
-	
-	private AssetsHandler handler;
 
-	public LoadScreen(MainGame game, AssetsHandler handler) {
+	public LoadScreen(MainGame game) {
 		super(game);
-		this.handler = handler;
 	}
 
 	@Override
 	public void render(float delta) {
-		if(handler.update())
+		if(game.getHandler().update())
 		{
-			
+			game.setScreen(new TestGameScreen(game));
+			return;
 		}
 
 	}
@@ -29,7 +27,7 @@ public class LoadScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		game.getHandler().loadAll();
 
 	}
 

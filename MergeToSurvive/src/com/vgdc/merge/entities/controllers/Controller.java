@@ -15,6 +15,11 @@ public abstract class Controller{
 		entity = nEntity;
 	}
 	
+	public void onDeath()
+	{
+		getEntity().getWorld().getEntityManager().removeEntity(getEntity());
+	}
+	
 	public Entity getEntity()
 	{
 		return entity;

@@ -12,7 +12,7 @@ public class World {
 	
 	private OrthographicCamera camera;
 	
-	private Assets assets;
+	//private Assets assets;
 	
 	public Vector2 dimensions = new Vector2(800,600);
 	
@@ -35,15 +35,15 @@ public class World {
 			e.onUpdate(Gdx.graphics.getDeltaTime());
 	}
 	
-	public void setAssets(Assets nAssets)
-	{
-		assets = nAssets;
-	}
-	
-	public Assets getAssets()
-	{
-		return assets;
-	}
+//	public void setAssets(Assets nAssets)
+//	{
+//		assets = nAssets;
+//	}
+//	
+//	public Assets getAssets()
+//	{
+//		return assets;
+//	}
 	
 	public OrthographicCamera getCamera()
 	{

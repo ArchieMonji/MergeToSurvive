@@ -9,40 +9,10 @@ dimensions: {
 	y: 96
 },
 
-controller: {
-	class: PlayerController,
-	controls: {
-		up: 51,
-		down: 47,
-		left: 29,
-		right: 32,
-		useAbility: 0
-	}
-},
+controller: PlayerController,
 
 abilities: [
-	{
-		class: HitBoxAbility,
-		offset: {
-			x: 40,
-			y: 28
-		},
-		data:{
-			damage: 1,
-			dimensions: {
-				x: 30,
-				y: 30
-			},
-			controller: {
-				class: HitBoxController,
-				duration: 0.2,
-				knockback: {
-					x: 20,
-					y: 20
-				}
-			}
-		}
-	}
+	
 ],
 
 animations: [
@@ -52,11 +22,13 @@ animations: [
 sounds: {
 	IDLE: [
 		{
+			class: com.vgdc.merge.assets.SoundFxData,
 			path: Vine_attack
 		}
 	],
 	MOVE: [
 		{
+			class: com.vgdc.merge.assets.SoundFxData,
 			path: flamethrower,
 			looping: true
 		}

@@ -28,7 +28,7 @@ public class TestAIController extends UnitController {
 			moveLeft(delta);
 		else
 			moveRight(delta);
-		stateMachine.affectState(delta);
+		super.onUpdate(delta);
 	}
 	
 	public void onDamage(Entity entity){

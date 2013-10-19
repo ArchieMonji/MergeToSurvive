@@ -45,8 +45,7 @@ public class PlayerController extends UnitController {
 		Entity e = getEntity();
 		if(Gdx.input.isKeyPressed(controls.down))
 		{
-			//this is test, change later
-			System.out.println("down!");
+			
 		}
 		if(Gdx.input.isKeyPressed(controls.up))
 		{

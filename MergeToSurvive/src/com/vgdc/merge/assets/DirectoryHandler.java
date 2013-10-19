@@ -36,6 +36,11 @@ public class DirectoryHandler implements FileHandleResolver
 		return new FileHandle(new File(path.file(), filename + extension));
 	}
 	
+	public File getPath()
+	{
+		return path.file();
+	}
+	
 	public FileHandle[] getFilesInDirectory()
 	{
 		return path.list();

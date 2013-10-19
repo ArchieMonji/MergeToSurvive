@@ -27,10 +27,6 @@ public class ProjectileController extends AbilityController{
 		{
 			onDeath();
 		}
-//		if(getEntity().getRenderer().isFlipped())
-//			getEntity().moveLeft(delta);
-//		else
-//			getEntity().moveRight(delta);
 	}
 	
 	@Override

@@ -1,5 +1,9 @@
 package com.vgdc.merge.assets;
 
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.util.PythonInterpreter;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
@@ -10,25 +14,32 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.controllers.Controller;
 
 public class AssetsHandler {
 	
 	private AssetManager manager = new AssetManager();
 	
+	private PythonInterpreter interpreter = new PythonInterpreter();
+	
 	private DirectoryHandler textureDirectory = new DirectoryHandler("test/art", ".png");
 	private DirectoryHandler soundDirectory = new DirectoryHandler("test/sound", ".ogg");
 	private DirectoryHandler musicDirectory = new DirectoryHandler("test/music", ".ogg");
-	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/anim", ".json");
-	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entity", ".json");
+	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/animations", ".json");
+	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entities", ".json");
+	private DirectoryHandler scriptsDirectory = new DirectoryHandler("test/scripts", ".py");
 	
 	public AssetsHandler()
 	{
 		populateJsons();
+		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getPath()));
 		manager.setLoader(Texture.class, new TextureLoader(textureDirectory));
 		manager.setLoader(Sound.class, new SoundLoader(soundDirectory));
 		manager.setLoader(Music.class, new MusicLoader(musicDirectory));
 		manager.setLoader(Animation.class, new AnimationLoader(animationDirectory, animationDirectory.getJson()));
 		manager.setLoader(EntityData.class, new EntityDataLoader(entityDataDirectory, entityDataDirectory.getJson()));
+		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
 	}
 	
 	private void populateJsons()
@@ -64,6 +75,22 @@ public class AssetsHandler {
 		return manager.get(path, EntityData.class);
 	}
 	
+	public <T> T createScriptObject(String filename, Class<T> cls)
+	{
+		PyObject object = manager.get(filename, PyObject.class).__call__();
+		return cls.cast(object.__tojava__(cls));
+	}
+	
+	public Ability getAbility(String filename)
+	{
+		return createScriptObject(filename, Ability.class);
+	}
+	
+	public Controller getController(String filename)
+	{
+		return createScriptObject(filename, Controller.class);
+	}
+	
 	/**
 	 * loads all files in all directories tracked by this AssetsHandler
 	 */
@@ -83,11 +110,17 @@ public class AssetsHandler {
 		}
 		for(FileHandle h : animationDirectory.getFilesInDirectory())
 		{
-			manager.load(h.nameWithoutExtension(), AnimationData.class);
+			manager.load(h.nameWithoutExtension(), Animation.class);
+			System.out.println(h.nameWithoutExtension());
 		}
 		for(FileHandle h : entityDataDirectory.getFilesInDirectory())
 		{
-			manager.load(h.nameWithoutExtension(), EntityLoadData.class);
+			manager.load(h.nameWithoutExtension(), EntityData.class);
+			System.out.println(h.nameWithoutExtension());
+		}
+		for(FileHandle h : scriptsDirectory.getFilesInDirectory())
+		{
+			manager.load(h.nameWithoutExtension(), PyObject.class);
 		}
 	}
 	
