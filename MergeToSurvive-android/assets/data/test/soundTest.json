@@ -1,0 +1,5 @@
+{
+		name: testthrower,
+		path: data/test/flamethrower.ogg,
+		looping: true
+}

@@ -22,6 +22,8 @@ public abstract class Controller{
 	
 	public abstract Controller copy();
 	
+	public abstract void onCreate();
+	
 	public abstract void onUpdate(float delta);
 	
 	public void onEntityCollision(Entity entity){
@@ -29,4 +31,6 @@ public abstract class Controller{
 	public void onPlatformCollision(Platform platform){
 		
 	}
+	
+	
 }

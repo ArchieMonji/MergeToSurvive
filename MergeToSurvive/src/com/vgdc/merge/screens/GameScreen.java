@@ -104,6 +104,7 @@ public class GameScreen extends AbstractScreen {
 				game.getAssets().entityDataMap.get("testitem"), myWorld);
 		item.setPosition(new Vector2(450, 275));
 		item.getMovingBody().setElasticity(0);
+		item.getController().onCreate();
 		myWorld.getEntityManager().addEntity(item);
 
 		/*

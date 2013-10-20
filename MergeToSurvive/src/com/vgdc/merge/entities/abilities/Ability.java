@@ -8,7 +8,8 @@ import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.Projectile;
 
 public abstract class Ability {
-	
+
+	public String itemName;
 	private Vector2 offset = new Vector2();
 	
 	public void onUse(Entity entity)

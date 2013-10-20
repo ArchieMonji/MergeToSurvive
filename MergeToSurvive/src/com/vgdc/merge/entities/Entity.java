@@ -55,6 +55,10 @@ public class Entity extends BaseEntity{
 		return new MovingBody();
 	}
 	
+	public Controller getController(){
+		return controller;
+	}
+	
 	public boolean isDead()
 	{
 		return health<=0;
@@ -218,6 +222,11 @@ public class Entity extends BaseEntity{
 	
 	public int getState(){
 		return getRenderer().getState();
+	}
+
+	public void delete() {
+		getWorld().getEntityManager().removeEntity(this);
+		health = 0;	
 	}
 
 }

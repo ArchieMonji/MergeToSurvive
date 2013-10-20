@@ -1,6 +1,7 @@
 package com.vgdc.merge.entities.controllers;
 
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.EntityType;
 import com.vgdc.merge.entities.Platform;
 
 public class ProjectileController extends AbilityController{
@@ -25,7 +26,10 @@ public class ProjectileController extends AbilityController{
 		timeAlive-=delta;
 		if(timeAlive<=0)
 		{
-			onDeath();
+			System.out.println("Death by Time-Out!");
+			if(!getEntity().isDead()){
+				onDeath();
+			}
 		}
 //		if(getEntity().getRenderer().isFlipped())
 //			getEntity().moveLeft(delta);
@@ -35,14 +39,25 @@ public class ProjectileController extends AbilityController{
 	
 	@Override
 	public void onPlatformCollision(Platform platform){
-		System.out.println("Collision!");
-		onDeath();
+		if(!getEntity().isDead()){
+			System.out.println("Platform Collision!");
+			onDeath();
+		}
 	}
 
 	@Override
 	public void onEntityCollision(Entity entity){
-		if(entity.getTeam()!=getEntity().getTeam())
-			onDeath();
+		if(entity.getTeam()!=getEntity().getTeam()){
+			System.out.println("Entity Collision!");
+			if(!getEntity().isDead()){
+				onDeath();
+			}
+		}
+	}
+
+	@Override
+	public void onCreate() {
+		
 	}
 
 }

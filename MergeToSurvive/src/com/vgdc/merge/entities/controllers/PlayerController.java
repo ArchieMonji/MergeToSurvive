@@ -140,4 +140,9 @@ public class PlayerController extends UnitController {
 		return controller;
 	}
 
+	@Override
+	public void onCreate() {
+		
+	}
+
 }

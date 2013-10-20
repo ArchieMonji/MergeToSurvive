@@ -34,6 +34,7 @@ public class HitBoxController extends AbilityController {
 
 	}
 	
+	@Override
 	public void onEntityCollision(Entity entity)
 	{
 		super.onEntityCollision(entity);
@@ -42,6 +43,11 @@ public class HitBoxController extends AbilityController {
 		float x = entity.getPosition().x - getEntity().getPosition().x;
 		entity.getMovingBody().setVelocity(new Vector2((x>0 ? 1 : -1)*knockback.x, knockback.y));
 		onDeath();
+	}
+
+	@Override
+	public void onCreate() {
+		
 	}
 
 }

@@ -42,10 +42,16 @@ public class TestAIController extends UnitController {
 				World world = getEntity().getWorld();
 				Item itemDrop = new Item(world.getAssets().entityDataMap.get(itemDropName),	world);
 				itemDrop.getPhysicsBody().setPosition(getEntity().getPosition());
+				itemDrop.getController().onCreate();
 				getEntity().getWorld().getEntityManager().addEntity(itemDrop);
 			}
 
 		}
+	}
+
+	@Override
+	public void onCreate() {
+		
 	}
 
 }

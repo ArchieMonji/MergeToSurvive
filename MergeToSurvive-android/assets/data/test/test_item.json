@@ -14,7 +14,8 @@ controller: {
 abilities: [
 	{
 		class: ProjectileAbility,
-		projectile: item_projectile
+		projectile: item_projectile,
+		itemName: testitem
 	}
 ],
 
