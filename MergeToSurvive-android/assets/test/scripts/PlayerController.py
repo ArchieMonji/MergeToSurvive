@@ -13,7 +13,7 @@ class PlayerController(UnitController):
 	ability = 0	
 	
 	def __init__(self):
-		self.invulnerableTime = 1
+		self.invulnerableTime = 1.0
 		self.numFlashes = 6
 		self.alpha = 0.5
 		self.alphaToggle = 0
@@ -28,7 +28,7 @@ class PlayerController(UnitController):
 			self.moveLeft(delta)
 		if Gdx.input.isKeyPressed(self.right):
 			self.moveRight(delta)
-		if Gdx.input.isKeyPressed(self.ability):
+		if Gdx.input.isButtonPressed(self.ability):
 			if not self.fired:
 				if not self.useAbility(0, True):
 					self.useDefault(0)
@@ -41,7 +41,7 @@ class PlayerController(UnitController):
 				self.alphaToggle += self.invulnerableTime/self.numFlashes/2
 				color = self.getEntity().getRenderer().getColor()
 				if color.a == 1.0:
-					self.getEntity().getRenderer().setColor(color.r, color.g, color.b, alpha)
+					self.getEntity().getRenderer().setColor(color.r, color.g, color.b, self.alpha)
 				else:
 					self.getEntity().getRenderer().setColor(color.r, color.g, color.b, 1)
 					self.num -= 1
@@ -58,5 +58,10 @@ class PlayerController(UnitController):
 		c.numFlashes = self.numFlashes
 		c.alpha = self.alpha
 		return c
-			
+	
+	def onDamage(self, entity):
+		if self.alphaToggle <= 0:
+			UnitController.onDamage(self, entity)
+			self.alphaToggle = self.invulnerableTime/self.numFlashes/2
+			self.num = self.numFlashes
 			

@@ -30,6 +30,7 @@ public class AnimationLoader extends AsynchronousAssetLoader<Animation, Animatio
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			AnimationDataParameter parameter) {
+		System.out.println("start : " + fileName);
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
 		data = json.fromJson(AnimationData.class, resolve(fileName));
 		deps.add(new AssetDescriptor<Texture>(data.path, Texture.class));
@@ -45,6 +46,7 @@ public class AnimationLoader extends AsynchronousAssetLoader<Animation, Animatio
 	@Override
 	public Animation loadSync(AssetManager manager, String fileName,
 			AnimationDataParameter parameter) {
+		
 		Texture sheet = manager.get(data.path, Texture.class);
 
 		TextureRegion[][] tmp = null;
@@ -63,6 +65,7 @@ public class AnimationLoader extends AsynchronousAssetLoader<Animation, Animatio
 				frames[index++] = tmp[i][j];
 			}
 		}
+		System.out.println("finish : " + fileName);
 		return new Animation(data.frameDuration, frames);
 	}
 }

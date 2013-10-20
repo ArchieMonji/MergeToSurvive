@@ -10,7 +10,6 @@ import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.Platform;
 import com.vgdc.merge.entities.physics.PlatformType;
 import com.vgdc.merge.entities.rendering.HitboxRenderer;
-import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
@@ -69,7 +68,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setCamera(new OrthographicCamera(800, 600));
 		myWorld.getCamera().position.x = 400;
 		myWorld.getCamera().position.y = 300;
-		//myWorld.setAssets(game.getAssets());
+		myWorld.setHandler(game.getHandler());
 		myWorld.setDimensions(800, 600);
 
 		if (SHOWHITBOXES) {

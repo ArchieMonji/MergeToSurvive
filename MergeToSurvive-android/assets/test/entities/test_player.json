@@ -12,7 +12,7 @@ dimensions: {
 controller: PlayerController,
 
 abilities: [
-	
+	TestProjectileAbility
 ],
 
 animations: [

@@ -44,15 +44,16 @@ public class AssetsHandler {
 	
 	private void populateJsons()
 	{
-		String[] packages = new String[] {
-				"com.vgdc.merge.entities.controllers",
-				"com.vgdc.merge.entities.abilities" };
-
-		for (String packageName : packages) {
-			for (Class<?> c : ClassFinder.getClassesInPackage(packageName)) {
-				entityDataDirectory.getJson().addClassTag(c.getSimpleName(), c);
-			}
-		}
+		entityDataDirectory.getJson().addClassTag(SoundFxData.class.getSimpleName(), SoundFxData.class);
+//		String[] packages = new String[] {
+//				"com.vgdc.merge.entities.controllers",
+//				"com.vgdc.merge.entities.abilities" };
+//
+//		for (String packageName : packages) {
+//			for (Class<?> c : ClassFinder.getClassesInPackage(packageName)) {
+//				entityDataDirectory.getJson().addClassTag(c.getSimpleName(), c);
+//			}
+//		}
 	}
 	
 	public Texture getTexture(String path){
@@ -111,12 +112,10 @@ public class AssetsHandler {
 		for(FileHandle h : animationDirectory.getFilesInDirectory())
 		{
 			manager.load(h.nameWithoutExtension(), Animation.class);
-			System.out.println(h.nameWithoutExtension());
 		}
 		for(FileHandle h : entityDataDirectory.getFilesInDirectory())
 		{
 			manager.load(h.nameWithoutExtension(), EntityData.class);
-			System.out.println(h.nameWithoutExtension());
 		}
 		for(FileHandle h : scriptsDirectory.getFilesInDirectory())
 		{

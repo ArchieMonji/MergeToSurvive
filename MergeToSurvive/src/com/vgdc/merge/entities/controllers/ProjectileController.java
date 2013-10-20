@@ -5,7 +5,12 @@ import com.vgdc.merge.entities.Platform;
 
 public class ProjectileController extends AbilityController{
 	
-	private float timeAlive = 1;
+	public ProjectileController(float timeAlive)
+	{
+		this.timeAlive = timeAlive;
+	}
+	
+	private float timeAlive;
 	
 	@Override
 	public void setEntity(Entity entity)
@@ -15,8 +20,7 @@ public class ProjectileController extends AbilityController{
 
 	@Override
 	public Controller copy() {
-		ProjectileController controller = new ProjectileController();
-		controller.timeAlive = timeAlive;
+		ProjectileController controller = new ProjectileController(timeAlive);
 		return controller;
 	}
 

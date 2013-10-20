@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
+import com.vgdc.merge.assets.AssetsHandler;
 import com.vgdc.merge.entities.BaseEntity;
 
 public class World {
 	private EntityManager entityManager = new EntityManager();
 	
 	private OrthographicCamera camera;
+	
+	private AssetsHandler handler;
 	
 	//private Assets assets;
 	
@@ -44,6 +47,16 @@ public class World {
 //	{
 //		return assets;
 //	}
+	
+	public AssetsHandler getHandler()
+	{
+		return handler;
+	}
+	
+	public void setHandler(AssetsHandler handler)
+	{
+		this.handler = handler;
+	}
 	
 	public OrthographicCamera getCamera()
 	{

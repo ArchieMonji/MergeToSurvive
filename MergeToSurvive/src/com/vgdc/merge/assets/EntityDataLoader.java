@@ -1,6 +1,7 @@
 package com.vgdc.merge.assets;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.python.core.PyObject;
 
@@ -23,7 +24,11 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 	
 	private Json json;
 	
-	private EntityLoadData loadData;
+	//private EntityLoadData loadData;
+	
+	private TreeMap<String, EntityLoadData> loadDataMap = new TreeMap<String, EntityLoadData>();
+	
+	private EntityData data;
 
 	public EntityDataLoader(FileHandleResolver resolver, Json json) {
 		super(resolver);
@@ -38,7 +43,8 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			EntityLoadDataParameter parameter) {
-		loadData = json.fromJson(EntityLoadData.class, resolve(fileName));
+		System.out.println("start : " + fileName);
+		EntityLoadData loadData = json.fromJson(EntityLoadData.class, resolve(fileName));
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
 		for(String s : loadData.animations)
 			deps.add(new AssetDescriptor(s, Animation.class));
@@ -52,19 +58,16 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 				deps.add(new AssetDescriptor(s, PyObject.class));
 		if(loadData.controller!=null)
 			deps.add(new AssetDescriptor(loadData.controller, PyObject.class));
+		loadDataMap.put(fileName, loadData);
 		return deps;
 	}
 
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
 			EntityLoadDataParameter parameter) {
+		data = new EntityData();
 		
-	}
-
-	@Override
-	public EntityData loadSync(AssetManager manager, String fileName,
-			EntityLoadDataParameter parameter) {
-		EntityData data = new EntityData();
+		EntityLoadData loadData = loadDataMap.remove(fileName);
 
 		loadData.copyInto(data);
 		// attach animations
@@ -108,6 +111,12 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
 			}
 		}
+		System.out.println("finish : " + fileName);
+	}
+
+	@Override
+	public EntityData loadSync(AssetManager manager, String fileName,
+			EntityLoadDataParameter parameter) {
 		
 		return data;
 	}

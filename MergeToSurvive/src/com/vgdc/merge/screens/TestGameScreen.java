@@ -70,7 +70,7 @@ public class TestGameScreen extends AbstractScreen {
 		myWorld.setCamera(new OrthographicCamera(800, 600));
 		myWorld.getCamera().position.x = 400;
 		myWorld.getCamera().position.y = 300;
-		//myWorld.setAssets(game.getAssets());
+		myWorld.setHandler(game.getHandler());
 		myWorld.setDimensions(800, 600);
 
 		if (SHOWHITBOXES) {

@@ -14,11 +14,13 @@ public class HitBoxAbility extends Ability {
 	//they are
 	
 	private EntityData data;
+	private boolean blank;
 
 	@Override
 	public void onUse(Entity entity, boolean retrievable) {
 		Entity hitbox = createEntity(data, entity, retrievable);
-		hitbox.setRenderer(new BlankRenderer());
+		if(blank)
+			hitbox.setRenderer(new BlankRenderer());
 		hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
 	}
 
