@@ -10,6 +10,7 @@ public class DirectoryHandler implements FileHandleResolver
 {
 	
 	private FileHandle path;
+	private FileHandle base;
 	private String extension;
 	
 	public DirectoryHandler(String directory)
@@ -21,14 +22,18 @@ public class DirectoryHandler implements FileHandleResolver
 	{
 		this.extension = extension;
 		path = Gdx.files.internal(directory);
+		base = Gdx.files.internal("");
 		if(!path.isDirectory())
 		{
 			path = Gdx.files.internal("./bin/" + directory);
+			base = Gdx.files.internal("./bin/");
 			if(!path.isDirectory())
 			{
-				path = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+				base = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+				path = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath() + directory);
 			}
 		}
+		System.out.println(path.path());
 	}
 
 	@Override
@@ -39,6 +44,11 @@ public class DirectoryHandler implements FileHandleResolver
 	public File getPath()
 	{
 		return path.file();
+	}
+	
+	public File getBase()
+	{
+		return base.file();
 	}
 	
 	public FileHandle[] getFilesInDirectory()
