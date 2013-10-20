@@ -31,10 +31,10 @@ public abstract class AbilityController extends Controller {
 				body.setElasticity(.5f);
 				Vector2 vel = e.getMovingBody().getVelocity();
 				if(vel.x > 0){
-					body.setVelocity(new Vector2(-10,20));
+					body.setVelocity(new Vector2(10,20));
 				}
 				else{
-					body.setVelocity(new Vector2(10,20));
+					body.setVelocity(new Vector2(-10,20));
 				}
 
 				((ItemController) item.getController()).setRelocating(true);
