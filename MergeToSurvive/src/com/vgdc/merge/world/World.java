@@ -28,7 +28,6 @@ public class World {
 		batch = new SpriteBatch();
 		uiManager = new UIManager(this);
 		eventSystem = new EventSystem(this);
-		eventSystem.loadEvents();
 	}
 
 	public EntityManager getEntityManager() {
