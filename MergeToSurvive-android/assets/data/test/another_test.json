@@ -19,6 +19,7 @@ textures: [
 	data/animations/proto_run.png,
 	data/animations/proto_idle.png,
 	data/animations/proto_run3.png,
+	data/test/flamesheet.png,
 ],
 animations: {
 	idle: data/test/idle_animation.json,

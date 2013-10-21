@@ -49,15 +49,16 @@ public class ItemController extends Controller {
 			// else if(time < 2)
 			// body.getPosition().y = spawnLocation.y -
 			// cosineInterpolation(15,0,(time-1.5f)*2);
-
+			
 			Renderer r = (Renderer) e.getRenderer();
+			/*
 			float angle = r.getRotation();
 			if (time < 1) {
 				r.setRotation(Cubic_Interpolate(100, 0, 360, 100, time));
 			}
 			// } else {
 			// r.setRotation(cosineInterpolation(180, 360, time - 1));
-			// }
+			// }*/
 
 			if (time > 1) {
 				r.setRotation(0);
