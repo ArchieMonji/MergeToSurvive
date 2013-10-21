@@ -58,7 +58,7 @@ public class TestAIController extends UnitController {
 			EventSystem system = getEntity().getWorld().getEventSystem();
 			// event to be played when entity dies
 			// this event is a dialogue even which will bring up a dialogue box
-			DialogueEvent onDeathEvent = new DialogueEvent("TestAIController: On Death Event", system);
+			DialogueEvent onDeathEvent = new DialogueEvent("TestAIController: On Death Event");
 			// dialogue script is the script that will be read by the dialogue
 			// box
 			onDeathEvent.dialogueScript = "data/dialogue/simple_script_test.json";
@@ -66,11 +66,11 @@ public class TestAIController extends UnitController {
 			// dialogueBox can trigger another event after the last line of text
 			// from the script is read
 			// this is optional
-			Event afterDialogClosesEvent = new Event("TestAIController: afterDialogClosesEvent", system) {
+			Event afterDialogClosesEvent = new Event("TestAIController: afterDialogClosesEvent") {
 
 				// example continuation event, spawns a bunch of crap
 				@Override
-				public void onEvent() {
+				public void onTrigger() {
 					for (int i = 0; i < 10; i++) {
 						String itemDropName = getEntity().getData().itemDrop;
 						World world = getEntity().getWorld();
@@ -88,6 +88,19 @@ public class TestAIController extends UnitController {
 						}
 					}
 				}
+
+				private float time;
+				
+				@Override
+				public void onUpdate(float delta) { 
+					time += delta;
+				}
+
+				//detonates (triggers) after 3 seconds
+				@Override
+				public boolean checkConditions() {
+					return time >= 3;
+				}
 			};
 			
 			onDeathEvent.onCloseEvent = afterDialogClosesEvent;
@@ -95,7 +108,7 @@ public class TestAIController extends UnitController {
 			// trigger the event, can pass the event object itself, or an alias
 			// which then looks up a pre-loaded event in the EventSystem's eventMap
 			// (similar to how EntityData is looked up in Assets)
-			getEntity().getWorld().getEventSystem().trigger(onDeathEvent);
+			system.addEvent(onDeathEvent);
 		}
 	}
 

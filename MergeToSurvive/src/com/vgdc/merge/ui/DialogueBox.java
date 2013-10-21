@@ -1,14 +1,10 @@
 package com.vgdc.merge.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,6 +18,7 @@ public class DialogueBox extends Window {
 	private Script script;
 	private Event onCloseEvent;
 	private Skin skin;
+	private EventSystem eventSystem;
 
 	public DialogueBox(String title, Skin skin) {
 		super(title, skin);
@@ -59,8 +56,9 @@ public class DialogueBox extends Window {
 
 	// Can optionally specify a event to be called when this dialogue box is
 	// closed. Allows for an event chain.
-	public void setOnCloseEvent(Event onCloseEvent) {
+	public void setOnCloseEvent(Event onCloseEvent, EventSystem eventSystem) {
 		this.onCloseEvent = onCloseEvent;
+		this.eventSystem = eventSystem;
 	}
 
 	private static class Script {
@@ -79,7 +77,7 @@ public class DialogueBox extends Window {
 			} else {
 				DialogueBox.this.remove();
 				if (onCloseEvent != null) {
-					onCloseEvent.getEventSystem().trigger(onCloseEvent);
+					eventSystem.addEvent(onCloseEvent);
 				}
 			}
 		}

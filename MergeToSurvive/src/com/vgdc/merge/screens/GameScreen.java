@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen {
 		if (delta < 0.05f) {
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-			myWorld.onUpdate();
+			myWorld.onUpdate(delta);
 			myWorld.onRender(delta);
 		}
 	}

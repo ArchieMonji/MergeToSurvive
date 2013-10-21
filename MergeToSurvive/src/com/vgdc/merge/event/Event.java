@@ -4,14 +4,13 @@ public abstract class Event {
 	private EventSystem eventSystem;
 	private String name;
 	
-	public Event(String name, EventSystem eventSystem){
-		this.eventSystem = eventSystem;
+	public Event(String name){
 		this.name = name;
 	}
 	
-	public Event(EventSystem eventSystem){
-		this.eventSystem = eventSystem;
-	}
+	public abstract void onTrigger();
+	public abstract void onUpdate(float delta);
+	public abstract boolean checkConditions();
 	
 	public EventSystem getEventSystem() {
 		return eventSystem;
@@ -20,8 +19,6 @@ public abstract class Event {
 	public void setEventSystem(EventSystem eventSystem) {
 		this.eventSystem = eventSystem;
 	}
-	
-	public abstract void onEvent();
 
 	public String getName() {
 		return name;

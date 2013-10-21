@@ -24,8 +24,6 @@ public class World {
 
 	private EventSystem eventSystem;
 
-	private boolean freeze;
-
 	public World() {
 		batch = new SpriteBatch();
 		uiManager = new UIManager(this);
@@ -48,13 +46,12 @@ public class World {
 		uiManager.onRender(camera, delta);
 	}
 
-	public void onUpdate() {
-		if(!freeze){
-			entityManager.onUpdate();
-			camera.update();
-			for (BaseEntity e : entityManager.getEntities())
-				e.onUpdate(Gdx.graphics.getDeltaTime());
-		}
+	public void onUpdate(float delta) {
+		entityManager.onUpdate();
+		camera.update();
+		for (BaseEntity e : entityManager.getEntities())
+			e.onUpdate(delta);
+		eventSystem.onUpdate(delta);
 	}
 
 	public void setAssets(Assets nAssets) {

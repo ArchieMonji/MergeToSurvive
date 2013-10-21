@@ -37,7 +37,7 @@ public class DialogueBoxManager {
 		DialogueBox db = new DialogueBox("DIALOGUE BOX", skin);
 		stage.addActor(db);
 		db.setScript(scriptPath);
-		db.setOnCloseEvent(onCloseEvent);
+		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
 		db.create();
 	}
 }
