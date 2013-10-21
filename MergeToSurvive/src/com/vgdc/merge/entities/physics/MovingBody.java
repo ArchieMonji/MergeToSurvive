@@ -116,8 +116,6 @@ public class MovingBody extends PhysicsBody {
 
 	/////Platform Collisions
 	public void onPlatformCollision(Platform platform,CollisionData collision){
-		((Entity)host).onPlatformCollision(platform);
-
 		if(collision.side == CollisionSide.Up){
 			touchingGround = true;
 			setPosition(new Vector2(position.x,collision.position+size.y/2+.1f));
@@ -129,6 +127,8 @@ public class MovingBody extends PhysicsBody {
 			setPosition(new Vector2(collision.position-size.x/2-.1f,position.y));
 		//System.out.println("Collision: "+collision.side);
 		applySideCollision(collision.side,getFrictionAgainst(platform.getPlatformBody()),getElasticityAgainst(platform.getPlatformBody()));
+		
+		((Entity)host).onPlatformCollision(platform);
 	}
 
 	static final float MINCHECKDIST = 50;//The smallest platformsize+entitysize for accurate collisions at high speeds

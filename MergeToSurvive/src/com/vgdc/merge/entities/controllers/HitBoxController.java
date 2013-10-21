@@ -2,6 +2,7 @@ package com.vgdc.merge.entities.controllers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.math.VectorMath;
 
 public class HitBoxController extends AbilityController {
 	
@@ -40,8 +41,9 @@ public class HitBoxController extends AbilityController {
 		super.onEntityCollision(entity);
 		if(entity.getTeam()==getEntity().getTeam())
 			return;
-		float x = entity.getPosition().x - getEntity().getPosition().x;
-		entity.getMovingBody().setVelocity(new Vector2((x>0 ? 1 : -1)*knockback.x, knockback.y));
+		//float x = entity.getPosition().x - getEntity().getPosition().x;
+		//entity.getMovingBody().setVelocity(new Vector2((x>0 ? 1 : -1)*knockback.x, knockback.y));
+		entity.getMovingBody().setVelocity(VectorMath.add(entity.getMovingBody().getVelocity(),this.getEntity().facingLeft() ? new Vector2(-15,10) : new Vector2(15,10)));
 		onDeath();
 	}
 

@@ -23,6 +23,7 @@ public class Entity extends BaseEntity{
 	private int team;
 	private float halfJumpDir;
 	private boolean currentlyWalking,currentlyJumping;
+	private boolean isFacingLeft;
 	
 	public Entity(EntityData data, World world)
 	{
@@ -81,6 +82,10 @@ public class Entity extends BaseEntity{
 	public EntityType getEntityType(){
 		return EntityType.Entity;
 	}
+	
+	public void setFacingLeft(boolean ifr){isFacingLeft = ifr;}
+	
+	public boolean facingLeft(){return isFacingLeft;}
 	
 	public int getDamage()
 	{
