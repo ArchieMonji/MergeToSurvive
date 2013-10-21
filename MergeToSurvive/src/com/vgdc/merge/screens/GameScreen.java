@@ -3,7 +3,6 @@ package com.vgdc.merge.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
@@ -16,10 +15,6 @@ import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.World;
 
 public class GameScreen extends AbstractScreen {
-	public static final boolean SHOWHITBOXES = false;
-
-	private SpriteBatch batch;
-
 	private World myWorld;
 
 	public GameScreen(MainGame game) {
@@ -29,28 +24,16 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void dispose() {
-		batch.dispose();
 		myWorld.dispose();
 	}
-
-	float max;
-
-	HealthBarRenderer hpr;
 
 	@Override
 	public void render(float delta) {
 		if (delta < 0.05f) {
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-			batch.begin();
 			myWorld.onUpdate();
-			myWorld.onRender(batch);
-
-			hpr.onRender(batch, delta);
-			batch.end();
-			if (SHOWHITBOXES)
-				hrenderer.onRender(myWorld.getCamera());
-
+			myWorld.onRender(delta);
 		}
 	}
 
@@ -66,9 +49,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void resume() {
 	}
-
-	HitboxRenderer hrenderer;
-
+	
 	@Override
 	public void show() {
 		float w = Gdx.graphics.getWidth();
@@ -80,15 +61,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.getCamera().position.y = 300;
 		myWorld.setAssets(game.getAssets());
 		myWorld.setDimensions(800, 600);
-
-		if (SHOWHITBOXES) {
-			hrenderer = new HitboxRenderer(myWorld);
-		}
-
-		hpr = new HealthBarRenderer(myWorld);
-
-		batch = new SpriteBatch();
-
+		
 		Entity testEntity = null;
 		testEntity = new Entity(
 				game.getAssets().entityDataMap.get("testenemy"), myWorld);

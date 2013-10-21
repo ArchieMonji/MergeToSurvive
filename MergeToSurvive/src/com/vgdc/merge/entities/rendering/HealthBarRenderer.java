@@ -9,10 +9,11 @@ import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.EntityType;
 import com.vgdc.merge.world.World;
 
-public class HealthBarRenderer extends BaseRenderer {
+public class HealthBarRenderer {
 
 	private World world;
-	private SpriteBatch batch = new SpriteBatch();
+	private SpriteBatch batch;
+	
 	private Texture borderTexture;
 	private Texture barBgTexture;
 	private Texture hpTexture;
@@ -28,6 +29,7 @@ public class HealthBarRenderer extends BaseRenderer {
 
 	public HealthBarRenderer(World world) {
 		this.world = world;
+		batch = new SpriteBatch();
 		borderTexture = new Texture("data/images/hp bars/border.png");
 		barBgTexture = new Texture("data/images/hp bars/BarBg.png");
 		hpTexture = new Texture("data/images/hp bars/hp.png");
@@ -60,8 +62,8 @@ public class HealthBarRenderer extends BaseRenderer {
 		this.minPipWidth = minPipWidth;
 	}
 	
-	@Override
-	public void onRender(SpriteBatch batch, float delta) {
+	public void onRender(float delta) {
+		batch.begin();
 		float pipHeight = barSize.y - 2 * borderSize.y;
 
 		for (BaseEntity e : world.getEntityManager().getEntities()) {
@@ -125,6 +127,7 @@ public class HealthBarRenderer extends BaseRenderer {
 				}
 			}
 		}
+		batch.end();
 	}
 
 	public void dispose() {

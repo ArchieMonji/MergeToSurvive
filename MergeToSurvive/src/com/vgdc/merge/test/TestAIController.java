@@ -1,9 +1,15 @@
 package com.vgdc.merge.test;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
+import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.UnitController;
+import com.vgdc.merge.event.DialogueEvent;
+import com.vgdc.merge.event.Event;
+import com.vgdc.merge.event.EventSystem;
 import com.vgdc.merge.world.World;
 
 public class TestAIController extends UnitController {
@@ -40,18 +46,62 @@ public class TestAIController extends UnitController {
 			String itemDropName = getEntity().getData().itemDrop;
 			if (itemDropName != null) {
 				World world = getEntity().getWorld();
-				Item itemDrop = new Item(world.getAssets().entityDataMap.get(itemDropName),	world);
-				itemDrop.getPhysicsBody().setPosition(getEntity().getPosition());
+				Item itemDrop = new Item(
+						world.getAssets().entityDataMap.get(itemDropName),
+						world);
+				itemDrop.getPhysicsBody()
+						.setPosition(getEntity().getPosition());
 				itemDrop.getController().onCreate();
 				getEntity().getWorld().getEntityManager().addEntity(itemDrop);
 			}
 
+			EventSystem system = getEntity().getWorld().getEventSystem();
+			// event to be played when entity dies
+			// this event is a dialogue even which will bring up a dialogue box
+			DialogueEvent onDeathEvent = new DialogueEvent("TestAIController: On Death Event", system);
+			// dialogue script is the script that will be read by the dialogue
+			// box
+			onDeathEvent.dialogueScript = "data/dialogue/simple_script_test.json";
+
+			// dialogueBox can trigger another event after the last line of text
+			// from the script is read
+			// this is optional
+			Event afterDialogClosesEvent = new Event("TestAIController: afterDialogClosesEvent", system) {
+
+				// example continuation event, spawns a bunch of crap
+				@Override
+				public void onEvent() {
+					for (int i = 0; i < 10; i++) {
+						String itemDropName = getEntity().getData().itemDrop;
+						World world = getEntity().getWorld();
+						EntityData itemData = world.getAssets().entityDataMap
+								.get(itemDropName);
+						if (itemDropName != null) {
+							Item itemDrop = new Item(itemData, world);
+							Vector2 pos = new Vector2(
+									MathUtils.random(world.dimensions.x),
+									MathUtils.random(world.dimensions.y));
+							itemDrop.getPhysicsBody().setPosition(pos);
+							itemDrop.getController().onCreate();
+							getEntity().getWorld().getEntityManager()
+									.addEntity(itemDrop);
+						}
+					}
+				}
+			};
+			
+			onDeathEvent.onCloseEvent = afterDialogClosesEvent;
+
+			// trigger the event, can pass the event object itself, or an alias
+			// which then looks up a pre-loaded event in the EventSystem's eventMap
+			// (similar to how EntityData is looked up in Assets)
+			getEntity().getWorld().getEventSystem().trigger(onDeathEvent);
 		}
 	}
 
 	@Override
 	public void onCreate() {
-		
+
 	}
 
 }

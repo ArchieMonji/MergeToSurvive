@@ -1,0 +1,20 @@
+
+uiskin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+consolas
+  rotate: false
+  xy: 1, 42
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+window-default
+  rotate: false
+  xy: 1, 1
+  size: 40, 39
+  split: 19, 19, 19, 18
+  orig: 40, 39
+  offset: 0, 0
+  index: -1
