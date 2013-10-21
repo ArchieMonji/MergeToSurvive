@@ -9,8 +9,6 @@ public class ProjectileAbility extends Ability {
 	
 	//private EntityData projectileData = new EntityData();
 	
-	private String projectile;
-	
 	public ProjectileAbility()
 	{
 //		

@@ -1,0 +1,22 @@
+{
+moveSpeed: 	10,
+jumpHeight: 10,
+dimensions: {x:32,y:32},
+
+controller: {
+	class: ItemController
+},
+
+abilities: [
+	{
+		class: HitBoxAbility,
+		projectile: spear_p_e,
+		itemName: spear_i_e
+	}
+],
+
+animations: [
+	spear_i_a
+],
+sounds: {}
+}

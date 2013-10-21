@@ -1,0 +1,9 @@
+{
+	frameCount: 1,
+	frameDuration: 0.10,
+	path: data/test/spear/spear_p.png,
+	frameWidth: 64,
+	frameHeight: 32,
+	cols: 1,
+	rows: 1
+}

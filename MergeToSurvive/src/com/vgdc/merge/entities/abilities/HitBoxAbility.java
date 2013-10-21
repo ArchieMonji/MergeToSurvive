@@ -18,9 +18,16 @@ public class HitBoxAbility extends Ability {
 
 	@Override
 	public void onUse(Entity entity, boolean retrievable) {
-		Projectile hitbox = createProjectile(data, entity, retrievable);
-		hitbox.setRenderer(new BlankRenderer());
-		hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
+		if (this.projectile == null) {
+			Projectile hitbox = createProjectile(data, entity, retrievable);
+			hitbox.setRenderer(new BlankRenderer());
+			hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
+		}
+		else{
+			EntityData data = entity.getWorld().getAssets().entityDataMap.get(projectile);
+			Projectile hitbox = createProjectile(data, entity, retrievable);
+			hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
+		}
 	}
 
 }

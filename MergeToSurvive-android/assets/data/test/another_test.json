@@ -20,6 +20,8 @@ textures: [
 	data/animations/proto_idle.png,
 	data/animations/proto_run3.png,
 	data/test/flamesheet.png,
+	data/test/spear/spear_i.png,
+	data/test/spear/spear_p.png
 ],
 animations: {
 	idle: data/test/idle_animation.json,
@@ -30,12 +32,16 @@ animations: {
 	item_projectile: data/test/item_projectile_animation.json,
 	proto_run: data/animations/player_run_animation.json,
 	proto_idle: data/animations/player_idle_animation.json,
+	spear_i_a: data/test/spear/spear_i_a.json,
+	spear_p_a: data/test/spear/spear_p_a.json
 },
 entities: {
 	testplayer: data/test/test_player.json,
 	testenemy: data/test/test_enemy.json,
 	testprojectile: data/test/test_projectile.json,
 	testitem: data/test/test_item.json,
-	item_projectile: data/test/item_projectile.json
+	item_projectile: data/test/item_projectile.json,
+	spear_p_e: data/test/spear/spear_p_e.json,
+	spear_i_e: data/test/spear/spear_i_e.json
 }
 }

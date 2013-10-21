@@ -36,7 +36,7 @@ public class GameScreen extends AbstractScreen {
 	float max;
 
 	HealthBarRenderer hpr;
-	
+
 	@Override
 	public void render(float delta) {
 		if (delta < 0.05f) {
@@ -45,12 +45,12 @@ public class GameScreen extends AbstractScreen {
 			batch.begin();
 			myWorld.onUpdate();
 			myWorld.onRender(batch);
-			
-			hpr.onRender(batch,delta);
+
+			hpr.onRender(batch, delta);
 			batch.end();
 			if (SHOWHITBOXES)
 				hrenderer.onRender(myWorld.getCamera());
-			
+
 		}
 	}
 
@@ -84,7 +84,7 @@ public class GameScreen extends AbstractScreen {
 		if (SHOWHITBOXES) {
 			hrenderer = new HitboxRenderer(myWorld);
 		}
-		
+
 		hpr = new HealthBarRenderer(myWorld);
 
 		batch = new SpriteBatch();
@@ -100,35 +100,39 @@ public class GameScreen extends AbstractScreen {
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 
-		Item item = new Item(
-				game.getAssets().entityDataMap.get("testitem"), myWorld);
+		Item item = new Item(game.getAssets().entityDataMap.get("testitem"),
+				myWorld);
 		item.setPosition(new Vector2(450, 275));
 		item.getMovingBody().setElasticity(0);
 		item.getController().onCreate();
 		myWorld.getEntityManager().addEntity(item);
 
-		for(Vector2 pos : new Vector2[] {
-				new Vector2(250, 50),
-	            new Vector2(650, 50),
-	            new Vector2(750, 500),
-	            new Vector2(-50/*650*/, 300)
-			}){
-	        Platform platform = new Platform(myWorld);
-	        platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-	        platform.setRenderer(new PlatformRenderer(
-	                "data/test/PlatformTest.png", 13, 13, 13, 13));
-	        platform.getPhysicsBody().setPosition(pos);
-	        platform.getPhysicsBody().setSize(new Vector2(200, 50));
-	        myWorld.getEntityManager().addEntity(platform);
-	    }
-		//Tall platform
-        Platform platform = new Platform(myWorld);
-        platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-        platform.setRenderer(new PlatformRenderer(
-                "data/test/PlatformTest.png", 13, 13, 13, 13));
-        platform.getPhysicsBody().setPosition(new Vector2(400,125));
-        platform.getPhysicsBody().setSize(new Vector2(50, 200));
-        myWorld.getEntityManager().addEntity(platform);
+		item = new Item(game.getAssets().entityDataMap.get("spear_i_e"),
+				myWorld);
+		item.setPosition(new Vector2(650, 275));
+		item.getMovingBody().setElasticity(0);
+		item.getController().onCreate();
+		myWorld.getEntityManager().addEntity(item);
+
+		for (Vector2 pos : new Vector2[] { new Vector2(250, 50),
+				new Vector2(650, 50), new Vector2(750, 500),
+				new Vector2(-50/* 650 */, 300) }) {
+			Platform platform = new Platform(myWorld);
+			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
+			platform.setRenderer(new PlatformRenderer(
+					"data/test/PlatformTest.png", 13, 13, 13, 13));
+			platform.getPhysicsBody().setPosition(pos);
+			platform.getPhysicsBody().setSize(new Vector2(200, 50));
+			myWorld.getEntityManager().addEntity(platform);
+		}
+		// Tall platform
+		Platform platform = new Platform(myWorld);
+		platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
+		platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png",
+				13, 13, 13, 13));
+		platform.getPhysicsBody().setPosition(new Vector2(400, 125));
+		platform.getPhysicsBody().setSize(new Vector2(50, 200));
+		myWorld.getEntityManager().addEntity(platform);
 	}
 
 	@Override

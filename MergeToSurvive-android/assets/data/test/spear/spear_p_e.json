@@ -1,0 +1,20 @@
+{
+moveSpeed: 	10,
+jumpHeight: 10,
+damage:1,
+dimensions: {x:64,y:32},
+
+controller: {
+	class: HitBoxController,
+	duration: 0.5,
+	knockback: {x: 10, y: 0}
+},
+
+abilities: [
+],
+
+animations: [
+	spear_p_a
+],
+sounds: {}
+}

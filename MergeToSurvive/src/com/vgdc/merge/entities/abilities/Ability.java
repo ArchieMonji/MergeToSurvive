@@ -9,6 +9,7 @@ import com.vgdc.merge.entities.Projectile;
 
 public abstract class Ability {
 
+	protected String projectile;
 	public String itemName;
 	private Vector2 offset = new Vector2();
 	
