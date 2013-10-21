@@ -1,0 +1,7 @@
+{
+	frameCount: 30,
+	frameDuration: 0.10,
+	path: animation_sheet,
+	cols: 6,
+	rows: 5
+}

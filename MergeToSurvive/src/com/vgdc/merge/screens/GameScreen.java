@@ -78,7 +78,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setCamera(new OrthographicCamera(800, 600));
 		myWorld.getCamera().position.x = 400;
 		myWorld.getCamera().position.y = 300;
-		myWorld.setAssets(game.getAssets());
+		myWorld.setHandler(game.getHandler());
 		myWorld.setDimensions(800, 600);
 
 		if (SHOWHITBOXES) {
@@ -119,8 +119,8 @@ public class GameScreen extends AbstractScreen {
 				new Vector2(-50/* 650 */, 300) }) {
 			Platform platform = new Platform(myWorld);
 			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-			platform.setRenderer(new PlatformRenderer(
-					"data/test/PlatformTest.png", 13, 13, 13, 13));
+//			platform.setRenderer(new PlatformRenderer(
+//					"data/test/PlatformTest.png", 13, 13, 13, 13));
 			platform.getPhysicsBody().setPosition(pos);
 			platform.getPhysicsBody().setSize(new Vector2(200, 50));
 			myWorld.getEntityManager().addEntity(platform);
@@ -128,7 +128,7 @@ public class GameScreen extends AbstractScreen {
 		// Tall platform
 		Platform platform = new Platform(myWorld);
 		platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-		platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png",
+		platform.setRenderer(new PlatformRenderer(game.getHandler().getTexture("data/test/PlatformTest.png"),
 				13, 13, 13, 13));
 		platform.getPhysicsBody().setPosition(new Vector2(400, 125));
 		platform.getPhysicsBody().setSize(new Vector2(50, 200));

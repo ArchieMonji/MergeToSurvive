@@ -1,0 +1,7 @@
+{
+	frameCount: 1,
+	frameDuration: 0.10,
+	path: Proto_Sprites,
+	cols: 1,
+	rows: 1
+}

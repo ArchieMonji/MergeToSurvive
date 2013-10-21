@@ -1,7 +1,6 @@
 package com.vgdc.merge.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.entities.controllers.Controller;
 
 public class BaseEntityData {
 	public int maxHealth = 1;
@@ -11,7 +10,6 @@ public class BaseEntityData {
 	public float jumpHeight;
 	public float moveSpeed;
 	public boolean mergeable;
-	public Controller controller;
 	public String itemDrop;
 	
 	public void copyInto(BaseEntityData other)
@@ -23,7 +21,6 @@ public class BaseEntityData {
 		other.jumpHeight = jumpHeight;
 		other.moveSpeed = moveSpeed;
 		other.mergeable = mergeable;
-		other.controller = controller;
 		other.itemDrop = itemDrop;
 	}
 }

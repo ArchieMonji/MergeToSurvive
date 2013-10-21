@@ -1,0 +1,30 @@
+{
+maxHealth: 	2,
+jumpHeight: 15,
+moveSpeed: 	5,
+defaultTeam: 1,
+mergeable: true,
+dimensions: {
+	x: 64,
+	y: 96
+},
+
+controller: PlayerController,
+
+abilities: [
+	PlayerPunchAbility
+],
+
+animations: [
+	idle_animation,
+	run_animation
+],
+sounds: {
+	IDLE: [
+		vineattack
+	],
+	MOVE: [
+		flamethrowerfx
+	]
+}
+}

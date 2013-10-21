@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
+import com.vgdc.merge.assets.AssetsHandler;
 import com.vgdc.merge.entities.BaseEntity;
 
 public class World {
@@ -12,7 +13,9 @@ public class World {
 	
 	private OrthographicCamera camera;
 	
-	private Assets assets;
+	private AssetsHandler handler;
+	
+	//private Assets assets;
 	
 	public Vector2 dimensions = new Vector2(800,600);
 	
@@ -35,14 +38,24 @@ public class World {
 			e.onUpdate(Gdx.graphics.getDeltaTime());
 	}
 	
-	public void setAssets(Assets nAssets)
+//	public void setAssets(Assets nAssets)
+//	{
+//		assets = nAssets;
+//	}
+//	
+//	public Assets getAssets()
+//	{
+//		return assets;
+//	}
+	
+	public AssetsHandler getHandler()
 	{
-		assets = nAssets;
+		return handler;
 	}
 	
-	public Assets getAssets()
+	public void setHandler(AssetsHandler handler)
 	{
-		return assets;
+		this.handler = handler;
 	}
 	
 	public OrthographicCamera getCamera()
@@ -62,7 +75,7 @@ public class World {
 	}
 
 	public void dispose() {
-		assets.dispose();
+		handler.dispose();
 	}
 	
 }
