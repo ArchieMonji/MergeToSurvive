@@ -13,7 +13,7 @@ public class EntityLoadData extends BaseEntityData{
 	public String controller;
 	public ArrayList<String> abilities;
 	public ArrayList<String> animations;
-	public OrderedMap<String, Array<SoundFxData>> sounds;
+	public OrderedMap<String, Array<String>> sounds;
 	
 	public EntityData convert(AssetsHandler handler)
 	{

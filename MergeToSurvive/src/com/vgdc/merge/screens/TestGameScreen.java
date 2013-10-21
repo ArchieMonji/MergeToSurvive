@@ -91,11 +91,11 @@ public class TestGameScreen extends AbstractScreen {
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 
-//		Entity item = new Entity(
-//				game.getAssets().entityDataMap.get("testitem"), myWorld);
-//		item.setPosition(new Vector2(450, 275));
-//		item.getMovingBody().setElasticity(0);
-//		myWorld.getEntityManager().addEntity(item);
+		Entity item = new Entity(
+				game.getHandler().getEntityData("test_item"), myWorld);
+		item.setPosition(new Vector2(450, 275));
+		item.getMovingBody().setElasticity(0);
+		myWorld.getEntityManager().addEntity(item);
 
 		/*
 		 * Platform platform = new Platform(myWorld); platform.setRenderer(new

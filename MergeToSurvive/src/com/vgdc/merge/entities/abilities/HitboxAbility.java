@@ -14,6 +14,7 @@ public class HitBoxAbility extends Ability {
 	//they are
 	
 	private String hitbox;
+	private Vector2 offset;
 	private boolean blank;
 	
 	public HitBoxAbility(String hitbox)
@@ -25,6 +26,7 @@ public class HitBoxAbility extends Ability {
 	{
 		this.hitbox = hitbox;
 		this.blank = blank;
+		offset = new Vector2();
 	}
 
 	@Override

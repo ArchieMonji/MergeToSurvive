@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.abilities.Ability;
+import com.vgdc.merge.entities.audio.SoundFx;
 import com.vgdc.merge.entities.controllers.Controller;
 
 public class AssetsHandler {
@@ -25,6 +26,7 @@ public class AssetsHandler {
 	
 	private DirectoryHandler textureDirectory = new DirectoryHandler("test/art", ".png");
 	private DirectoryHandler soundDirectory = new DirectoryHandler("test/sound", ".ogg");
+	private JsonDirectoryHandler soundFxDirectory = new JsonDirectoryHandler("test/soundfx", ".json");
 	private DirectoryHandler musicDirectory = new DirectoryHandler("test/music", ".ogg");
 	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/animations", ".json");
 	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entities", ".json");
@@ -40,6 +42,7 @@ public class AssetsHandler {
 		manager.setLoader(Animation.class, new AnimationLoader(animationDirectory, animationDirectory.getJson()));
 		manager.setLoader(EntityData.class, new EntityDataLoader(entityDataDirectory, entityDataDirectory.getJson()));
 		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
+		manager.setLoader(SoundFx.class, new SoundFxLoader(soundFxDirectory, soundFxDirectory.getJson()));
 	}
 	
 	private void populateJsons()

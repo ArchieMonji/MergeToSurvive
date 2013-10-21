@@ -10,7 +10,6 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -46,13 +45,18 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		System.out.println("start : " + fileName);
 		EntityLoadData loadData = json.fromJson(EntityLoadData.class, resolve(fileName));
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
-		for(String s : loadData.animations)
-			deps.add(new AssetDescriptor(s, Animation.class));
-		for(String s : loadData.sounds.keys())
-		{
-			for(SoundFxData a : loadData.sounds.get(s))
-				deps.add(new AssetDescriptor(a.path, Sound.class));
-		}
+		if(loadData.animations != null)
+			for(String s : loadData.animations)
+				deps.add(new AssetDescriptor(s, Animation.class));
+		if(loadData.sounds != null)
+			for(String s : loadData.sounds.keys())
+			{
+				for(String a : loadData.sounds.get(s))
+				{
+					System.out.println(a);
+					deps.add(new AssetDescriptor(a, SoundFx.class));
+				}
+			}
 		if(loadData.abilities!=null)
 			for(String s : loadData.abilities)
 				deps.add(new AssetDescriptor(s, PyObject.class));
@@ -71,10 +75,13 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 
 		loadData.copyInto(data);
 		// attach animations
-		data.animations = new ArrayList<Animation>();
 
-		for (String animationName : loadData.animations) {
-			data.animations.add(manager.get(animationName, Animation.class));
+		if(loadData.animations!=null)
+		{
+			data.animations = new ArrayList<Animation>();
+			for (String animationName : loadData.animations) {
+				data.animations.add(manager.get(animationName, Animation.class));
+			}
 		}
 
 		// attach sounds
@@ -82,17 +89,14 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		for (UnitStateEnum state : UnitStateEnum.values()) {
 			//json.setElementType(BaseEntityLoadData.class, "sounds",
 			//		ArrayList.class);
-			Array<SoundFxData> soundNames = loadData.sounds.get(state.name());
+			Array<String> soundNames = loadData.sounds.get(state.name());
 			if (soundNames != null) {
 				ArrayList<SoundFx> soundList = new ArrayList<SoundFx>();
 				data.sounds.add(soundList);
 
 				if (soundNames != null) {
-					for (SoundFxData soundFxData : soundNames) {
-						SoundFx sound = new SoundFx();
-						sound.sound = manager.get(soundFxData.path, Sound.class);
-						sound.looping = soundFxData.looping;
-						soundList.add(sound);
+					for (String soundFxData : soundNames) {
+						soundList.add(manager.get(soundFxData, SoundFx.class));
 					}
 				}
 			} else {

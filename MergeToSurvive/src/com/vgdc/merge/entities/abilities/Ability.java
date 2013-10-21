@@ -15,6 +15,11 @@ public abstract class Ability {
 		onUse(entity, false);
 	}
 	
+	public void setOffset(float x, float y)
+	{
+		offset.set(x, y);
+	}
+	
 	public abstract void onUse(Entity entity, boolean retrievable);
 	
 	public Entity createEntity(EntityData data, Entity entity, boolean retrievable)
