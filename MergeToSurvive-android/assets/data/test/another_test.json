@@ -18,6 +18,7 @@ textures: [
 	data/test/purple_attack.png,
 	data/animations/proto_run.png,
 	data/animations/proto_idle.png,
+	data/animations/proto_run3.png,
 ],
 animations: {
 	idle: data/test/idle_animation.json,

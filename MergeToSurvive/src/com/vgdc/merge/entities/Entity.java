@@ -197,6 +197,7 @@ public class Entity extends BaseEntity{
 		if(getMovingBody().getVelocity().x > walkspeed)
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
+		setFacingLeft(true);
 		getRenderer().flip(true);
 	}
 	
@@ -210,6 +211,7 @@ public class Entity extends BaseEntity{
 		if(getMovingBody().getVelocity().x < walkspeed)
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
+		setFacingLeft(false);
 		getRenderer().flip(false);
 	}
 

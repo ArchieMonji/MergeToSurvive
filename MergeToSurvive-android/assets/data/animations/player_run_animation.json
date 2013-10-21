@@ -1,7 +1,7 @@
 {
-	frameCount: 4,
+	frameCount: 8,
 	frameDuration: 0.1,
-	path: data/animations/proto_run.png,
-	cols: 4,
+	path: data/animations/proto_run3.png,
+	cols: 8,
 	rows: 1
 }

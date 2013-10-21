@@ -34,6 +34,7 @@ public abstract class Ability {
 		boolean flip = entity.getRenderer().isFlipped();
 		projectile.setPosition(new Vector2(entity.getPosition().x+(flip ? - offset.x : offset.x), entity.getPosition().y+offset.y));
 		projectile.getRenderer().flip(flip);
+		projectile.setFacingLeft(entity.facingLeft());
 		entity.getWorld().getEntityManager().addEntity(projectile);
 		return projectile;
 	}
