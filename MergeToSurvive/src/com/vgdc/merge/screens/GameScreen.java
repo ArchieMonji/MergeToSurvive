@@ -91,23 +91,23 @@ public class GameScreen extends AbstractScreen {
 
 		Entity testEntity = null;
 		testEntity = new Entity(
-				game.getAssets().entityDataMap.get("testenemy"), myWorld);
+				game.getHandler().getEntityData("test_enemy"), myWorld);
 		testEntity.setPosition(new Vector2(500, 0));
 		myWorld.getEntityManager().addEntity(testEntity);
 		testEntity = new Entity(
-				game.getAssets().entityDataMap.get("testplayer"), myWorld);
+				game.getHandler().getEntityData("test_player"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 
-		Item item = new Item(game.getAssets().entityDataMap.get("testitem"),
+		Item item = new Item(game.getHandler().getEntityData("test_item"),
 				myWorld);
 		item.setPosition(new Vector2(450, 275));
 		item.getMovingBody().setElasticity(0);
 		item.getController().onCreate();
 		myWorld.getEntityManager().addEntity(item);
 
-		item = new Item(game.getAssets().entityDataMap.get("spear_i_e"),
+		item = new Item(game.getHandler().getEntityData("spear_i_e"),
 				myWorld);
 		item.setPosition(new Vector2(650, 275));
 		item.getMovingBody().setElasticity(0);
@@ -119,8 +119,8 @@ public class GameScreen extends AbstractScreen {
 				new Vector2(-50/* 650 */, 300) }) {
 			Platform platform = new Platform(myWorld);
 			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-//			platform.setRenderer(new PlatformRenderer(
-//					"data/test/PlatformTest.png", 13, 13, 13, 13));
+			platform.setRenderer(new PlatformRenderer(game.getHandler().getTexture(
+					"PlatformTest"), 13, 13, 13, 13));
 			platform.getPhysicsBody().setPosition(pos);
 			platform.getPhysicsBody().setSize(new Vector2(200, 50));
 			myWorld.getEntityManager().addEntity(platform);

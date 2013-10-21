@@ -7,7 +7,6 @@ import com.vgdc.merge.screens.LoadScreen;
 
 public class MainGame extends Game {
 	
-	private Assets assets;
 	private AssetsHandler handler;
 	@Override
 	public void create() {
@@ -15,11 +14,6 @@ public class MainGame extends Game {
 		//assets = new Assets();
 		//assets.loadAssets("data/test/another_test.json");
 		setScreen(new LoadScreen(this));
-	}
-	
-	public Assets getAssets()
-	{
-		return assets;
 	}
 	
 	public AssetsHandler getHandler()
