@@ -23,7 +23,7 @@ class TestAIController(UnitController):
 		UnitController.onUpdate(self, delta);
 		
 	def onDamage(self, entity):
-		UnitController.onDamage(entity)
+		UnitController.onDamage(self, entity)
 		if self.getEntity().isDead():
 			self.onDeath();
 

@@ -13,15 +13,32 @@ public class HitBoxAbility extends Ability {
 //	private int damage;
 	//they are
 	
-	private EntityData data;
+	private String hitbox;
 	private boolean blank;
+	
+	public HitBoxAbility(String hitbox)
+	{
+		this(hitbox, true);
+	}
+	
+	public HitBoxAbility(String hitbox, boolean blank)
+	{
+		this.hitbox = hitbox;
+		this.blank = blank;
+	}
 
 	@Override
 	public void onUse(Entity entity, boolean retrievable) {
-		Entity hitbox = createEntity(data, entity, retrievable);
+		Entity box = createEntity(entity.getWorld().getHandler().getEntityData(hitbox), entity, retrievable);
 		if(blank)
-			hitbox.setRenderer(new BlankRenderer());
-		hitbox.getMovingBody().setAcceleration(new Vector2(0, 0));
+			box.setRenderer(new BlankRenderer());
+		box.getMovingBody().setAcceleration(new Vector2(0, 0));
+	}
+	
+	public Entity createEntity(EntityData data, Entity entity, boolean retrievable)
+	{
+		Entity hitbox = super.createEntity(data, entity, retrievable);
+		return hitbox;
 	}
 
 }

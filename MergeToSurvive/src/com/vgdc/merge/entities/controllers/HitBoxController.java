@@ -16,6 +16,13 @@ public class HitBoxController extends AbilityController {
 	public HitBoxController(float duration)
 	{
 		this.duration = duration;
+		this.knockback = new Vector2(0, 0);
+	}
+	
+	public HitBoxController(float duration, float x, float y)
+	{
+		this.duration = duration;
+		this.knockback = new Vector2(x, y);
 	}
 
 	@Override
