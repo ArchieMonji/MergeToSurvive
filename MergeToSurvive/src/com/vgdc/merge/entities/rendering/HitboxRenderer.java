@@ -21,11 +21,11 @@ public class HitboxRenderer {
 	private boolean shouldRenderPositions;
 	private int decimalPlaces;
 	private boolean shouldRenderFPS;
+	private boolean shouldRenderHitboxes;
 
 	public HitboxRenderer(World world) {
 		this.world = world;
-		font = new BitmapFont(Gdx.files.internal("data/fonts/consolas.fnt"),
-				false);
+		font = new BitmapFont(Gdx.files.internal("data/fonts/consolas.fnt"), false);
 
 		font.setColor(Color.RED);
 
@@ -35,21 +35,26 @@ public class HitboxRenderer {
 	}
 
 	public void onRender(Camera camera) {
-
-		renderHitBoxes(camera);
-
 		batch.setProjectionMatrix(camera.combined);
-		
+
+		if (shouldRenderHitboxes) {
+			renderHitboxes(camera);
+		}
+
 		if (shouldRenderPositions) {
 			renderEntityPositions(camera);
 		}
-		
+
 		if (shouldRenderFPS) {
 			renderFPS(camera);
 		}
 	}
+	
+	public void renderHitboxes(boolean shouldRenderHitboxes) {
+		this.shouldRenderHitboxes = shouldRenderHitboxes;
+	}
 
-	private void renderHitBoxes(Camera camera) {
+	private void renderHitboxes(Camera camera) {
 		sr.setProjectionMatrix(camera.combined);
 		sr.begin(ShapeType.Rectangle);
 
@@ -65,17 +70,16 @@ public class HitboxRenderer {
 		}
 		sr.end();
 	}
-
-	public void renderEntityPositions(boolean shouldRenderPositions) {
-		this.shouldRenderPositions = shouldRenderPositions;
-	}
-	
 	public void renderFPS(boolean shouldRenderFPS) {
 		this.shouldRenderFPS = shouldRenderFPS;
 	}
 
 	public void setDecimalPlaces(int decimalPlaces) {
 		this.decimalPlaces = decimalPlaces;
+	}
+	
+	public void renderEntityPositions(boolean shouldRenderPositions) {
+		this.shouldRenderPositions = shouldRenderPositions;
 	}
 
 	private void renderEntityPositions(Camera camera) {
@@ -87,8 +91,7 @@ public class HitboxRenderer {
 			float y = body.getPosition().y;
 			float h = body.getSize().y;
 
-			CharSequence msg = String.format("[%." + decimalPlaces + "f, %."
-					+ decimalPlaces + "f]", x, y);
+			CharSequence msg = String.format("[%." + decimalPlaces + "f, %." + decimalPlaces + "f]", x, y);
 
 			TextBounds bounds = font.getBounds(msg);
 			font.draw(this.batch, msg, x - bounds.width / 2, y - h / 2);
@@ -98,8 +101,7 @@ public class HitboxRenderer {
 		Vector3 mCoord = new Vector3(mouseX, mouseY, 0);
 		camera.unproject(mCoord);
 
-		CharSequence msg = String.format("[%." + decimalPlaces + "f, %."
-				+ decimalPlaces + "f]", mCoord.x, mCoord.y);
+		CharSequence msg = String.format("[%." + decimalPlaces + "f, %." + decimalPlaces + "f]", mCoord.x, mCoord.y);
 		TextBounds bounds = font.getBounds(msg);
 		font.draw(this.batch, msg, mCoord.x, mCoord.y + bounds.height);
 
@@ -109,8 +111,8 @@ public class HitboxRenderer {
 	private void renderFPS(Camera camera) {
 		batch.begin();
 		Vector3 coord = new Vector3(0, Gdx.graphics.getHeight(), 0);
-		//camera.unproject(coord);
-		//render fps topleft
+		// camera.unproject(coord);
+		// render fps topleft
 		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond(), coord.x, coord.y);
 		batch.end();
 	}

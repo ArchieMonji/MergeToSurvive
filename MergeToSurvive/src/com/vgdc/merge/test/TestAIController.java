@@ -59,7 +59,7 @@ public class TestAIController extends UnitController {
 	    DialogueBubbleEvent onDeathEvent = new DialogueBubbleEvent("TestAIController: On Death Event");
 	    // dialogue script is the script that will be read by the dialogue
 	    // box
-	    onDeathEvent.position = new Vector2(entity.getPosition());
+	    onDeathEvent.position = new Vector2(entity.getPosition().x - 250, entity.getPosition().y);
 	    onDeathEvent.dialogueScript = "data/dialogue/dialogue_bubble_test.json";
 
 	    // dialogueBox & Bubble can trigger another event after the last

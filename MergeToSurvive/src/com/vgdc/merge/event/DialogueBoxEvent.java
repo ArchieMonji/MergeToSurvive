@@ -5,26 +5,27 @@ import com.vgdc.merge.ui.DialogueBox;
 
 public class DialogueBoxEvent extends Event {
 
-    public String dialogueScript;
-    public Event onCloseEvent;
-    public Vector2 position;
+	public String dialogueScript;
+	public Event onCloseEvent;
+	public Vector2 position;
 
-    public DialogueBoxEvent(String name) {
-	super(name);
-    }
+	public DialogueBoxEvent(String name) {
+		super(name);
+	}
 
-    @Override
-    public void onTrigger() {
-	DialogueBox db = getEventSystem().getWorld().getUIManager().getDialogueManager().createDialogueBox(dialogueScript, onCloseEvent);
-	db.setPosition(position.x, position.y);
-    }
-    
-    @Override
-    public void onUpdate(float delta) {
-    }
+	@Override
+	public void onTrigger() {
+		DialogueBox db = getEventSystem().getWorld().getUIManager().getDialogueManager()
+				.createDialogueBox(dialogueScript, onCloseEvent);
+		db.setPosition(position.x, position.y);
+	}
 
-    @Override
-    public boolean checkConditions() {
-	return true;
-    }
+	@Override
+	public void onUpdate(float delta) {
+	}
+
+	@Override
+	public boolean checkConditions() {
+		return true;
+	}
 }
