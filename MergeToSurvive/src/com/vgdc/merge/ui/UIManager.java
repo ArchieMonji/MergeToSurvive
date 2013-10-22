@@ -6,23 +6,26 @@ import com.vgdc.merge.entities.rendering.HitboxRenderer;
 import com.vgdc.merge.world.World;
 
 public class UIManager {
-	DialogueBoxManager dialogueManager;
-	HealthBarRenderer healthBarRenderer;
-	HitboxRenderer hitboxRenderer;
+    private DialogueBoxManager dialogueManager;
+    private HealthBarRenderer healthBarRenderer;
+    private HitboxRenderer hitboxRenderer;
+    private boolean DEBUG;
 
-	public UIManager(World world) {
-		dialogueManager = new DialogueBoxManager(world);
-		healthBarRenderer = new HealthBarRenderer(world);
-		hitboxRenderer = new HitboxRenderer(world);
-	}
+    public UIManager(World world) {
+	dialogueManager = new DialogueBoxManager(world);
+	healthBarRenderer = new HealthBarRenderer(world);
+	hitboxRenderer = new HitboxRenderer(world);
+    }
 
-	public void onRender(Camera camera, float delta) {
-		dialogueManager.onRender();
-		healthBarRenderer.onRender(delta);
-		hitboxRenderer.onRender(camera);
+    public void onRender(Camera camera, float delta) {
+	dialogueManager.onRender();
+	healthBarRenderer.onRender(delta);
+	if (DEBUG) {
+	    hitboxRenderer.onRender(camera);
 	}
+    }
 
-	public DialogueBoxManager getDialogueManager() {
-		return dialogueManager;
-	}
+    public DialogueBoxManager getDialogueManager() {
+	return dialogueManager;
+    }
 }
