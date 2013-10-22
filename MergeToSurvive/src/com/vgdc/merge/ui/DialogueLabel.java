@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DialogueLabel extends Label {
-	public static final float DEFAULT_CHARS_PER_SECOND = 30;
+	public static final float DEFAULT_CHARS_PER_SECOND = 25;
 	private int characterLimit;
 	private String line;
 	private int breakPosition;
@@ -51,7 +51,7 @@ public class DialogueLabel extends Label {
 			time += delta;
 			textPointer = (int) Math.min(time * textSpeed, line.length());
 			// only attempt to update when the pointer has advanced
-			if(textPointer != lastPointer){
+			if (textPointer != lastPointer) {
 				updateText();
 			}
 		}
@@ -62,18 +62,15 @@ public class DialogueLabel extends Label {
 		if (limitCharacters) {
 			updateCharacterLimit();
 			if (textPointer >= characterLimit + breakPosition) {
-				breakPosition = textPointer - (characterLimit / 3);
-//				// break at last complete word
-//				if (!Character.isWhitespace(line.charAt(textPointer))) {
-//					for (int i = textPointer; i >= 0; i--) {
-//						if (Character.isWhitespace(line.charAt(i))) {
-//							breakPosition = i;
-//						}
-//					}
-//					if (breakPosition < textPointer - characterLimit) {
-//						breakPosition = textPointer;
-//					}
-//				}
+				breakPosition = textPointer - characterLimit;
+				// break at last complete word
+				if (!Character.isWhitespace(line.charAt(breakPosition))) {
+					for (int i = textPointer; i > breakPosition; i--) {
+						if (Character.isWhitespace(line.charAt(i))) {
+							breakPosition = i;
+						}
+					}
+				}
 				this.setText(line.substring(breakPosition, textPointer));
 			}
 			else {

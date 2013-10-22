@@ -13,7 +13,7 @@ public class HealthBarRenderer {
 
 	private World world;
 	private SpriteBatch batch;
-	
+
 	private Texture borderTexture;
 	private Texture barBgTexture;
 	private Texture hpTexture;
@@ -31,7 +31,7 @@ public class HealthBarRenderer {
 		this.world = world;
 		batch = new SpriteBatch();
 		borderTexture = new Texture("data/images/hp bars/border.png");
-		barBgTexture = new Texture("data/images/hp bars/BarBg.png");
+		barBgTexture = new Texture("data/images/hp bars/barBg.png");
 		hpTexture = new Texture("data/images/hp bars/hp.png");
 		spacerTexture = new Texture("data/images/hp bars/spacer.png");
 	}
@@ -54,14 +54,14 @@ public class HealthBarRenderer {
 		this.hoverHeight = hoverHeight;
 	}
 
-	public void setFixedPipWidth(boolean useFixedPipWidth){
+	public void setFixedPipWidth(boolean useFixedPipWidth) {
 		this.useFixedPipWidth = useFixedPipWidth;
 	}
-	
-	public void setPipWidth(float minPipWidth){
+
+	public void setPipWidth(float minPipWidth) {
 		this.minPipWidth = minPipWidth;
 	}
-	
+
 	public void onRender(float delta) {
 		batch.begin();
 		float pipHeight = barSize.y - 2 * borderSize.y;
@@ -71,30 +71,28 @@ public class HealthBarRenderer {
 				Entity entity = (Entity) e;
 				if (entity.getHealth() >= 0) {
 					EntityData data = entity.getData();
-					
+
 					float barWidth = 0;
 					if (barWidthRelativeToSize) {
 						barWidth = entity.getPhysicsBody().getSize().x;
-					} else {
+					}
+					else {
 						barWidth = barSize.x;
 					}
-					
-					//calculate pip size
+
+					// calculate pip size
 					float numSpacers = data.maxHealth - 1;
-					float hpPipWidth = (barWidth - 2 * borderSize.x - numSpacers
-							* spacerWidth)
-							/ (data.maxHealth);
-					
-					//if Pips are too small, resize bar to fit
-					if(useFixedPipWidth  || hpPipWidth < minPipWidth ){
+					float hpPipWidth = (barWidth - 2 * borderSize.x - numSpacers * spacerWidth) / (data.maxHealth);
+
+					// if Pips are too small, resize bar to fit
+					if (useFixedPipWidth || hpPipWidth < minPipWidth) {
 						hpPipWidth = minPipWidth;
-						barWidth = 2 * borderSize.x + numSpacers
-								* spacerWidth + hpPipWidth * data.maxHealth;
+						barWidth = 2 * borderSize.x + numSpacers * spacerWidth + hpPipWidth * data.maxHealth;
 					}
 
 					float h = entity.getPhysicsBody().getSize().y;
 
-					//determine hp bar location
+					// determine hp bar location
 					float x = entity.getPosition().x - barWidth / 2;
 					float y = entity.getPosition().y + h / 2 + hoverHeight;
 
@@ -103,25 +101,20 @@ public class HealthBarRenderer {
 
 					// draw bar bg (shows when health is below max)
 					if (entity.getHealth() < data.maxHealth) {
-						batch.draw(barBgTexture, x + borderSize.x, y
-								+ borderSize.y, barWidth - 2 * borderSize.x,
+						batch.draw(barBgTexture, x + borderSize.x, y + borderSize.y, barWidth - 2 * borderSize.x,
 								pipHeight);
 					}
-
-
 
 					// draw hp bar
 					float currHp = entity.getHealth();
 					if (currHp > 0) {
-						batch.draw(hpTexture, x + borderSize.x, y
-								+ borderSize.y, hpPipWidth * currHp
-								+ spacerWidth * (currHp - 1), pipHeight);
+						batch.draw(hpTexture, x + borderSize.x, y + borderSize.y, hpPipWidth * currHp + spacerWidth
+								* (currHp - 1), pipHeight);
 					}
 
 					// draw spaces between healths pips
 					for (int i = 1; i <= numSpacers; i++) {
-						batch.draw(spacerTexture, x + borderSize.x + i
-								* (hpPipWidth) + (i - 1) * spacerWidth, y
+						batch.draw(spacerTexture, x + borderSize.x + i * (hpPipWidth) + (i - 1) * spacerWidth, y
 								+ borderSize.y, spacerWidth, pipHeight);
 					}
 				}
