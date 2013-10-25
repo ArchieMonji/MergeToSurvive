@@ -1,8 +1,11 @@
 package com.vgdc.merge.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -15,7 +18,7 @@ import com.vgdc.merge.event.EventSystem;
 public class DialogueBox extends Window {
 
 	private DialogueLabel dialogueLabel;
-	// private Image image; TODO in future
+	private Image image;
 	private String[] script;
 	private Event onCloseEvent;
 	private Skin skin;
@@ -37,12 +40,13 @@ public class DialogueBox extends Window {
 	}
 
 	private void create() {
-		this.setSize(400, 125);
-		// /Texture imageTexture = new
-		// Texture(Gdx.files.internal("data/test/item_icon.png"));
-		// image = new Image(imageTexture);
+		this.setSize(450, 125);
+		Texture imageTexture = new Texture(Gdx.files.internal("data/dialogue/chibi.png"));
+		imageTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		image = new Image(imageTexture);
 
-		// table.add(image).top().left();
+		this.row();
+		add(image).top().size(32, 75);
 		dialogueLabel = new DialogueLabel(skin);
 		{
 			// this.add(textLabel).top().left().expand().size(500, 100);
@@ -51,14 +55,14 @@ public class DialogueBox extends Window {
 		}
 
 		scrollPane = new ScrollPane(dialogueLabel, skin);
-		add(scrollPane).top().left().fill().expand();
+		add(scrollPane).top().fill().expand();
 
-		this.row();
+		this.row().colspan(2);
 
 		final Button button = new Button(skin);
 		{
 			button.addListener(new ContinueButtonListener());
-			this.add(button).size(50, 25).right().bottom();
+			this.add(button).size(50, 25).right();
 		}
 		this.setMovable(true);
 		// this.debug();
@@ -79,7 +83,7 @@ public class DialogueBox extends Window {
 	public void setSkip(boolean canSkip) {
 		this.canSkip = canSkip;
 	}
-	
+
 	public void setScrollSpeed(float charsPerSecond) {
 		this.dialogueLabel.setScrollSpeed(charsPerSecond);
 	}
