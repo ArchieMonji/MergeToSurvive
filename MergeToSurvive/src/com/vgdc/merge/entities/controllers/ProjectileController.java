@@ -1,7 +1,6 @@
 package com.vgdc.merge.entities.controllers;
 
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.entities.EntityType;
 import com.vgdc.merge.entities.Platform;
 
 public class ProjectileController extends AbilityController{
