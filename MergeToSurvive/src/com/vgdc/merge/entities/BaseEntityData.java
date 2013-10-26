@@ -3,6 +3,7 @@ package com.vgdc.merge.entities;
 import com.badlogic.gdx.math.Vector2;
 
 public class BaseEntityData {
+	
 	public int maxHealth = 1;
 	public int damage;
 	public int defaultTeam;
