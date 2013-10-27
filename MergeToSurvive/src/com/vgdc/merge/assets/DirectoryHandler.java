@@ -51,6 +51,11 @@ public class DirectoryHandler implements FileHandleResolver
 		return base.file();
 	}
 	
+	public String getExtension()
+	{
+		return extension;
+	}
+	
 	public FileHandle[] getFilesInDirectory()
 	{
 		return path.list();

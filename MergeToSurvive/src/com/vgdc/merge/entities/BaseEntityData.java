@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BaseEntityData {
 	
-	public int maxHealth = 1;
+	public int maxHealth = 1; //*
 	public int damage;
 	public int defaultTeam;
-	public Vector2 dimensions;
+	public Vector2 dimensions; //*
 	public float jumpHeight;
 	public float moveSpeed;
 	public boolean mergeable;

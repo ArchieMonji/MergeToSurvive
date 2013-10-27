@@ -1,4 +1,4 @@
-from com.vgdc.merge.entities.controllers import ProjectileController
+from ProjectileController import ProjectileController
 
 class TestProjectileController(ProjectileController):
 

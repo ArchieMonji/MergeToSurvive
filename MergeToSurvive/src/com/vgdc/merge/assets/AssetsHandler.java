@@ -32,7 +32,7 @@ public class AssetsHandler {
 	private DirectoryHandler musicDirectory = new DirectoryHandler("test/music", ".ogg");
 	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/animations", ".json");
 	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entities", ".json");
-	private DirectoryHandler scriptsDirectory = new DirectoryHandler("test/scripts", ".py");
+	private DirectoryHandler scriptsDirectory = new ExclusiveDirectoryHandler("test/scripts", ".py");
 	
 	public AssetsHandler()
 	{
