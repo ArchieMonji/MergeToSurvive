@@ -1,4 +1,4 @@
-package com.vgdc.merge.ui;
+package com.vgdc.merge.ui.dialogue;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -76,12 +76,12 @@ public class DialogueLabel extends Label {
 	private void updateText() {
 		if (limitCharacters) {
 			updateCharacterLimit();
-			if (textPointer >= characterLimit + breakPosition) {
+			if (textPointer > characterLimit + breakPosition) {
 				breakPosition = textPointer - characterLimit;
 				// break at last complete word
 				if (!Character.isWhitespace(line.charAt(breakPosition))) {
 					for (int i = textPointer; i > breakPosition; i--) {
-						if (Character.isWhitespace(line.charAt(i))) {
+						if (Character.isWhitespace(line.charAt(i - 1))) {
 							breakPosition = i - 1;
 						}
 					}

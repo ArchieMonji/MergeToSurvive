@@ -38,6 +38,7 @@ animations: {
 entities: {
 	testplayer: data/test/test_player.json,
 	testenemy: data/test/test_enemy.json,
+	hugging_enemy: data/test/hugging_enemy.json,
 	testprojectile: data/test/test_projectile.json,
 	testitem: data/test/test_item.json,
 	item_projectile: data/test/item_projectile.json,

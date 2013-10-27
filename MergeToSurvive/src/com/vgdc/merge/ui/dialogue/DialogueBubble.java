@@ -1,4 +1,4 @@
-package com.vgdc.merge.ui;
+package com.vgdc.merge.ui.dialogue;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;

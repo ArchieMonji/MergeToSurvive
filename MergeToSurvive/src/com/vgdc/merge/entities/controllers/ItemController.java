@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityType;
-import com.vgdc.merge.entities.Platform;
 import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.physics.MovingBody;
 import com.vgdc.merge.entities.rendering.Renderer;

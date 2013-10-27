@@ -1,7 +1,7 @@
 package com.vgdc.merge.event;
 
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.ui.DialogueBubble;
+import com.vgdc.merge.ui.dialogue.DialogueBubble;
 
 public class DialogueBubbleEvent extends Event {
 	public String dialogueScript;
@@ -14,9 +14,7 @@ public class DialogueBubbleEvent extends Event {
 
 	@Override
 	public void onTrigger() {
-		DialogueBubble db = getEventSystem().getWorld().getUIManager()
-				.getDialogueManager()
-				.createDialogueBubble(dialogueScript, onCloseEvent);
+		DialogueBubble db = getEventSystem().getWorld().getUIManager().createDialogueBubble(dialogueScript, onCloseEvent);
 		db.setPosition(position.x, position.y);
 	}
 

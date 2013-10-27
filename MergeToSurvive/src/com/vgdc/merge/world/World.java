@@ -1,11 +1,11 @@
 package com.vgdc.merge.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.entities.BaseEntity;
+import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.event.EventSystem;
 import com.vgdc.merge.ui.UIManager;
 
@@ -24,9 +24,10 @@ public class World {
 
 	private EventSystem eventSystem;
 
+	private Entity player;
+	
 	public World() {
 		batch = new SpriteBatch();
-		uiManager = new UIManager(this);
 		eventSystem = new EventSystem(this);
 	}
 
@@ -79,6 +80,10 @@ public class World {
 		batch.dispose();
 	}
 
+	public void setUIManager(UIManager uiManager) {
+		this.uiManager = uiManager;
+	}
+	
 	public UIManager getUIManager() {
 		return uiManager;
 	}
@@ -87,4 +92,12 @@ public class World {
 		return eventSystem;
 	}
 
+	public Entity getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(Entity player) {
+		this.player = player;
+		uiManager.setPlayer(player);
+	}
 }

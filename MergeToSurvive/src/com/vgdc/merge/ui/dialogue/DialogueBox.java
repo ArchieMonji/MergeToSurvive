@@ -1,13 +1,13 @@
-package com.vgdc.merge.ui;
+package com.vgdc.merge.ui.dialogue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -57,13 +57,25 @@ public class DialogueBox extends Window {
 		scrollPane = new ScrollPane(dialogueLabel, skin);
 		add(scrollPane).top().fill().expand();
 
-		this.row().colspan(2);
+		this.row();
 
-		final Button button = new Button(skin);
+		final TextButton closeButton = new TextButton("CLOSE", skin);
 		{
-			button.addListener(new ContinueButtonListener());
-			this.add(button).size(50, 25).right();
+			closeButton.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					close();
+				}
+			});
+			this.add(closeButton).left().size(50,25);
 		}
+
+		final TextButton continueButton = new TextButton("NEXT", skin);
+		{
+			continueButton.addListener(new ContinueButtonListener());
+			this.add(continueButton).right().size(50,25);
+		}
+
 		this.setMovable(true);
 		// this.debug();
 

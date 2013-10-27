@@ -1,7 +1,7 @@
 package com.vgdc.merge.event;
 
 import com.badlogic.gdx.math.Vector2;
-import com.vgdc.merge.ui.DialogueBox;
+import com.vgdc.merge.ui.dialogue.DialogueBox;
 
 public class DialogueBoxEvent extends Event {
 
@@ -15,8 +15,7 @@ public class DialogueBoxEvent extends Event {
 
 	@Override
 	public void onTrigger() {
-		DialogueBox db = getEventSystem().getWorld().getUIManager().getDialogueManager()
-				.createDialogueBox(dialogueScript, onCloseEvent);
+		DialogueBox db = getEventSystem().getWorld().getUIManager().createDialogueBox(dialogueScript, onCloseEvent);
 		db.setPosition(position.x, position.y);
 	}
 
