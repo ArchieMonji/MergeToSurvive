@@ -1,4 +1,4 @@
-from com.vgdc.merge.entities.controllers import AbilityController
+from AbilityController import AbilityController
 from com.vgdc.merge.entities import Entity
 from com.vgdc.merge.entities import Platform
 
