@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.vgdc.merge.assets.loaders.AnimationLoader;
 import com.vgdc.merge.assets.loaders.EntityDataLoader;
+import com.vgdc.merge.assets.loaders.SoundFxLoader;
+import com.vgdc.merge.assets.loaders.data.SoundFxData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.audio.SoundFx;

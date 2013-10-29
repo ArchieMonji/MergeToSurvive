@@ -1,4 +1,4 @@
-package com.vgdc.merge.assets;
+package com.vgdc.merge.assets.loaders.data;
 
 import com.vgdc.merge.entities.audio.BaseSoundFx;
 

@@ -1,9 +1,16 @@
 package com.vgdc.merge.entities;
 
+import org.python.core.PyObject;
+
 import com.badlogic.gdx.math.Vector2;
 
-public class BaseEntityData {
+// I have no idea what I'm doing anymore
+public class BaseEntityData extends PyObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int maxHealth = 1; //*
 	public int damage;
 	public int defaultTeam;

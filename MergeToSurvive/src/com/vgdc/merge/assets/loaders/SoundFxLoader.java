@@ -1,44 +1,57 @@
 package com.vgdc.merge.assets.loaders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
+import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.vgdc.merge.assets.loaders.data.SoundFxData;
 import com.vgdc.merge.entities.audio.SoundFx;
 
-public class SoundFxLoader extends
-		SynchronousAssetLoader<SoundFx, SoundFxLoader.SoundFxParameter> {
-	public SoundFxLoader(FileHandleResolver resolver) {
+public class SoundFxLoader extends AsynchronousAssetLoader<SoundFx, SoundFxLoader.SoundFxParameter> {
+	
+	private Json json;
+	
+	private SoundFxData data;
+	
+	public SoundFxLoader(FileHandleResolver resolver, Json json) {
 		super(resolver);
+		this.json = json;
 	}
 
-	@Override
-	public SoundFx load(AssetManager assetManager, String fileName,
-			SoundFxParameter parameter) {
-		SoundFx sfx = new SoundFx();
-		Json json = new Json();
-		System.out.println(fileName);
-		SoundFxParameter data = json.fromJson(SoundFxParameter.class, resolve(fileName));
-		sfx.sound = Gdx.audio.newSound(resolve(data.path));
-		sfx.looping = data.looping;
-		return sfx;
-	}
-
-	static public class SoundFxParameter extends AssetLoaderParameters<SoundFx> {
-		public String name;
-		public String path;
-		public boolean looping;
+	static public class SoundFxParameter extends
+		AssetLoaderParameters<SoundFx> {
+		
 	}
 
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			SoundFxParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("start : " + fileName);
+		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
+		data = json.fromJson(SoundFxData.class, resolve(fileName));
+		deps.add(new AssetDescriptor<Sound>(data.path, Sound.class));
+		return deps;
+	}
+
+	@Override
+	public void loadAsync(AssetManager manager, String fileName,
+			SoundFxParameter parameter) {
+		
+	}
+
+	@Override
+	public SoundFx loadSync(AssetManager manager, String fileName,
+			SoundFxParameter parameter) {
+		
+		SoundFx fx = new SoundFx();
+		fx.looping = data.looping;
+		fx.sound = manager.get(data.path);
+		System.out.println("finish : " + fileName);
+		return fx;
 	}
 }
+

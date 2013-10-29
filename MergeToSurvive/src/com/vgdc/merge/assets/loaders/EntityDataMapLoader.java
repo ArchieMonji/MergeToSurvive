@@ -1,6 +1,7 @@
 package com.vgdc.merge.assets.loaders;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.python.core.PyObject;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.vgdc.merge.assets.loaders.data.EntityLoadData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
@@ -20,56 +23,65 @@ import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.audio.SoundFx;
 import com.vgdc.merge.entities.controllers.Controller;
 
-public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, EntityDataLoader.EntityLoadDataParameter> {
+public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, EntityDataMapLoader.EntityDataParameter>{
+	
+	private static final String ANIM = "animations";
+	private static final String ABIL = "abilities";
+	private static final String CONT = "controller";
+	private static final String SOUND = "sounds";
 	
 	private Json json;
 	
 	//private EntityLoadData loadData;
 	
-	private TreeMap<String, EntityLoadData> loadDataMap = new TreeMap<String, EntityLoadData>();
+	private TreeMap<String, HashMap<String, Object>> loadDataMap = new TreeMap<String, HashMap<String, Object>>();
 	
 	private EntityData data;
 
-	public EntityDataLoader(FileHandleResolver resolver, Json json) {
+	public EntityDataMapLoader(FileHandleResolver resolver, Json json) {
 		super(resolver);
 		this.json = json;
 	}
 	
-	static public class EntityLoadDataParameter extends
+	static public class EntityDataParameter extends
 	AssetLoaderParameters<EntityData> {
 }
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
-			EntityLoadDataParameter parameter) {
+			EntityDataParameter parameter) {
 		System.out.println("start : " + fileName);
-		EntityLoadData loadData = json.fromJson(EntityLoadData.class, resolve(fileName));
+		HashMap<String, Object> loadData = json.fromJson(HashMap.class, resolve(fileName));
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
-		if(loadData.animations != null)
-			for(String s : loadData.animations)
+		Array<String> animations = (Array<String>) loadData.get(ANIM);
+		if(animations != null)
+			for(String s : animations)
 				deps.add(new AssetDescriptor(s, Animation.class));
-		if(loadData.sounds != null)
-			for(String s : loadData.sounds.keys())
+		OrderedMap<String, Array<String>> sounds = (OrderedMap<String, Array<String>>) loadData.get(SOUND);
+		if(sounds != null)
+			for(Entry<String, Array<String>> s : sounds.entries())
 			{
-				for(String a : loadData.sounds.get(s))
+				for(String a : s.value)
 				{
 					System.out.println(a);
 					deps.add(new AssetDescriptor(a, SoundFx.class));
 				}
 			}
-		if(loadData.abilities!=null)
-			for(String s : loadData.abilities)
+		Array<String> abilities = (Array<String>) loadData.get(ABIL);
+		if(abilities!=null)
+			for(String s : abilities)
 				deps.add(new AssetDescriptor(s, PyObject.class));
-		if(loadData.controller!=null)
-			deps.add(new AssetDescriptor(loadData.controller, PyObject.class));
+		String controller = (String) loadData.get(CONT);
+		if(controller!=null)
+			deps.add(new AssetDescriptor(controller, PyObject.class));
 		loadDataMap.put(fileName, loadData);
 		return deps;
 	}
 
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
-			EntityLoadDataParameter parameter) {
+			EntityDataParameter parameter) {
 		data = new EntityData();
 		
 		EntityLoadData loadData = loadDataMap.remove(fileName);
@@ -121,9 +133,9 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 
 	@Override
 	public EntityData loadSync(AssetManager manager, String fileName,
-			EntityLoadDataParameter parameter) {
+			EntityDataParameter parameter) {
 		
 		return data;
 	}
-
+	
 }

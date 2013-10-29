@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.vgdc.merge.assets.AnimationData;
+import com.vgdc.merge.assets.loaders.data.AnimationData;
 
 public class AnimationLoader extends AsynchronousAssetLoader<Animation, AnimationLoader.AnimationDataParameter> {
 	
