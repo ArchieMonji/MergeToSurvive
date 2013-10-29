@@ -1,4 +1,4 @@
-package com.vgdc.merge.event;
+package com.vgdc.merge.events;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -7,9 +7,9 @@ import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.controllers.Controller;
 import com.vgdc.merge.entities.controllers.UnitController;
-import com.vgdc.merge.event.DialogueBubbleEvent;
-import com.vgdc.merge.event.Event;
-import com.vgdc.merge.event.EventSystem;
+import com.vgdc.merge.events.DialogueBubbleEvent;
+import com.vgdc.merge.events.Event;
+import com.vgdc.merge.events.EventSystem;
 import com.vgdc.merge.world.World;
 
 public class TestAIController extends UnitController {

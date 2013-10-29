@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.rendering.HealthBarRenderer;
 import com.vgdc.merge.entities.rendering.HitboxRenderer;
-import com.vgdc.merge.event.Event;
+import com.vgdc.merge.events.Event;
 import com.vgdc.merge.ui.dialogue.DialogueBox;
 import com.vgdc.merge.ui.dialogue.DialogueBubble;
 import com.vgdc.merge.world.World;

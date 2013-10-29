@@ -1,4 +1,4 @@
-package com.vgdc.merge.event;
+package com.vgdc.merge.events;
 
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.ui.dialogue.DialogueBubble;

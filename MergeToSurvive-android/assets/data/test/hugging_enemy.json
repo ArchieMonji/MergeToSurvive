@@ -1,7 +1,7 @@
 {
 maxHealth: 	4,
 jumpHeight: 15,
-moveSpeed: 	1,
+moveSpeed: 	2,
 damage: 1,
 itemDrop: testitem,
 dimensions: {

@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
-import com.vgdc.merge.event.Event;
-import com.vgdc.merge.event.EventSystem;
+import com.vgdc.merge.events.Event;
+import com.vgdc.merge.events.EventSystem;
 
 public class DialogueBox extends Window {
 

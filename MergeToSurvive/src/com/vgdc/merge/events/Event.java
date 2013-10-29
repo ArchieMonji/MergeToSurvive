@@ -1,4 +1,4 @@
-package com.vgdc.merge.event;
+package com.vgdc.merge.events;
 
 public abstract class Event {
 	private EventSystem eventSystem;

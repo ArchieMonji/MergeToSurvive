@@ -10,8 +10,8 @@ import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.Platform;
 import com.vgdc.merge.entities.physics.PlatformType;
 import com.vgdc.merge.entities.rendering.PlatformRenderer;
-import com.vgdc.merge.event.DialogueBoxEvent;
-import com.vgdc.merge.event.EventSystem;
+import com.vgdc.merge.events.DialogueBoxEvent;
+import com.vgdc.merge.events.EventSystem;
 import com.vgdc.merge.ui.UIManager;
 import com.vgdc.merge.world.World;
 

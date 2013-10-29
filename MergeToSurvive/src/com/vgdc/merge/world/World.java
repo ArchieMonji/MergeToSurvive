@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.entities.BaseEntity;
 import com.vgdc.merge.entities.Entity;
-import com.vgdc.merge.event.EventSystem;
+import com.vgdc.merge.events.EventSystem;
 import com.vgdc.merge.ui.UIManager;
 
 public class World {

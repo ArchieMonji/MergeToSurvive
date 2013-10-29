@@ -11,8 +11,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
-import com.vgdc.merge.event.Event;
-import com.vgdc.merge.event.EventSystem;
+import com.vgdc.merge.events.Event;
+import com.vgdc.merge.events.EventSystem;
 
 public class DialogueBubble extends DialogueLabel {
 	private static float FADE_IN_TIME = 1.5f;
