@@ -15,17 +15,11 @@ public class EntityData extends BaseEntityData{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//	public int maxHealth;
-//	public int damage;
-//	public int defaultTeam;
-//	public Vector2 dimensions;
-//	public float jumpHeight;
-//	public float moveSpeed;
 	public Controller controller;
 	public ArrayList<Ability> defaultAbilities;
 	public ArrayList<Animation> animations;
 	public ArrayList<ArrayList<SoundFx>> sounds;
-	public HashMap<String, PyObject> dynamicVariableTable = new HashMap<String, PyObject>();
+	public HashMap<String, PyObject> dynamicVariableTable;
 	
 	@Override
 	public PyObject __findattr_ex__(String name){

@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import org.python.core.PyBoolean;
+import org.python.core.PyDictionary;
+import org.python.core.PyFloat;
+import org.python.core.PyList;
 import org.python.core.PyObject;
+import org.python.core.PyString;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -17,6 +22,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.vgdc.merge.assets.loaders.data.EntityLoadData;
+import com.vgdc.merge.assets.loaders.data.EntityLoadMapData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
 import com.vgdc.merge.entities.abilities.Ability;
@@ -34,7 +40,7 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 	
 	//private EntityLoadData loadData;
 	
-	private TreeMap<String, HashMap<String, Object>> loadDataMap = new TreeMap<String, HashMap<String, Object>>();
+	private TreeMap<String, EntityLoadMapData> loadDataMap = new TreeMap<String, EntityLoadMapData>();
 	
 	private EntityData data;
 
@@ -52,15 +58,16 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			EntityDataParameter parameter) {
 		System.out.println("start : " + fileName);
-		HashMap<String, Object> loadData = json.fromJson(HashMap.class, resolve(fileName));
+		HashMap<String, Object> mapData = json.fromJson(HashMap.class, resolve(fileName));
+		EntityLoadMapData loadData = new EntityLoadMapData();
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
-		Array<String> animations = (Array<String>) loadData.get(ANIM);
-		if(animations != null)
-			for(String s : animations)
+		loadData.animations = (Array<String>) mapData.remove(ANIM);
+		if(loadData.animations != null)
+			for(String s : loadData.animations)
 				deps.add(new AssetDescriptor(s, Animation.class));
-		OrderedMap<String, Array<String>> sounds = (OrderedMap<String, Array<String>>) loadData.get(SOUND);
-		if(sounds != null)
-			for(Entry<String, Array<String>> s : sounds.entries())
+		loadData.sounds = (OrderedMap<String, Array<String>>) mapData.remove(SOUND);
+		if(loadData.sounds != null)
+			for(Entry<String, Array<String>> s : loadData.sounds.entries())
 			{
 				for(String a : s.value)
 				{
@@ -68,15 +75,52 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 					deps.add(new AssetDescriptor(a, SoundFx.class));
 				}
 			}
-		Array<String> abilities = (Array<String>) loadData.get(ABIL);
-		if(abilities!=null)
-			for(String s : abilities)
+		loadData.abilities = (Array<String>) mapData.remove(ABIL);
+		if(loadData.abilities!=null)
+			for(String s : loadData.abilities)
 				deps.add(new AssetDescriptor(s, PyObject.class));
-		String controller = (String) loadData.get(CONT);
-		if(controller!=null)
-			deps.add(new AssetDescriptor(controller, PyObject.class));
+		loadData.controller = (String) mapData.remove(CONT);
+		if(loadData.controller!=null)
+			deps.add(new AssetDescriptor(loadData.controller, PyObject.class));
+		for(java.util.Map.Entry<String, Object> e : mapData.entrySet())
+		{
+			loadData.dynamicVariables.put(e.getKey(), getObject(e.getValue()));
+		}
 		loadDataMap.put(fileName, loadData);
 		return deps;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private PyObject getObject(Object obj)
+	{
+		if(obj instanceof Float)
+		{
+			return new PyFloat((Float)obj);
+		}
+		if(obj instanceof String)
+		{
+			return new PyString((String)obj);
+		}
+		if(obj instanceof Boolean)
+		{
+			return new PyBoolean((Boolean)obj);
+		}
+		if(obj instanceof Array)
+		{
+			PyList list = new PyList();
+			for(Object o : (Array)obj)
+				list.add(getObject(o));
+			return list;
+		}
+		if(obj instanceof OrderedMap)
+		{
+			PyDictionary dict = new PyDictionary();
+			for(Entry<String, Object> e : ((OrderedMap<String, Object>)obj).entries())
+				dict.put(e.key, getObject(e.value));
+			return dict;
+		}
+		System.out.println("Unknown Type: " + obj.getClass());
+		return null;
 	}
 
 	@Override
@@ -84,9 +128,9 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 			EntityDataParameter parameter) {
 		data = new EntityData();
 		
-		EntityLoadData loadData = loadDataMap.remove(fileName);
+		EntityLoadMapData loadData = loadDataMap.remove(fileName);
 
-		loadData.copyInto(data);
+		//loadData.copyInto(data);
 		// attach animations
 
 		if(loadData.animations!=null)
@@ -128,6 +172,7 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
 			}
 		}
+		data.dynamicVariableTable = loadData.dynamicVariables;
 		System.out.println("finish : " + fileName);
 	}
 
