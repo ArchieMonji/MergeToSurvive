@@ -1,5 +1,7 @@
 package com.vgdc.merge.entities;
 
+import java.util.HashMap;
+
 import org.python.core.PyObject;
 
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +13,7 @@ public class BaseEntityData extends PyObject{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	public int maxHealth = 1; //*
 	public int damage;
 	public int defaultTeam;
@@ -30,5 +33,15 @@ public class BaseEntityData extends PyObject{
 		other.moveSpeed = moveSpeed;
 		other.mergeable = mergeable;
 		other.itemDrop = itemDrop;
+	}
+	
+	private static final String HEALTH = "maxHealth";
+	private static final String DMG = "damage";
+	private static final String TEAM = "defaultTeam";
+	private static final String JMP = "jumpHeight";
+	
+	public void copyFrom(HashMap<String, Object> map)
+	{
+		
 	}
 }

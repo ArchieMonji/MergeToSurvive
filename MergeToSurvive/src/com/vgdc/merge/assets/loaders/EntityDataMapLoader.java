@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import org.python.core.PyBoolean;
 import org.python.core.PyDictionary;
 import org.python.core.PyFloat;
+import org.python.core.PyJavaType;
 import org.python.core.PyList;
 import org.python.core.PyObject;
 import org.python.core.PyString;
@@ -119,8 +120,7 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 				dict.put(e.key, getObject(e.value));
 			return dict;
 		}
-		System.out.println("Unknown Type: " + obj.getClass());
-		return null;
+		return PyJavaType.wrapJavaObject(obj);
 	}
 
 	@Override
