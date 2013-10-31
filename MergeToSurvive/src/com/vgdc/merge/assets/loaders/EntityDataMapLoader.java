@@ -69,13 +69,11 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 		loadData.sounds = (OrderedMap<String, Array<String>>) mapData.remove(SOUND);
 		if(loadData.sounds != null)
 			for(Entry<String, Array<String>> s : loadData.sounds.entries())
-			{
 				for(String a : s.value)
 				{
 					System.out.println(a);
 					deps.add(new AssetDescriptor(a, SoundFx.class));
 				}
-			}
 		loadData.abilities = (Array<String>) mapData.remove(ABIL);
 		if(loadData.abilities!=null)
 			for(String s : loadData.abilities)
