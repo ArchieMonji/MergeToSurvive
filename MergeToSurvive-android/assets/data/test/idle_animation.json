@@ -2,6 +2,6 @@
 	frameCount: 2,
 	frameDuration: 0.45,
 	path: data/test/animation_sheet.png,
-	cols: 6,
-	rows: 5
+	cols: 9,
+	rows: 1
 }

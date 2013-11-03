@@ -15,7 +15,7 @@ public class DialogueBoxEvent extends Event {
 
 	@Override
 	public void onTrigger() {
-		DialogueBox db = getEventSystem().getWorld().getUIManager().createDialogueBox(dialogueScript, onCloseEvent);
+		DialogueBox db = getEventSystem().getWorld().getUIManager().getDialogueManager().createDialogueBox(dialogueScript, onCloseEvent);
 		db.setPosition(position.x, position.y);
 	}
 

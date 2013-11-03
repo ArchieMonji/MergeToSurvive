@@ -14,7 +14,7 @@ public class DialogueBubbleEvent extends Event {
 
 	@Override
 	public void onTrigger() {
-		DialogueBubble db = getEventSystem().getWorld().getUIManager().createDialogueBubble(dialogueScript, onCloseEvent);
+		DialogueBubble db = getEventSystem().getWorld().getUIManager().getDialogueManager().createDialogueBubble(dialogueScript, onCloseEvent);
 		db.setPosition(position.x, position.y);
 	}
 

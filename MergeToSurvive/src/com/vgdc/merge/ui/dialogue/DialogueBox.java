@@ -29,16 +29,23 @@ public class DialogueBox extends Window {
 	private ContinueLabel continueLabel;
 	private Image leftSpeaker;
 	private Image rightSpeaker;
-	private String[] script;
+	private DialogueScript script;
 	private Event onCloseEvent;
 	private Skin skin;
 	private EventSystem eventSystem;
 	private boolean closed;
 	private boolean canSkip = true;
 	private ScrollPane scrollPane;
+	private DialogueManager manager;
 
-	public DialogueBox(World world, String scriptPath, Skin skin) {
-		super("NARRATOR FOR NOW", skin);
+	private DialogueScript.Page currentPage;
+	private int pagePointer = 0;
+	private int linePointer = 0;
+	private DialogueScript.Emotion currentEmotion;
+
+	public DialogueBox(DialogueManager manager, World world, String scriptPath, Skin skin) {
+		super("", skin);
+		this.manager = manager;
 		this.world = world;
 		this.skin = skin;
 		setScript(scriptPath);
@@ -47,17 +54,16 @@ public class DialogueBox extends Window {
 
 	public void setScript(String scriptPath) {
 		Json json = new Json();
-		script = json.fromJson(String[].class, Gdx.files.internal(scriptPath));
+		script = json.fromJson(DialogueScript.class, Gdx.files.internal(scriptPath));
 	}
 
 	private void create() {
 		this.setSize(450, 125);
-		Texture imageTexture = new Texture(Gdx.files.internal("data/dialogue/chibi.png"));
-		imageTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		leftSpeaker = new Image(imageTexture);
+		leftSpeaker = new Image();
+		rightSpeaker = new Image();
 
 		this.row();
-		add(leftSpeaker).top().size(32, 75);
+		add(leftSpeaker).top().size(64, 64);
 		dialogueLabel = new DialogueLabel(skin);
 		{
 			// this.add(textLabel).top().left().expand().size(500, 100);
@@ -73,10 +79,12 @@ public class DialogueBox extends Window {
 				}
 			});
 		}
-
 		scrollPane = new ScrollPane(dialogueLabel, skin);
 		add(scrollPane).top().fill().expand();
 
+		rightSpeaker = new Image();
+		add(rightSpeaker).top().size(64, 64);
+		
 		this.row();
 
 		continueLabel = new ContinueLabel("", skin);
@@ -104,26 +112,24 @@ public class DialogueBox extends Window {
 		this.setMovable(true);
 		// this.debug();
 
-		dialogueLabel.setScriptLine(script[0]);
+		currentPage = script.pages[0];
+		setTitle(currentPage.speaker);
+		currentEmotion = currentPage.emotions[0];
+		dialogueLabel.setScriptLine(currentEmotion.lines[0]);
+		setLeftSpeaker(currentEmotion.image);
+		
 		world.stop();
 	}
 
-	boolean buttonPressed;
+	private boolean buttonPressed;
+	private int emotionPointer;
 
 	@Override
 	public void act(float delta) {
 		if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
 			if (buttonPressed == false) {
 				if (dialogueLabel.isEndOfLineReached()) {
-					scriptPointer++;
-					if (scriptPointer < script.length) {
-						dialogueLabel.setScriptLine(script[scriptPointer]);
-						continueLabel.setText("");
-						continueLabel.stopFadeTween();
-					}
-					else {
-						close();
-					}
+					nextLine();
 				}
 				else {
 					if (canSkip) {
@@ -143,6 +149,44 @@ public class DialogueBox extends Window {
 		}
 
 		super.act(delta);
+	}
+
+	private void nextLine() {
+		linePointer++;
+		if (linePointer < currentEmotion.lines.length) {
+			dialogueLabel.setScriptLine(currentEmotion.lines[linePointer]);
+			continueLabel.setText("");
+			continueLabel.stopFadeTween();
+		}
+		else {
+			nextEmotion();
+		}
+	}
+
+	private void nextEmotion() {
+		emotionPointer++;
+		linePointer = -1;
+		if (emotionPointer < currentPage.emotions.length) {
+			currentEmotion = currentPage.emotions[emotionPointer];
+			setLeftSpeaker(currentEmotion.image);
+			nextLine();
+		}
+		else{
+			nextPage();
+		}
+	}
+
+	private void nextPage() {
+		pagePointer++;
+		emotionPointer = -1;
+		if (pagePointer < script.pages.length) {
+			currentPage = script.pages[pagePointer];
+			setTitle(currentPage.speaker);
+			nextEmotion();
+		}
+		else {
+			close();
+		}
 	}
 
 	public void setSkip(boolean canSkip) {
@@ -173,15 +217,15 @@ public class DialogueBox extends Window {
 		return closed;
 	}
 
-	public void setLeftSpeaker(TextureRegion image){
-		leftSpeaker.setDrawable(new TextureRegionDrawable(image));
+	public void setLeftSpeaker(String imageName) {
+		TextureRegionDrawable image = manager.getPortrait(imageName);
+		leftSpeaker.setDrawable(image);
 	}
-	
-	public void setRightSpeaker(TextureRegion image){
-		rightSpeaker.setDrawable(new TextureRegionDrawable(image));
+
+	public void setRightSpeaker(String imageName) {
+		TextureRegionDrawable image = manager.getPortrait(imageName);
+		rightSpeaker.setDrawable(image);
 	}
-	
-	int scriptPointer = 0;
 
 	private class ContinueLabel extends Label {
 		private Tween tween;

@@ -115,7 +115,7 @@ public class GameScreen extends AbstractScreen {
 		DialogueBoxEvent welcomeDialogEvent = new DialogueBoxEvent("GameScreen: welcomeDialogEvent");
 		// dialogue script is the script that will be read by the dialogue
 		// box
-		welcomeDialogEvent.dialogueScript = "data/dialogue/dialogue_box_test.json";
+		welcomeDialogEvent.dialogueScript = "data/dialogue/testScript.json";
 		welcomeDialogEvent.position = new Vector2(0, h);
 		system.addEvent(welcomeDialogEvent);
 		
