@@ -2,8 +2,8 @@
 	frameCount: 6,
 	frameDuration: 0.15,
 	path: data/test/purple_attack.png,
-	frameWidth: 32,
-	frameHeight: 32,
+	frameWidth: 24,
+	frameHeight: 24,
 	cols: 3,
 	rows: 2
 }
