@@ -21,7 +21,8 @@ textures: [
 	data/animations/proto_run3.png,
 	data/test/flamesheet.png,
 	data/test/spear/spear_i.png,
-	data/test/spear/spear_p.png
+	data/test/spear/spear_p.png,
+	data/test/flames.png,
 ],
 animations: {
 	idle: data/test/idle_animation.json,

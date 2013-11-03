@@ -3,7 +3,7 @@ package com.vgdc.merge.math;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class VectorMath {//Static
-    static final float pi = (float)Math.PI;
+    public static final float pi = (float)Math.PI;
     
     public float x,y;
     

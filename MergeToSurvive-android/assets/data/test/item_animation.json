@@ -1,7 +1,7 @@
 {
-	frameCount: 3,
-	frameDuration: 0.02,
-	path: data/test/flamesheet.png,
-	cols: 3,
+	frameCount: 8,
+	frameDuration: 0.083,
+	path: data/test/flames.png,
+	cols: 8,
 	rows: 1
 }

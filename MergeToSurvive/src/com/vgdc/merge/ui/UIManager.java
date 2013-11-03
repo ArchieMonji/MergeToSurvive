@@ -15,7 +15,7 @@ import com.vgdc.merge.ui.dialogue.DialogueBubble;
 import com.vgdc.merge.world.World;
 
 public class UIManager {
-	private static final boolean DEBUG_WORLD = false;
+	private static final boolean DEBUG_WORLD = true;//false;
 	private static final boolean DEBUG_UI = false;
 
 	private Stage stage;
