@@ -1,5 +1,6 @@
 package com.vgdc.merge.ui.dialogue;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -27,6 +28,10 @@ public class DialogueLabel extends Label {
 	// utility variable for clean wrapping with unlimited char display
 	// (DialogueBox)
 	private int lastAppend;
+
+	boolean lineFinishedDrawing;
+	//
+	private DialogueLabelListener dialogueLabelListener;
 
 	public DialogueLabel(Skin skin, String styleName) {
 		super("", skin, styleName);
@@ -133,6 +138,17 @@ public class DialogueLabel extends Label {
 		}
 	}
 
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		
+		//notify line finished after label has been resized appropriately
+		if (textPointer == line.length() && !lineFinishedDrawing) {
+			lineFinishedDrawing = true;
+			notifyLineFinished();
+		}
+	}
+	
 	public boolean isEndOfLineReached() {
 		return textPointer >= line.length();
 	}
@@ -145,6 +161,7 @@ public class DialogueLabel extends Label {
 		breakPosition = 0;
 		currLineCount = 0;
 		lastAppend = 0;
+		lineFinishedDrawing = false;
 	}
 
 	public void limitCharacters(boolean limit) {
@@ -160,5 +177,15 @@ public class DialogueLabel extends Label {
 
 	public void setScrollSpeed(float charsPerSecond) {
 		this.textSpeed = charsPerSecond;
+	}
+
+	public void setDialogueListener(DialogueLabelListener dialogueLabelListener) {
+		this.dialogueLabelListener = dialogueLabelListener;
+	}
+
+	public void notifyLineFinished() {
+		if (dialogueLabelListener != null) {
+			dialogueLabelListener.lineFinished(this);
+		}
 	}
 }

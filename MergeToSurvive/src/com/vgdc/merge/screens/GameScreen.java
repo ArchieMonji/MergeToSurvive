@@ -1,8 +1,10 @@
 package com.vgdc.merge.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.MainGame;
 import com.vgdc.merge.entities.Entity;
@@ -63,6 +65,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.getCamera().position.y = 300;
 		myWorld.setAssets(game.getAssets());
 		myWorld.setDimensions(800, 600);
+		myWorld.setBackground(new Texture(Gdx.files.internal("data/test/darkroom.png")));
 		
 		uiManager = new UIManager(myWorld);
 		myWorld.setUIManager(uiManager);
@@ -93,7 +96,7 @@ public class GameScreen extends AbstractScreen {
 				new Vector2(-50/* 650 */, 300) }) {
 			Platform platform = new Platform(myWorld);
 			platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-			platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png", 13, 13, 13, 13));
+			platform.setRenderer(new PlatformRenderer("data/test/grass.png", 1,1,1,1));
 			platform.getPhysicsBody().setPosition(pos);
 			platform.getPhysicsBody().setSize(new Vector2(200, 50));
 			myWorld.getEntityManager().addEntity(platform);
@@ -101,7 +104,7 @@ public class GameScreen extends AbstractScreen {
 		// Tall platform
 		Platform platform = new Platform(myWorld);
 		platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-		platform.setRenderer(new PlatformRenderer("data/test/PlatformTest.png", 13, 13, 13, 13));
+		platform.setRenderer(new PlatformRenderer("data/test/grass.png", 1,1,1,1));
 		platform.getPhysicsBody().setPosition(new Vector2(400, 75));
 		platform.getPhysicsBody().setSize(new Vector2(50, 100));
 		myWorld.getEntityManager().addEntity(platform);
@@ -115,7 +118,10 @@ public class GameScreen extends AbstractScreen {
 		welcomeDialogEvent.dialogueScript = "data/dialogue/dialogue_box_test.json";
 		welcomeDialogEvent.position = new Vector2(0, h);
 		system.addEvent(welcomeDialogEvent);
-
+		
+		Music bgm = Gdx.audio.newMusic(Gdx.files.internal("data/test/Savant - Pirate Bay feat Twistex (Alchemist).mp3"));
+		bgm.setLooping(true);
+		bgm.play();
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import com.vgdc.merge.ui.dialogue.DialogueBubble;
 import com.vgdc.merge.world.World;
 
 public class UIManager {
-	private static final boolean DEBUG_WORLD = true;//false;
+	private static final boolean DEBUG_WORLD = false;
 	private static final boolean DEBUG_UI = false;
 
 	private Stage stage;
@@ -79,7 +79,7 @@ public class UIManager {
 	}
 
 	public DialogueBox createDialogueBox(String scriptPath, Event onCloseEvent) {
-		DialogueBox db = new DialogueBox(scriptPath, skin);
+		DialogueBox db = new DialogueBox(world, scriptPath, skin);
 		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
 
 		stage.addActor(db);
