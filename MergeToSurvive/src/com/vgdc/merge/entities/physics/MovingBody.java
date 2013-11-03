@@ -17,7 +17,9 @@ public class MovingBody extends PhysicsBody {
 	protected Vector2 velocity = new Vector2(), acceleration = DEFAULTGRAVITY;
 
 	protected float friction = .4f;
-	protected float elasticity = .5f;
+	protected float elasticity = 0;
+	
+	protected float timeMultiplier = 1;
 
 	public MovingBody() {
 	}
@@ -53,6 +55,13 @@ public class MovingBody extends PhysicsBody {
 
 	public float getElasticity() {
 		return elasticity;
+	}
+	
+	public void setTimeMultiplier(float t){
+		timeMultiplier = t;
+	}
+	public float getTimeMultiplier(){
+		return timeMultiplier;
 	}
 
 	public Vector2 getLastPosition() {
@@ -195,7 +204,7 @@ public class MovingBody extends PhysicsBody {
 
 	public void onUpdate(float delta) {
 		super.onUpdate(delta);
-		delta *= TIMEMULT;
+		delta *= TIMEMULT*timeMultiplier;
 		touchingGround = false;
 		lastPosition = new Vector2(position.x, position.y);
 		setPosition(getPosition().add(VectorMath.mul(getVelocity(), delta)));
