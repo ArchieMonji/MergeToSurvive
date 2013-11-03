@@ -1,4 +1,4 @@
-package com.vgdc.merge.assets;
+package com.vgdc.merge.assets.loaders;
 
 import java.util.HashMap;
 import java.util.TreeMap;

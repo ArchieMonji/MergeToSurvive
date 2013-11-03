@@ -1,4 +1,4 @@
-from com.vgdc.merge.entities.abilities import ProjectileAbility
+from ProjectileAbility import ProjectileAbility
 
 requirements = { 'test_projectile' : 'EntityData' }
 

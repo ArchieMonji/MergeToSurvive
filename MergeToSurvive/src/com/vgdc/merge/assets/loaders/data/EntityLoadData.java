@@ -10,6 +10,10 @@ import com.vgdc.merge.entities.EntityData;
 
 public class EntityLoadData extends BaseEntityData{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String controller;
 	public ArrayList<String> abilities;
 	public ArrayList<String> animations;

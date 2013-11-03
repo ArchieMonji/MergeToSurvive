@@ -1,0 +1,16 @@
+{
+moveSpeed: 	10,
+jumpHeight: 10,
+dimensions: {x:32,y:32},
+
+controller: BasicItemController,
+
+abilities: [
+	SpearAbility
+],
+
+animations: [
+	spear_i_a
+],
+sounds: {}
+}

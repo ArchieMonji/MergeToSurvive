@@ -1,4 +1,4 @@
-from com.vgdc.merge.entities.abilities import HitBoxAbility
+from HitBoxAbility import HitBoxAbility
 
 requirements = { 'player_punch' : 'EntityData' }
 

@@ -28,6 +28,7 @@ public class AnimationLoader extends AsynchronousAssetLoader<Animation, Animatio
 		
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			AnimationDataParameter parameter) {

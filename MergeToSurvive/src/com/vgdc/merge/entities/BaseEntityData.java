@@ -43,36 +43,53 @@ public class BaseEntityData extends PyObject{
 	private static final String MOVE = "moveSpeed";
 	private static final String MERGE = "mergeable";
 	private static final String ITEM = "itemDrop";
+	private static final String DIM = "dimensions";
 	
 	public void copyFrom(HashMap<String, Object> map)
 	{
-		
+		maxHealth = loadInt(map, HEALTH, maxHealth);
+		damage = loadInt(map, DMG);
+		defaultTeam = loadInt(map, TEAM);
+		jumpHeight = loadFloat(map, JUMP);
+		moveSpeed = loadFloat(map, MOVE);
+		mergeable = loadBoolean(map, MERGE);
+		itemDrop = loadString(map, ITEM);
+		dimensions = loadVector(map, DIM);
 	}
 	
-	private int loadInt(HashMap<String, Object> map, String key)
+	public int loadInt(HashMap<String, Object> map, String key)
 	{
-		Float f = (Float) map.get(key);
+		Float f = (Float) map.remove(key);
 		if(f!=null)
 			return f.intValue();
 		return 0;
 	}
 	
-	private float loadFloat(HashMap<String, Object> map, String key)
+	public int loadInt(HashMap<String, Object> map, String key, int def)
 	{
-		Float f = (Float) map.get(key);
+		Float f = (Float) map.remove(key);
+		if(f!=null)
+			return f.intValue();
+		return def;
+	}
+	
+	public float loadFloat(HashMap<String, Object> map, String key)
+	{
+		Float f = (Float) map.remove(key);
 		if(f!=null)
 			return f.floatValue();
 		return 0.0f;
 	}
 	
-	private String loadString(HashMap<String, Object> map, String key)
+	public String loadString(HashMap<String, Object> map, String key)
 	{
-		return (String) map.get(key);
+		return (String) map.remove(key);
 	}
 	
-	private Vector2 loadVector(HashMap<String, Object> map, String key)
+	@SuppressWarnings("unchecked")
+	public Vector2 loadVector(HashMap<String, Object> map, String key)
 	{
-		OrderedMap<String, Object> vector = (OrderedMap<String, Object>) map.get(key);
+		OrderedMap<String, Object> vector = (OrderedMap<String, Object>) map.remove(key);
 		if(vector!=null)
 		{
 			Vector2 ans = new Vector2();
@@ -81,6 +98,14 @@ public class BaseEntityData extends PyObject{
 			return ans;
 		}
 		return new Vector2(0, 0);
+	}
+	
+	public boolean loadBoolean(HashMap<String, Object> map, String key)
+	{
+		Boolean b = Boolean.parseBoolean((String) map.get(key));
+		if(b!=null)
+			return b.booleanValue();
+		return false;
 	}
 	
 }

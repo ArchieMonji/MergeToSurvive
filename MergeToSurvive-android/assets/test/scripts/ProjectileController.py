@@ -16,6 +16,7 @@ class ProjectileController(AbilityController):
 		if self.timeAlive<=0:
 			print("Death by Time-Out!")
 			if not self.getEntity().isDead():
+				print("kill")
 				self.onDeath()
 				
 	def onPlatformCollision(self, platform):

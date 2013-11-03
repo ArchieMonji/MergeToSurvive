@@ -14,7 +14,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.vgdc.merge.assets.loaders.AnimationLoader;
-import com.vgdc.merge.assets.loaders.EntityDataLoader;
+import com.vgdc.merge.assets.loaders.EntityDataMapLoader;
+import com.vgdc.merge.assets.loaders.ScriptLoader;
 import com.vgdc.merge.assets.loaders.SoundFxLoader;
 import com.vgdc.merge.assets.loaders.data.SoundFxData;
 import com.vgdc.merge.entities.EntityData;
@@ -44,7 +45,7 @@ public class AssetsHandler {
 		manager.setLoader(Sound.class, new SoundLoader(soundDirectory));
 		manager.setLoader(Music.class, new MusicLoader(musicDirectory));
 		manager.setLoader(Animation.class, new AnimationLoader(animationDirectory, animationDirectory.getJson()));
-		manager.setLoader(EntityData.class, new EntityDataLoader(entityDataDirectory, entityDataDirectory.getJson()));
+		manager.setLoader(EntityData.class, new EntityDataMapLoader(entityDataDirectory, entityDataDirectory.getJson()));
 		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
 		manager.setLoader(SoundFx.class, new SoundFxLoader(soundFxDirectory, soundFxDirectory.getJson()));
 	}

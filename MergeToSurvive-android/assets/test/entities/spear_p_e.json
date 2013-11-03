@@ -1,0 +1,16 @@
+{
+moveSpeed: 	10,
+jumpHeight: 10,
+damage:1,
+dimensions: {x:64,y:32},
+
+controller: SpearController,
+
+abilities: [
+],
+
+animations: [
+	spear_p_a
+],
+sounds: {}
+}

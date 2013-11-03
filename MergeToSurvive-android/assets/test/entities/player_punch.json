@@ -7,5 +7,9 @@
 	abilities: [
 	],
 
-	sounds: {}
+	sounds: {},
+	
+	duration: 0.5,
+	knockbackx: 3,
+	knockbacky: 3
 }
