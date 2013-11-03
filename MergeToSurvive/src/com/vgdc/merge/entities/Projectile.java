@@ -12,4 +12,10 @@ public class Projectile extends Entity{
 	public EntityType getEntityType(){
 		return EntityType.Projectile;
 	}
+	
+	@Override
+	public void onUpdate(float delta){
+		super.onUpdate(delta);
+		this.getWorld().getParticleManager().create_Fire(getPhysicsBody().getPosition());
+	}
 }

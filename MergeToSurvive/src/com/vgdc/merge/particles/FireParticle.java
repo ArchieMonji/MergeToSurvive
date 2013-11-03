@@ -4,16 +4,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 public class FireParticle extends Particle {
+	static final float SIZE = 22.5f;//15;
+	
     float lerptransrate;
     float sizechange;
     
 	public FireParticle(){
-		super("data/particles/fire.png",15,2);
+		super("data/particles/fire.png",SIZE,2);
 	}
 	
 	public void onRegister(){
 		color = new Color(1,1,1,1f);
-		System.out.println(color);
 		sizechange = .99f+manager.random.nextFloat()*.02f;
 		lerptransrate = .95f+manager.random.nextFloat()*.03f;
 		rotvelocity = (manager.random.nextFloat()-.5f)*2;
