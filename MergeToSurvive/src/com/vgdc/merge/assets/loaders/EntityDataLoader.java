@@ -3,7 +3,13 @@ package com.vgdc.merge.assets.loaders;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import org.python.core.PyBoolean;
+import org.python.core.PyDictionary;
+import org.python.core.PyFloat;
+import org.python.core.PyJavaType;
+import org.python.core.PyList;
 import org.python.core.PyObject;
+import org.python.core.PyString;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -13,6 +19,8 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.vgdc.merge.assets.loaders.data.EntityLoadData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;
@@ -21,6 +29,20 @@ import com.vgdc.merge.entities.audio.SoundFx;
 import com.vgdc.merge.entities.controllers.Controller;
 
 public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, EntityDataLoader.EntityLoadDataParameter> {
+	
+	private class NoScriptException extends RuntimeException
+	{
+		
+		public NoScriptException(String text)
+		{
+			super(text);
+		}
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+	}
 	
 	private Json json;
 	
@@ -59,10 +81,18 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 				}
 			}
 		if(loadData.abilities!=null)
-			for(String s : loadData.abilities)
-				deps.add(new AssetDescriptor(s, PyObject.class));
+			for(OrderedMap<String, Object> m : loadData.abilities)
+			{
+				String cont = (String) m.get("script");
+				if(cont!=null)
+					deps.add(new AssetDescriptor(cont, PyObject.class));
+			}
 		if(loadData.controller!=null)
-			deps.add(new AssetDescriptor(loadData.controller, PyObject.class));
+		{
+			String cont = (String) loadData.controller.get("script");
+			if(cont!=null)
+				deps.add(new AssetDescriptor(cont, PyObject.class));
+		}
 		loadDataMap.put(fileName, loadData);
 		return deps;
 	}
@@ -105,18 +135,94 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			}
 
 		}
-		
-		PyObject object = manager.get(loadData.controller, PyObject.class).__call__();
+		String cont = (String) loadData.controller.remove("script");
+		if(cont==null)
+		{
+			cont = (String) loadData.controller.remove("class");
+			if(cont == null)
+				throw new NoScriptException("No class or script field in controller");
+			Controller c = null;
+			try {
+				c = (Controller) json.getClass(cont).newInstance();
+			} catch (InstantiationException e) {
+				throw new NoScriptException("The class of controller could not be found");
+			} catch (IllegalAccessException e) {
+				throw new NoScriptException("The class of controller could not be found");
+			}
+			json.readFields(c, loadData.controller);
+			data.controller = c;
+		}
+		PyObject object = manager.get(cont, PyObject.class).__call__();
+		for(Entry<String, Object> o : loadData.controller.entries())
+		{
+			object.__setattr__(o.key, getObject(o.value));
+		}
 		data.controller = (Controller) (object.__tojava__(Controller.class));
 		
 		data.defaultAbilities = new ArrayList<Ability>();
 		if(loadData.abilities!=null) {
-			for(String s : loadData.abilities) {
-				object = manager.get(s, PyObject.class).__call__();
-				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
+			for(OrderedMap<String, Object> map : loadData.abilities) {
+				cont = (String) map.remove("script");
+				if(cont==null)
+				{
+					cont = (String) loadData.controller.remove("class");
+					if(cont == null)
+						throw new NoScriptException("No class or script field in controller");
+					Ability a = null;
+					try {
+						a = (Ability) json.getClass(cont).newInstance();
+					} catch (InstantiationException e) {
+						throw new NoScriptException("The class of ability could not be found");
+					} catch (IllegalAccessException e) {
+						throw new NoScriptException("The class of ability could not be found");
+					}
+					json.readFields(a, map);
+					data.defaultAbilities.add(a);
+				}
+				else
+				{
+					object = manager.get(cont, PyObject.class).__call__();
+					for(Entry<String, Object> o : loadData.controller.entries())
+					{
+						object.__setattr__(o.key, getObject(o.value));
+					}
+					data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
+				}
 			}
 		}
 		System.out.println("finish : " + fileName);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private PyObject getObject(Object obj)
+	{
+		if(obj instanceof Float)
+		{
+			return new PyFloat((Float)obj);
+		}
+		if(obj instanceof String)
+		{
+			return new PyString((String)obj);
+		}
+		if(obj instanceof Boolean)
+		{
+			return new PyBoolean((Boolean)obj);
+		}
+		if(obj instanceof Array)
+		{
+			PyList list = new PyList();
+			for(Object o : (Array<Object>)obj)
+				list.add(getObject(o));
+			return list;
+		}
+		if(obj instanceof OrderedMap)
+		{
+			PyDictionary dict = new PyDictionary();
+			for(Entry<String, Object> e : ((OrderedMap<String, Object>)obj).entries())
+				dict.put(e.key, getObject(e.value));
+			return dict;
+		}
+		return PyJavaType.wrapJavaObject(obj);
 	}
 
 	@Override

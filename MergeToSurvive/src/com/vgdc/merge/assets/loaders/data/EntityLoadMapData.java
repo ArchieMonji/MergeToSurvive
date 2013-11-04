@@ -36,15 +36,15 @@ public class EntityLoadMapData extends BaseEntityData{
 	
 	public void copyFrom(HashMap<String, Object> map)
 	{
-		super.copyFrom(map);
-		controller = loadString(map, CONT);
-		abilities = loadArray(map, ABIL);
-		animations = loadArray(map, ANIM);
-		sounds = loadArrayMap(map, SOUND);
-		for(java.util.Map.Entry<String, Object> e : map.entrySet())
-		{
-			dynamicVariables.put(e.getKey(), getObject(e.getValue()));
-		}
+//		super.copyFrom(map);
+//		controller = loadString(map, CONT);
+//		abilities = loadArray(map, ABIL);
+//		animations = loadArray(map, ANIM);
+//		sounds = loadArrayMap(map, SOUND);
+//		for(java.util.Map.Entry<String, Object> e : map.entrySet())
+//		{
+//			dynamicVariables.put(e.getKey(), getObject(e.getValue()));
+//		}
 	}
 	
 	@SuppressWarnings("unchecked")

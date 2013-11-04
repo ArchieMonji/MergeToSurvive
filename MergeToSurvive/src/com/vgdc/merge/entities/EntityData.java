@@ -19,14 +19,5 @@ public class EntityData extends BaseEntityData{
 	public ArrayList<Ability> defaultAbilities;
 	public ArrayList<Animation> animations;
 	public ArrayList<ArrayList<SoundFx>> sounds;
-	public HashMap<String, PyObject> dynamicVariableTable;
-	
-	@Override
-	public PyObject __findattr_ex__(String name){
-		PyObject object = super.__findattr_ex__(name);
-		if(object!=null)
-			return object;
-		return dynamicVariableTable.get(name);
-	}
 	
 }

@@ -115,8 +115,8 @@ public class EntityDataMapLoader extends AsynchronousAssetLoader<EntityData, Ent
 				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
 			}
 		}
-		data.dynamicVariableTable = loadData.dynamicVariables;
-		System.out.println("finish : " + fileName);
+//		data.dynamicVariableTable = loadData.dynamicVariables;
+//		System.out.println("finish : " + fileName);
 	}
 
 	@Override

@@ -14,14 +14,9 @@ public class EntityLoadData extends BaseEntityData{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String controller;
-	public ArrayList<String> abilities;
+	public OrderedMap<String, Object> controller;
+	public ArrayList<OrderedMap<String, Object>> abilities;
 	public ArrayList<String> animations;
 	public OrderedMap<String, Array<String>> sounds;
-	
-	public EntityData convert(AssetsHandler handler)
-	{
-		return null;
-	}
 
 }

@@ -2,13 +2,10 @@ package com.vgdc.merge.entities;
 
 import java.util.HashMap;
 
-import org.python.core.PyObject;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.OrderedMap;
 
-// I have no idea what I'm doing anymore
-public class BaseEntityData extends PyObject{
+public class BaseEntityData{
 	
 	/**
 	 * 
@@ -34,27 +31,6 @@ public class BaseEntityData extends PyObject{
 		other.moveSpeed = moveSpeed;
 		other.mergeable = mergeable;
 		other.itemDrop = itemDrop;
-	}
-	
-	private static final String HEALTH = "maxHealth";
-	private static final String DMG = "damage";
-	private static final String TEAM = "defaultTeam";
-	private static final String JUMP = "jumpHeight";
-	private static final String MOVE = "moveSpeed";
-	private static final String MERGE = "mergeable";
-	private static final String ITEM = "itemDrop";
-	private static final String DIM = "dimensions";
-	
-	public void copyFrom(HashMap<String, Object> map)
-	{
-		maxHealth = loadInt(map, HEALTH, maxHealth);
-		damage = loadInt(map, DMG);
-		defaultTeam = loadInt(map, TEAM);
-		jumpHeight = loadFloat(map, JUMP);
-		moveSpeed = loadFloat(map, MOVE);
-		mergeable = loadBoolean(map, MERGE);
-		itemDrop = loadString(map, ITEM);
-		dimensions = loadVector(map, DIM);
 	}
 	
 	public int loadInt(HashMap<String, Object> map, String key)
