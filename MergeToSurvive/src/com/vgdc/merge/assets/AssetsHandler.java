@@ -13,8 +13,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.loaders.AnimationLoader;
-import com.vgdc.merge.assets.loaders.EntityDataMapLoader;
+import com.vgdc.merge.assets.loaders.EntityDataLoader;
 import com.vgdc.merge.assets.loaders.ScriptLoader;
 import com.vgdc.merge.assets.loaders.SoundFxLoader;
 import com.vgdc.merge.assets.loaders.data.SoundFxData;
@@ -45,7 +46,7 @@ public class AssetsHandler {
 		manager.setLoader(Sound.class, new SoundLoader(soundDirectory));
 		manager.setLoader(Music.class, new MusicLoader(musicDirectory));
 		manager.setLoader(Animation.class, new AnimationLoader(animationDirectory, animationDirectory.getJson()));
-		manager.setLoader(EntityData.class, new EntityDataMapLoader(entityDataDirectory, entityDataDirectory.getJson()));
+		manager.setLoader(EntityData.class, new EntityDataLoader(entityDataDirectory, entityDataDirectory.getJson()));
 		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
 		manager.setLoader(SoundFx.class, new SoundFxLoader(soundFxDirectory, soundFxDirectory.getJson()));
 	}
@@ -53,15 +54,16 @@ public class AssetsHandler {
 	private void populateJsons()
 	{
 		entityDataDirectory.getJson().addClassTag(SoundFxData.class.getSimpleName(), SoundFxData.class);
-//		String[] packages = new String[] {
-//				"com.vgdc.merge.entities.controllers",
-//				"com.vgdc.merge.entities.abilities" };
-//
-//		for (String packageName : packages) {
-//			for (Class<?> c : ClassFinder.getClassesInPackage(packageName)) {
-//				entityDataDirectory.getJson().addClassTag(c.getSimpleName(), c);
-//			}
-//		}
+		String[] packages = new String[] {
+				"com.vgdc.merge.entities.controllers",
+				"com.vgdc.merge.entities.abilities" };
+
+		for (String packageName : packages) {
+			for (Class<?> c : ClassFinder.getClassesInPackage(packageName)) {
+				entityDataDirectory.getJson().addClassTag(c.getSimpleName(), c);
+			}
+		}
+		entityDataDirectory.getJson().addClassTag(Vector2.class.getSimpleName(), Vector2.class);
 	}
 	
 	public Texture getTexture(String path){
