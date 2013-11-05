@@ -7,14 +7,20 @@ dimensions: {
 	y: 32
 },
 
-controller: BasicItemController,
+controller: {
+	class: ItemController
+},
 
 abilities: [
-	ItemProjectileAbility
+	{
+		class: ProjectileAbility,
+		projectile: item_projectile,
+		itemName: testitem
+	}
 ],
 
 animations: [
-	item_animation
+	item
 ],
 
 sounds: {}

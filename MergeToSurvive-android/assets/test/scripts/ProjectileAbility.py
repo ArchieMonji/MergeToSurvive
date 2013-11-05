@@ -5,7 +5,7 @@ from com.vgdc.merge.entities import EntityData;
 
 class ProjectileAbility(Ability):
 	
-	def __init__(self, projectile):
+	def __init__(self, projectile = ""):
 		self.projectile = projectile
 
 	def onUse(self, entity, retrievable = False):

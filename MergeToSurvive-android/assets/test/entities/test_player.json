@@ -9,22 +9,52 @@ dimensions: {
 	y: 96
 },
 
-controller: PlayerController,
+controller: {
+	class: PlayerController,
+	controls: {
+		up: 62,
+		down: 47,
+		left: 29,
+		right: 32,
+		useAbility: 0
+	}
+},
 
 abilities: [
-	PlayerPunchAbility
+	{
+		class: HitBoxAbility,
+		offset: {
+			x: 40,
+			y: 28
+		},
+		data:{
+			damage: 1,
+			dimensions: {
+				x: 30,
+				y: 30
+			},
+			controller: {
+				class: HitBoxController,
+				duration: 0.2,
+				knockback: {
+					x: 20,
+					y: 20
+				}
+			}
+		}
+	}
 ],
 
 animations: [
-	idle_animation,
-	run_animation
+	proto_idle,
+	proto_run
 ],
 sounds: {
 	IDLE: [
-		vineattack
+		testvine
 	],
 	MOVE: [
-		flamethrowerfx
+		testthrower
 	]
-},
+}
 }

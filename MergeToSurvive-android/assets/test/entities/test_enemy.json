@@ -3,20 +3,26 @@ maxHealth: 	4,
 jumpHeight: 5,
 moveSpeed: 	1,
 damage: 1,
+itemDrop: testitem,
 dimensions: {
 	x: 65,
 	y: 102
 },
 
-controller: TestAIController,
+controller: {
+	class: com.vgdc.merge.test.TestAIController
+},
 
 abilities: [
-	
+	{
+		class: ProjectileAbility,
+		projectile: testprojectile
+	}
 ],
 
 animations: [
-	idle_animation,
-	run_animation
+	idle,
+	run
 ],
 sounds: {}
 }

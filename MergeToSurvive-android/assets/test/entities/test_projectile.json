@@ -4,13 +4,15 @@ jumpHeight: 20,
 damage:1,
 dimensions: {x:8,y:8},
 
-controller: TestProjectileController,
+controller: {
+	class: ProjectileController
+},
 
 abilities: [
 ],
 
 animations: [
-	projectile_animation
+	projectile
 ],
 sounds: {}
 }
