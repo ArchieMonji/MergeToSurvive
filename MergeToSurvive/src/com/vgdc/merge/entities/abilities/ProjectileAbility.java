@@ -6,8 +6,6 @@ import com.vgdc.merge.entities.EntityData;
 
 public class ProjectileAbility extends Ability {
 	
-	public String projectile;
-	
 	public ProjectileAbility()
 	{
 //		

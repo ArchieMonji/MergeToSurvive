@@ -18,6 +18,11 @@ public class HitBoxAbility extends Ability {
 	private Vector2 offset;
 	private boolean blank;
 	
+	public HitBoxAbility()
+	{
+		this(null, true);
+	}
+	
 	public HitBoxAbility(String hitbox)
 	{
 		this(hitbox, true);

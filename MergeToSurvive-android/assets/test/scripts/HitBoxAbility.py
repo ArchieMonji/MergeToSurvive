@@ -7,7 +7,7 @@ from com.vgdc.merge.entities.rendering import BlankRenderer
 	
 class HitBoxAbility(Ability):
 	
-	def __init__(self, hitbox, blank = True):
+	def __init__(self, hitbox = "", blank = True):
 		self.hitbox = hitbox
 		self.blank = blank
 

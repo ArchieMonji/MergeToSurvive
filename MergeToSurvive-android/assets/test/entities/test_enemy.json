@@ -21,8 +21,8 @@ abilities: [
 ],
 
 animations: [
-	idle,
-	run
+	idle_animation,
+	run_animation
 ],
 sounds: {}
 }

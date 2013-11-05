@@ -44,6 +44,8 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		
 	}
 	
+	private static final String script = "script";
+	
 	private Json json;
 	
 	//private EntityLoadData loadData;
@@ -80,23 +82,32 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 					deps.add(new AssetDescriptor(a, SoundFx.class));
 				}
 			}
-		if(loadData.abilities!=null)
-			for(OrderedMap<String, Object> m : loadData.abilities)
-			{
-				String cont = (String) m.get("script");
-				if(cont!=null)
-					deps.add(new AssetDescriptor(cont, PyObject.class));
-			}
-		if(loadData.controller!=null)
+		if(loadData.sabilities!=null)
 		{
-			String cont = (String) loadData.controller.get("script");
-			if(cont!=null)
+			for(OrderedMap<String, Object> m : loadData.sabilities)
+			{
+				String cont = (String) m.get(script);
+				if(cont == null)
+					throw new NoScriptException("the file " + fileName + " doesnt specify a python file for an ability");
 				deps.add(new AssetDescriptor(cont, PyObject.class));
+			}
+		}
+		if(loadData.scontroller!=null)
+		{
+			String cont = (String) loadData.scontroller.get(script);
+			if(cont == null)
+				throw new NoScriptException("the file " + fileName + " doesnt specify a python file for its controller");
+			deps.add(new AssetDescriptor(cont, PyObject.class));
+		}
+		else if(loadData.controller==null)
+		{
+			throw new NoScriptException("the file " + fileName + " doesnt specify a java class or python script for its controller");
 		}
 		loadDataMap.put(fileName, loadData);
 		return deps;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
 			EntityLoadDataParameter parameter) {
@@ -135,61 +146,96 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			}
 
 		}
-		String cont = (String) loadData.controller.remove("script");
-		if(cont==null)
-		{
-			cont = (String) loadData.controller.remove("class");
-			if(cont == null)
-				throw new NoScriptException("No class or script field in controller");
-			Controller c = null;
-			try {
-				c = (Controller) json.getClass(cont).newInstance();
-			} catch (InstantiationException e) {
-				throw new NoScriptException("The class of controller could not be found");
-			} catch (IllegalAccessException e) {
-				throw new NoScriptException("The class of controller could not be found");
-			}
-			json.readFields(c, loadData.controller);
-			data.controller = c;
-		}
-		PyObject object = manager.get(cont, PyObject.class).__call__();
-		for(Entry<String, Object> o : loadData.controller.entries())
-		{
-			object.__setattr__(o.key, getObject(o.value));
-		}
-		data.controller = (Controller) (object.__tojava__(Controller.class));
 		
+		//attach controller
+		if(loadData.scontroller != null)
+		{
+			String cont = (String) loadData.scontroller.remove(script);
+			PyObject object = manager.get(cont, PyObject.class).__call__();
+			for(Entry<String, Object> entry : loadData.scontroller.entries())
+			{
+				object.__setattr__(entry.key, getObject(entry.value));
+			}
+			data.controller = ((Controller) object.__tojava__(Controller.class));
+		}
+		else
+		{
+			data.controller = loadData.controller;
+		}
+//		String cont = (String) loadData.controller.remove("script");
+//		if(cont==null)
+//		{
+//			cont = (String) loadData.controller.remove("class");
+//			if(cont == null)
+//				throw new NoScriptException("No class or script field in controller");
+//			Controller c = null;
+//			try {
+//				System.out.println(json.getClass(cont));
+//				c = (Controller) json.getClass(cont).newInstance();
+//			} catch (InstantiationException e) {
+//				throw new NoScriptException("The class of controller could not be found");
+//			} catch (IllegalAccessException e) {
+//				throw new NoScriptException("The class of controller could not be found");
+//			}
+//			json.readFields(c, loadData.controller);
+//			data.controller = c;
+//		}
+//		PyObject object = manager.get(cont, PyObject.class).__call__();
+//		for(Entry<String, Object> o : loadData.controller.entries())
+//		{
+//			object.__setattr__(o.key, getObject(o.value));
+//		}
+//		data.controller = (Controller) (object.__tojava__(Controller.class));
+		
+		//attach abilities
 		data.defaultAbilities = new ArrayList<Ability>();
-		if(loadData.abilities!=null) {
-			for(OrderedMap<String, Object> map : loadData.abilities) {
-				cont = (String) map.remove("script");
-				if(cont==null)
+		if(loadData.sabilities!=null)
+		{
+			for(OrderedMap<String, Object> m : loadData.sabilities)
+			{
+				String abil = (String) m.remove(script);
+				PyObject object = manager.get(abil, PyObject.class).__call__();
+				for(Entry<String, Object> entry : m.entries())
 				{
-					cont = (String) loadData.controller.remove("class");
-					if(cont == null)
-						throw new NoScriptException("No class or script field in controller");
-					Ability a = null;
-					try {
-						a = (Ability) json.getClass(cont).newInstance();
-					} catch (InstantiationException e) {
-						throw new NoScriptException("The class of ability could not be found");
-					} catch (IllegalAccessException e) {
-						throw new NoScriptException("The class of ability could not be found");
-					}
-					json.readFields(a, map);
-					data.defaultAbilities.add(a);
+					object.__setattr__(entry.key, getObject(entry.value));
 				}
-				else
-				{
-					object = manager.get(cont, PyObject.class).__call__();
-					for(Entry<String, Object> o : loadData.controller.entries())
-					{
-						object.__setattr__(o.key, getObject(o.value));
-					}
-					data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
-				}
+				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
 			}
 		}
+		if(loadData.abilities!=null)
+		{
+			data.defaultAbilities.addAll(loadData.abilities);
+		}
+//		if(loadData.abilities!=null) {
+//			for(OrderedMap<String, Object> map : loadData.abilities) {
+//				cont = (String) map.remove("script");
+//				if(cont==null)
+//				{
+//					cont = (String) loadData.controller.remove("class");
+//					if(cont == null)
+//						throw new NoScriptException("No class or script field in controller");
+//					Ability a = null;
+//					try {
+//						a = (Ability) json.getClass(cont).newInstance();
+//					} catch (InstantiationException e) {
+//						throw new NoScriptException("The class of ability could not be found");
+//					} catch (IllegalAccessException e) {
+//						throw new NoScriptException("The class of ability could not be found");
+//					}
+//					json.readFields(a, map);
+//					data.defaultAbilities.add(a);
+//				}
+//				else
+//				{
+//					object = manager.get(cont, PyObject.class).__call__();
+//					for(Entry<String, Object> o : loadData.controller.entries())
+//					{
+//						object.__setattr__(o.key, getObject(o.value));
+//					}
+//					data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
+//				}
+//			}
+//		}
 		System.out.println("finish : " + fileName);
 	}
 	

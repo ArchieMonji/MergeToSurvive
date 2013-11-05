@@ -20,41 +20,22 @@ controller: {
 	}
 },
 
-abilities: [
+sabilities: [
 	{
-		class: HitBoxAbility,
-		offset: {
-			x: 40,
-			y: 28
-		},
-		data:{
-			damage: 1,
-			dimensions: {
-				x: 30,
-				y: 30
-			},
-			controller: {
-				class: HitBoxController,
-				duration: 0.2,
-				knockback: {
-					x: 20,
-					y: 20
-				}
-			}
-		}
+		script: PlayerPunchAbility
 	}
 ],
 
 animations: [
-	proto_idle,
-	proto_run
+	player_idle_animation,
+	player_run_animation
 ],
 sounds: {
 	IDLE: [
-		testvine
+		vineattack
 	],
 	MOVE: [
-		testthrower
+		flamethrowerfx
 	]
 }
 }

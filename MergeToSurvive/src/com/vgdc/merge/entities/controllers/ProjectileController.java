@@ -5,6 +5,11 @@ import com.vgdc.merge.entities.Platform;
 
 public class ProjectileController extends AbilityController{
 	
+	public ProjectileController()
+	{
+		this.timeAlive = 1f;
+	}
+	
 	public ProjectileController(float timeAlive)
 	{
 		this.timeAlive = timeAlive;

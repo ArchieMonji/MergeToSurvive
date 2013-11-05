@@ -12,7 +12,7 @@ abilities: [
 ],
 
 animations: [
-	projectile
+	projectile_animation
 ],
 sounds: {}
 }

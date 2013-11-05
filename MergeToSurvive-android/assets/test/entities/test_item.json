@@ -15,12 +15,12 @@ abilities: [
 	{
 		class: ProjectileAbility,
 		projectile: item_projectile,
-		itemName: testitem
+		itemName: test_item
 	}
 ],
 
 animations: [
-	item
+	item_animation
 ],
 
 sounds: {}
