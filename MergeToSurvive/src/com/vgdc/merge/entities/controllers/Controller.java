@@ -1,10 +1,13 @@
 package com.vgdc.merge.entities.controllers;
 
+import java.util.Map;
+
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.Platform;
+import com.vgdc.merge.assets.LoadableAsset;
 
-public abstract class Controller{
+public abstract class Controller implements LoadableAsset{
 	
 	private Entity entity;
 	
@@ -60,6 +63,15 @@ public abstract class Controller{
 	}
 	public void onPlatformCollision(Platform platform){
 		
+	}
+	
+	/**
+	 * the requirements to load this controller, usually in terms of other files
+	 * @return
+	 */
+	public Map<String, String> getRequirements()
+	{
+		return null;
 	}
 	
 	

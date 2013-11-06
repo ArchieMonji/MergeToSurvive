@@ -1,7 +1,5 @@
 from ProjectileAbility import ProjectileAbility
 
-requirements = { 'test_projectile' : 'EntityData' }
-
 class TestProjectileAbility(ProjectileAbility):
 
 	def __init__(self):

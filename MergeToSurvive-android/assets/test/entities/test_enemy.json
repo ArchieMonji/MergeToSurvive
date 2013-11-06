@@ -3,7 +3,7 @@ maxHealth: 	4,
 jumpHeight: 5,
 moveSpeed: 	1,
 damage: 1,
-itemDrop: testitem,
+itemDrop: test_item,
 dimensions: {
 	x: 65,
 	y: 102
@@ -16,7 +16,7 @@ controller: {
 abilities: [
 	{
 		class: ProjectileAbility,
-		projectile: testprojectile
+		projectile: test_projectile
 	}
 ],
 

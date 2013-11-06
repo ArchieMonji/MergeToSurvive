@@ -1,7 +1,5 @@
 from HitBoxAbility import HitBoxAbility
 
-requirements = { 'player_punch' : 'EntityData' }
-
 class PlayerPunchAbility(HitBoxAbility):
 
 	def __init__(self):

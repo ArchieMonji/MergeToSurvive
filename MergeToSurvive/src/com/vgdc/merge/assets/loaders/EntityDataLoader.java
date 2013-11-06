@@ -1,15 +1,11 @@
 package com.vgdc.merge.assets.loaders;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
-import org.python.core.PyBoolean;
-import org.python.core.PyDictionary;
-import org.python.core.PyFloat;
-import org.python.core.PyJavaType;
-import org.python.core.PyList;
 import org.python.core.PyObject;
-import org.python.core.PyString;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -70,6 +66,8 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 		System.out.println("start : " + fileName);
 		EntityLoadData loadData = json.fromJson(EntityLoadData.class, resolve(fileName));
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
+		if(loadData.itemDrop!=null)
+			deps.add(new AssetDescriptor(loadData.itemDrop, EntityData.class));
 		if(loadData.animations != null)
 			for(String s : loadData.animations)
 				deps.add(new AssetDescriptor(s, Animation.class));
@@ -89,7 +87,21 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 				String cont = (String) m.get(script);
 				if(cont == null)
 					throw new NoScriptException("the file " + fileName + " doesnt specify a python file for an ability");
-				deps.add(new AssetDescriptor(cont, PyObject.class));
+				ScriptLoader.ScriptParameter scriptparam = new ScriptLoader.ScriptParameter();
+				scriptparam.argsMap = new HashMap<String, Object>();
+				for(Entry<String, Object> e : m.entries())
+				{
+					scriptparam.argsMap.put(e.key, e.value);
+				}
+				scriptparam.argsMap.remove(script);
+				deps.add(new AssetDescriptor(cont, PyObject.class, scriptparam));
+			}
+		}
+		if(loadData.abilities != null)
+		{
+			for(Ability a : loadData.abilities)
+			{
+				PyHelper.addDependencies(a.getRequirements(), deps, fileName);
 			}
 		}
 		if(loadData.scontroller!=null)
@@ -97,17 +109,26 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			String cont = (String) loadData.scontroller.get(script);
 			if(cont == null)
 				throw new NoScriptException("the file " + fileName + " doesnt specify a python file for its controller");
-			deps.add(new AssetDescriptor(cont, PyObject.class));
+			ScriptLoader.ScriptParameter scriptparam = new ScriptLoader.ScriptParameter();
+			scriptparam.argsMap = new HashMap<String, Object>();
+			for(Entry<String, Object> e : loadData.scontroller.entries())
+			{
+				scriptparam.argsMap.put(e.key, e.value);
+			}
+			scriptparam.argsMap.remove(script);
+			deps.add(new AssetDescriptor(cont, PyObject.class, scriptparam));
 		}
-		else if(loadData.controller==null)
+		else
 		{
-			throw new NoScriptException("the file " + fileName + " doesnt specify a java class or python script for its controller");
+			if(loadData.controller==null)
+				throw new NoScriptException("the file " + fileName + " doesnt specify a java class or python script for its controller");
+			Map<String, String> req = loadData.controller.getRequirements();
+			PyHelper.addDependencies(req, deps, fileName);
 		}
 		loadDataMap.put(fileName, loadData);
 		return deps;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
 			EntityLoadDataParameter parameter) {
@@ -154,7 +175,7 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			PyObject object = manager.get(cont, PyObject.class).__call__();
 			for(Entry<String, Object> entry : loadData.scontroller.entries())
 			{
-				object.__setattr__(entry.key, getObject(entry.value));
+				object.__setattr__(entry.key, PyHelper.getObject(entry.value));
 			}
 			data.controller = ((Controller) object.__tojava__(Controller.class));
 		}
@@ -197,7 +218,7 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 				PyObject object = manager.get(abil, PyObject.class).__call__();
 				for(Entry<String, Object> entry : m.entries())
 				{
-					object.__setattr__(entry.key, getObject(entry.value));
+					object.__setattr__(entry.key, PyHelper.getObject(entry.value));
 				}
 				data.defaultAbilities.add((Ability) object.__tojava__(Ability.class));
 			}
@@ -237,38 +258,6 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 //			}
 //		}
 		System.out.println("finish : " + fileName);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private PyObject getObject(Object obj)
-	{
-		if(obj instanceof Float)
-		{
-			return new PyFloat((Float)obj);
-		}
-		if(obj instanceof String)
-		{
-			return new PyString((String)obj);
-		}
-		if(obj instanceof Boolean)
-		{
-			return new PyBoolean((Boolean)obj);
-		}
-		if(obj instanceof Array)
-		{
-			PyList list = new PyList();
-			for(Object o : (Array<Object>)obj)
-				list.add(getObject(o));
-			return list;
-		}
-		if(obj instanceof OrderedMap)
-		{
-			PyDictionary dict = new PyDictionary();
-			for(Entry<String, Object> e : ((OrderedMap<String, Object>)obj).entries())
-				dict.put(e.key, getObject(e.value));
-			return dict;
-		}
-		return PyJavaType.wrapJavaObject(obj);
 	}
 
 	@Override

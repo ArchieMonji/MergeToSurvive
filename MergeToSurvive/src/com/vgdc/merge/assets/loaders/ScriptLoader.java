@@ -1,11 +1,10 @@
 package com.vgdc.merge.assets.loaders;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.python.core.PyDictionary;
 import org.python.core.PyObject;
-import org.python.core.PyTuple;
 import org.python.util.PythonInterpreter;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
@@ -13,14 +12,10 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
-import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.assets.LoadableAsset;
 
 public class ScriptLoader extends AsynchronousAssetLoader<PyObject, ScriptLoader.ScriptParameter> {
-	
-	@SuppressWarnings("rawtypes")
-	private HashMap<String, Class> nameClassMap = new HashMap<String, Class>();
 	
 	private PythonInterpreter interpreter;
 	
@@ -29,37 +24,38 @@ public class ScriptLoader extends AsynchronousAssetLoader<PyObject, ScriptLoader
 	public ScriptLoader(FileHandleResolver resolver, PythonInterpreter interpreter) {
 		super(resolver);
 		this.interpreter = interpreter;
-		nameClassMap.put("entitydata", EntityData.class);
-		nameClassMap.put("animation", Animation.class);
-		nameClassMap.put("ability", PyObject.class);
-		nameClassMap.put("controller", PyObject.class);
 	}
 
 	static public class ScriptParameter extends
 	AssetLoaderParameters<PyObject> {
+		
+		public Map<String, Object> argsMap = null;
 	
 }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			ScriptParameter parameter) {
 		System.out.println("start : " + fileName);
 		interpreter.set("requirements", null);
 		interpreter.execfile(resolve(fileName).path());
-		objectMap.put(fileName, interpreter.get(fileName));
-		PyDictionary dictionary = interpreter.get("requirements", PyDictionary.class);
-		System.out.println(dictionary);
-		if(dictionary==null)
+		PyObject cls = interpreter.get(fileName);
+		objectMap.put(fileName, cls);
+		//PyDictionary dictionary = interpreter.get("requirements", PyDictionary.class);
+		System.out.println(parameter.argsMap);
+		if(parameter.argsMap==null)
+			return null;
+		PyObject object = cls.__call__();
+		for(Entry<String, Object> e : parameter.argsMap.entrySet())
+		{
+			object.__setattr__(e.getKey(), PyHelper.getObject(e.getValue()));
+		}
+		Map<String, String> dependenciesMap = ((LoadableAsset) object.__tojava__(LoadableAsset.class)).getRequirements();
+		if(dependenciesMap==null)
 			return null;
 		Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
-		for(Object o : dictionary.items())
-		{
-			PyTuple tuple = (PyTuple) o;
-			String name = (String) tuple.get(0);
-			String cls = (String) tuple.get(1);
-			deps.add(new AssetDescriptor(name, nameClassMap.get(cls.toLowerCase())));
-		}
+		PyHelper.addDependencies(dependenciesMap, deps, fileName);
 		return deps;
 	}
 
