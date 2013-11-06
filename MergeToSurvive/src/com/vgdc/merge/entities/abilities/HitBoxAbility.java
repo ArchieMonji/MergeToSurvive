@@ -14,8 +14,6 @@ public class HitBoxAbility extends Ability {
 //	private int damage;
 	//they are
 	
-	private String hitbox;
-	private Vector2 offset;
 	private boolean blank;
 	
 	public HitBoxAbility()
@@ -30,14 +28,14 @@ public class HitBoxAbility extends Ability {
 	
 	public HitBoxAbility(String hitbox, boolean blank)
 	{
-		this.hitbox = hitbox;
+		this.projectile = hitbox;
 		this.blank = blank;
 		offset = new Vector2();
 	}
 
 	@Override
 	public void onUse(Entity entity, boolean retrievable) {
-		Entity box = createProjectile(entity.getWorld().getHandler().getEntityData(hitbox), entity, retrievable);
+		Entity box = createProjectile(entity.getWorld().getHandler().getEntityData(projectile), entity, retrievable);
 		if(blank)
 			box.setRenderer(new BlankRenderer());
 		box.getMovingBody().setAcceleration(new Vector2(0, 0));

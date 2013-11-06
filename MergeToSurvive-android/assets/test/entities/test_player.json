@@ -22,7 +22,9 @@ controller: {
 
 sabilities: [
 	{
-		script: PlayerPunchAbility
+		script: HitBoxAbility,
+		projectile: player_punch,
+		offset: { class:Vector2, x:35, y:35 }
 	}
 ],
 

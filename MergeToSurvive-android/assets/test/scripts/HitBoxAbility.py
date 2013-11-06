@@ -8,11 +8,11 @@ from com.vgdc.merge.entities.rendering import BlankRenderer
 class HitBoxAbility(Ability):
 	
 	def __init__(self, hitbox = "", blank = True):
-		self.hitbox = hitbox
+		self.projectile = hitbox
 		self.blank = blank
 
 	def onUse(self, entity, retrievable = False):
-		box = self.createProjectile(entity.getWorld().getHandler().getEntityData(self.hitbox), entity, retrievable)
+		box = self.createProjectile(entity.getWorld().getHandler().getEntityData(self.projectile), entity, retrievable)
 		if self.blank:
 			box.setRenderer(BlankRenderer())
 		box.getMovingBody().setAcceleration(Vector2(0, 0))

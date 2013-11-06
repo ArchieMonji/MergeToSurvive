@@ -128,7 +128,7 @@ public class GameScreen extends AbstractScreen {
 		// Tall platform
 		Platform platform = new Platform(myWorld);
 		platform.getPlatformBody().setPlatformType(PlatformType.Rectangle);
-		platform.setRenderer(new PlatformRenderer(game.getHandler().getTexture("data/test/PlatformTest.png"),
+		platform.setRenderer(new PlatformRenderer(game.getHandler().getTexture("PlatformTest"),
 				13, 13, 13, 13));
 		platform.getPhysicsBody().setPosition(new Vector2(400, 125));
 		platform.getPhysicsBody().setSize(new Vector2(50, 200));

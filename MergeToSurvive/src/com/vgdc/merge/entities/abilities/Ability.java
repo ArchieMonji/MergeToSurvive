@@ -12,9 +12,9 @@ import com.vgdc.merge.entities.Projectile;
 
 public abstract class Ability implements LoadableAsset{
 
-	protected String projectile;
+	public String projectile;
 	public String itemName;
-	private Vector2 offset = new Vector2();
+	public Vector2 offset = new Vector2();
 	
 	public void onUse(Entity entity)
 	{

@@ -13,7 +13,7 @@ public class LoadScreen extends AbstractScreen {
 	public void render(float delta) {
 		if(game.getHandler().update())
 		{
-			game.setScreen(new TestGameScreen(game));
+			game.setScreen(new TitleScreen(game));
 			return;
 		}
 
