@@ -11,7 +11,9 @@ abilities: [
 	{
 		class: HitBoxAbility,
 		projectile: spear_p_e,
-		itemName: spear_i_e
+		itemName: spear_i_e,
+		blank: false,
+		offset: {class:Vector2, x:35, y:20 }
 	}
 ],
 

@@ -11,6 +11,7 @@ public class DirectoryHandler implements FileHandleResolver
 	
 	private FileHandle path;
 	private FileHandle base;
+	private String directory;
 	private String extension;
 	
 	public DirectoryHandler(String directory)
@@ -21,6 +22,7 @@ public class DirectoryHandler implements FileHandleResolver
 	public DirectoryHandler(String directory, String extension)
 	{
 		this.extension = extension;
+		this.directory = directory;
 		path = Gdx.files.internal(directory);
 		base = Gdx.files.internal("");
 		if(!path.isDirectory())
@@ -38,7 +40,10 @@ public class DirectoryHandler implements FileHandleResolver
 
 	@Override
 	public FileHandle resolve(String filename) {
-		return new FileHandle(new File(path.file(), filename + extension));
+		FileHandle handle = new FileHandle(new File(path.file(), filename + extension));
+		if(!handle.exists())
+			return Gdx.files.internal(directory + "/" + filename + extension);
+		return handle;
 	}
 	
 	public File getPath()
