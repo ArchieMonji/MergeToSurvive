@@ -5,19 +5,25 @@ import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
 import com.vgdc.merge.assets.loaders.AnimationLoader;
+import com.vgdc.merge.assets.loaders.DescriptorLoader;
 import com.vgdc.merge.assets.loaders.EntityDataLoader;
 import com.vgdc.merge.assets.loaders.ScriptLoader;
 import com.vgdc.merge.assets.loaders.SoundFxLoader;
+import com.vgdc.merge.assets.loaders.data.DescriptorData;
 import com.vgdc.merge.assets.loaders.data.SoundFxData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.abilities.Ability;
@@ -36,7 +42,8 @@ public class AssetsHandler {
 	private DirectoryHandler musicDirectory = new DirectoryHandler("test/music", ".ogg");
 	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/animations", ".json");
 	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entities", ".json");
-	private DirectoryHandler scriptsDirectory = new ExclusiveDirectoryHandler("test/scripts", ".py");
+	private ExclusiveDirectoryHandler scriptsDirectory = new ExclusiveDirectoryHandler("test/scripts", ".py");
+	private ExclusiveDirectoryHandler fontsDirectory = new ExclusiveDirectoryHandler("test/fonts", ".fnt");
 	
 	public AssetsHandler()
 	{
@@ -49,6 +56,8 @@ public class AssetsHandler {
 		manager.setLoader(EntityData.class, new EntityDataLoader(entityDataDirectory, entityDataDirectory.getJson()));
 		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
 		manager.setLoader(SoundFx.class, new SoundFxLoader(soundFxDirectory, soundFxDirectory.getJson()));
+		manager.setLoader(BitmapFont.class, new BitmapFontLoader(fontsDirectory));
+		manager.setLoader(DescriptorData.class, new DescriptorLoader(new InternalFileHandleResolver(), new Json()));
 	}
 	
 	private void populateJsons()
@@ -135,6 +144,10 @@ public class AssetsHandler {
 		{
 			manager.load(h.nameWithoutExtension(), SoundFx.class);
 		}
+		for(FileHandle h : fontsDirectory.getFilesInDirectory())
+		{
+			manager.load(h.nameWithoutExtension(), BitmapFont.class);
+		}
 	}
 	
 	/**
@@ -152,7 +165,7 @@ public class AssetsHandler {
 	 */
 	public void loadBasedOnDescription(String filename)
 	{
-		
+		manager.load(filename, DescriptorData.class);
 	}
 	
 	public boolean update(){
