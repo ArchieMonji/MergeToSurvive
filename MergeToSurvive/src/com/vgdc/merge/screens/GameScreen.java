@@ -63,7 +63,7 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setCamera(new OrthographicCamera(800, 600));
 		myWorld.getCamera().position.x = 400;
 		myWorld.getCamera().position.y = 300;
-		myWorld.setAssets(game.getAssets());
+		myWorld.setHandler(game.getHandler());
 		myWorld.setDimensions(800, 600);
 		myWorld.setBackground(new Texture(Gdx.files.internal("data/test/darkroom.png")));
 		
@@ -71,22 +71,24 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setUIManager(uiManager);
 
 		Entity testEntity = null;
-		testEntity = new Entity(game.getAssets().entityDataMap.get("hugging_enemy"), myWorld);
+		testEntity = new Entity(game.getAssets().getEntityData("hugging_enemy"), myWorld);
 		testEntity.setPosition(new Vector2(500, 0));
 		myWorld.getEntityManager().addEntity(testEntity);
-		testEntity = new Entity(game.getAssets().entityDataMap.get("testplayer"), myWorld);
+		testEntity = new Entity(game.getHandler().getEntityData("testplayer"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);
 		myWorld.setPlayer(testEntity);
 
-		Item item = new Item(game.getAssets().entityDataMap.get("testitem"), myWorld);
+		Item item = new Item(game.getHandler().getEntityData("test_item"),
+				myWorld);
 		item.setPosition(new Vector2(450, 275));
 		item.getMovingBody().setElasticity(0);
 		item.getController().onCreate();
 		myWorld.getEntityManager().addEntity(item);
 
-		item = new Item(game.getAssets().entityDataMap.get("spear_i_e"), myWorld);
+		item = new Item(game.getHandler().getEntityData("spear_i_e"),
+				myWorld);
 		item.setPosition(new Vector2(650, 275));
 		item.getMovingBody().setElasticity(0);
 		item.getController().onCreate();

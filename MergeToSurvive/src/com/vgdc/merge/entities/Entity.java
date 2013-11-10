@@ -23,7 +23,6 @@ public class Entity extends BaseEntity{
 	private int team;
 	private float halfJumpDir;
 	private boolean currentlyWalking,currentlyJumping;
-	private boolean isFacingLeft;
 	
 	public Entity(EntityData data, World world)
 	{
@@ -83,9 +82,9 @@ public class Entity extends BaseEntity{
 		return EntityType.Entity;
 	}
 	
-	public void setFacingLeft(boolean ifr){isFacingLeft = ifr;}
+	public void setFacingLeft(boolean flip) { getRenderer().flip(flip); }
 	
-	public boolean facingLeft(){return isFacingLeft;}
+	public boolean facingLeft(){return getRenderer().isFlipped();}
 	
 	public int getDamage()
 	{
@@ -197,7 +196,7 @@ public class Entity extends BaseEntity{
 		if(getMovingBody().getVelocity().x > walkspeed)
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
-		setFacingLeft(true);
+		//setFacingLeft(true);
 		getRenderer().flip(true);
 	}
 	
@@ -211,8 +210,18 @@ public class Entity extends BaseEntity{
 		if(getMovingBody().getVelocity().x < walkspeed)
 			getMovingBody().setVelocity(new Vector2(walkspeed*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
 
-		setFacingLeft(false);
+		//a;
 		getRenderer().flip(false);
+	}
+	
+	public void move(float delta, float velocity)
+	{
+		currentlyWalking = true;
+//		if(!getMovingBody().checkTouchingGround())
+//			walkspeed *= JUMPCONTROL;
+		if(getMovingBody().getVelocity().x < velocity)
+			getMovingBody().setVelocity(new Vector2(velocity*WALKFORCE+getMovingBody().getVelocity().x*(1-WALKFORCE),getMovingBody().getVelocity().y));
+		getRenderer().flip(velocity >= 0);
 	}
 
 	public void onEntityCollision(Entity other){

@@ -1,0 +1,7 @@
+{
+	frameCount: 8,
+	frameDuration: 0.1,
+	path: proto_run3,
+	cols: 8,
+	rows: 1
+}

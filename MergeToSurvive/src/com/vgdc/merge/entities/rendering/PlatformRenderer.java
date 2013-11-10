@@ -10,8 +10,12 @@ public class PlatformRenderer extends BaseRenderer{
 	private NinePatch patch;
 	
 	public PlatformRenderer(){}
-	public PlatformRenderer(String texturepath,int left,int right,int top,int bottom){
-		setNinePatchFrom(texturepath,left,right,top,bottom);
+//	public PlatformRenderer(String texturepath,int left,int right,int top,int bottom){
+//		setNinePatchFrom(texturepath,left,right,top,bottom);
+//	}
+	
+	public PlatformRenderer(Texture texture, int left, int right, int top, int bottom){
+		setNinePatchFrom(texture, left, right, top, bottom);
 	}
 	
 	public void setNinePatchFrom(String texturepath,int left,int right,int top,int bottom){

@@ -35,7 +35,7 @@ public class TestAIController extends UnitController {
 			moveLeft(delta);
 		else
 			moveRight(delta);
-		stateMachine.affectState(delta);
+		super.onUpdate(delta);
 	}
 
 	public void onDamage(Entity entity) {
@@ -46,7 +46,7 @@ public class TestAIController extends UnitController {
 			String itemDropName = getEntity().getData().itemDrop;
 			if (itemDropName != null) {
 				World world = getEntity().getWorld();
-				Item itemDrop = new Item(world.getAssets().entityDataMap.get(itemDropName), world);
+				Item itemDrop = new Item(world.getHandler().getEntityData(itemDropName), world);
 				itemDrop.getPhysicsBody().setPosition(getEntity().getPosition());
 				itemDrop.getController().onCreate();
 				getEntity().getWorld().getEntityManager().addEntity(itemDrop);

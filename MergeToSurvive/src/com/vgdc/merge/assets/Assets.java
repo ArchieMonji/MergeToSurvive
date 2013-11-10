@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Json;
+import com.vgdc.merge.assets.loaders.data.AnimationData;
 import com.vgdc.merge.entities.BaseEntityData;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.UnitStateEnum;

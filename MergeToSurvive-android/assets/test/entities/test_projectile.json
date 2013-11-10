@@ -1,0 +1,18 @@
+{
+moveSpeed: 	10,
+jumpHeight: 20,
+damage:1,
+dimensions: {x:8,y:8},
+
+controller: {
+	class: ProjectileController
+},
+
+abilities: [
+],
+
+animations: [
+	projectile_animation
+],
+sounds: {}
+}

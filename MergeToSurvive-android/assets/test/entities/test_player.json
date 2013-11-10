@@ -1,0 +1,43 @@
+{
+maxHealth: 	2,
+jumpHeight: 15,
+moveSpeed: 	5,
+defaultTeam: 1,
+mergeable: true,
+dimensions: {
+	x: 64,
+	y: 96
+},
+
+controller: {
+	class: PlayerController,
+	controls: {
+		up: 62,
+		down: 47,
+		left: 29,
+		right: 32,
+		useAbility: 0
+	}
+},
+
+sabilities: [
+	{
+		script: HitBoxAbility,
+		projectile: player_punch,
+		offset: { class:Vector2, x:35, y:35 }
+	}
+],
+
+animations: [
+	player_idle_animation,
+	player_run_animation
+],
+sounds: {
+	IDLE: [
+		vineattack
+	],
+	MOVE: [
+		flamethrowerfx
+	]
+}
+}

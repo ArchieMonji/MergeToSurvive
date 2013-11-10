@@ -1,21 +1,29 @@
 package com.vgdc.merge.entities.abilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
+import com.vgdc.merge.assets.LoadableAsset;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.entities.Projectile;
 
-public abstract class Ability {
+public abstract class Ability implements LoadableAsset{
 
-	protected String projectile;
+	public String projectile;
 	public String itemName;
-	private Vector2 offset = new Vector2();
+	public Vector2 offset = new Vector2();
 	
 	public void onUse(Entity entity)
 	{
 		onUse(entity, false);
+	}
+	
+	public void setOffset(float x, float y)
+	{
+		offset.set(x, y);
 	}
 	
 	public abstract void onUse(Entity entity, boolean retrievable);
@@ -38,6 +46,16 @@ public abstract class Ability {
 		projectile.setFacingLeft(entity.facingLeft());
 		entity.getWorld().getEntityManager().addEntity(projectile);
 		return projectile;
+	}
+	
+	public Map<String, String> getRequirements()
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		if(projectile!=null)
+			map.put(projectile, "entitydata");
+		if(itemName!=null)
+			map.put(itemName, "entitydata");
+		return map;
 	}
 
 }

@@ -15,13 +15,14 @@ public abstract class AbilityController extends Controller {
 	public void onDeath() {
 		Entity e = getEntity();
 		World world = e.getWorld();
-		e.delete();
-		ArrayList<Ability> a = e.getAbilities();
-		if (a != null && a.size() > 0 && a.get(0) != null) {
+		super.onDeath();
+		ArrayList<Ability> a = getEntity().getAbilities();
+		if(a!=null&&a.size()>0&&a.get(0)!=null)
+		{
 			System.out.println("drop it!");
 			String itemName = a.get(0).itemName;
 			if (itemName != null) {
-				EntityData itemData = world.getAssets().entityDataMap.get(itemName);
+				EntityData itemData = world.getHandler().getEntityData(itemName);
 				Item item = new Item(itemData, world);
 				world.getEntityManager().addEntity(item);
 				MovingBody body = item.getMovingBody();

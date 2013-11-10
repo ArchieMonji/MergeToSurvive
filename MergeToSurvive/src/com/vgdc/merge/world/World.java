@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
+import com.vgdc.merge.assets.AssetsHandler;
 import com.vgdc.merge.entities.BaseEntity;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.events.EventSystem;
@@ -29,6 +30,8 @@ public class World {
 	private EventSystem eventSystem;
 
 	private Entity player;
+	
+	private AssetsHandler handler;
 	
 	private boolean isRunning;
 	
@@ -59,6 +62,7 @@ public class World {
 			camera.update();
 		}
 	}
+<<<<<<< HEAD
 
 	public void onRender(float delta) {
 		batch.setProjectionMatrix(camera.combined);
@@ -81,6 +85,26 @@ public class World {
 
 	public Assets getAssets() {
 		return assets;
+=======
+	
+//	public void setAssets(Assets nAssets)
+//	{
+//		assets = nAssets;
+//	}
+//	
+//	public Assets getAssets()
+//	{
+//		return assets;
+//	}
+	
+	public AssetsHandler getHandler()
+	{
+		return handler;
+	}
+	
+	public void setHandler(AssetsHandler handler)
+	{
+		this.handler = handler;
 	}
 
 	public OrthographicCamera getCamera() {
