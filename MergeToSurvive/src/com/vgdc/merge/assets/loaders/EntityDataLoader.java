@@ -76,7 +76,6 @@ public class EntityDataLoader extends AsynchronousAssetLoader<EntityData, Entity
 			{
 				for(String a : loadData.sounds.get(s))
 				{
-					System.out.println(a);
 					deps.add(new AssetDescriptor(a, SoundFx.class));
 				}
 			}

@@ -1,0 +1,9 @@
+{
+	entitydata: [
+		hugging_enemy,
+		test_player,
+		test_item,
+		spear_i_e
+	],
+
+}

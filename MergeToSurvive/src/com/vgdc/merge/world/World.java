@@ -62,7 +62,6 @@ public class World {
 			camera.update();
 		}
 	}
-<<<<<<< HEAD
 
 	public void onRender(float delta) {
 		batch.setProjectionMatrix(camera.combined);
@@ -79,13 +78,13 @@ public class World {
 		uiManager.onRender(camera, delta);
 	}
 
-	public void setAssets(Assets nAssets) {
-		assets = nAssets;
-	}
-
-	public Assets getAssets() {
-		return assets;
-=======
+//	public void setAssets(Assets nAssets) {
+//		assets = nAssets;
+//	}
+//
+//	public Assets getAssets() {
+//		return assets;
+//	}
 	
 //	public void setAssets(Assets nAssets)
 //	{

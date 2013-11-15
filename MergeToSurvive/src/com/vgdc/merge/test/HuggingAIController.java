@@ -85,7 +85,7 @@ public class HuggingAIController extends UnitController {
 			String itemDropName = getEntity().getData().itemDrop;
 			if (itemDropName != null) {
 				World world = getEntity().getWorld();
-				Item itemDrop = new Item(world.getAssets().entityDataMap.get(itemDropName), world);
+				Item itemDrop = new Item(world.getHandler().getEntityData(itemDropName), world);
 				itemDrop.getPhysicsBody().setPosition(getEntity().getPosition());
 				itemDrop.getController().onCreate();
 				getEntity().getWorld().getEntityManager().addEntity(itemDrop);
@@ -114,7 +114,7 @@ public class HuggingAIController extends UnitController {
 					for (int i = 0; i < 10; i++) {
 						String itemDropName = getEntity().getData().itemDrop;
 						World world = getEntity().getWorld();
-						EntityData itemData = world.getAssets().entityDataMap.get(itemDropName);
+						EntityData itemData = world.getHandler().getEntityData(itemDropName);
 						if (itemDropName != null) {
 							Item itemDrop = new Item(itemData, world);
 							Vector2 pos = new Vector2(MathUtils.random(world.dimensions.x),

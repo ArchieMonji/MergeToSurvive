@@ -74,7 +74,7 @@ public class TestAIController extends UnitController {
 					for (int i = 0; i < 10; i++) {
 						String itemDropName = getEntity().getData().itemDrop;
 						World world = getEntity().getWorld();
-						EntityData itemData = world.getAssets().entityDataMap.get(itemDropName);
+						EntityData itemData = world.getHandler().getEntityData(itemDropName);
 						if (itemDropName != null) {
 							Item itemDrop = new Item(itemData, world);
 							Vector2 pos = new Vector2(MathUtils.random(world.dimensions.x),

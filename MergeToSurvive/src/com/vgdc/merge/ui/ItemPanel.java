@@ -88,7 +88,7 @@ public class ItemPanel extends Widget {
 				if (a != null) {
 					if (a.itemName != null) {
 						if (currentItem == null || !a.itemName.equals(currentItem)) {
-							EntityData itemData = world.getAssets().entityDataMap.get(a.itemName);
+							EntityData itemData = world.getHandler().getEntityData(a.itemName);
 							itemAnimation = itemData.animations.get(abilityIndex);
 							currentItem = a.itemName;
 							animationTime = 0;

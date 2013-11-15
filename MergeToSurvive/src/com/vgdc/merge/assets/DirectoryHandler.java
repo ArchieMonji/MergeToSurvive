@@ -35,14 +35,18 @@ public class DirectoryHandler implements FileHandleResolver
 				path = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath() + directory);
 			}
 		}
-		System.out.println(path.path());
+		//System.out.println(path.path());
 	}
 
 	@Override
 	public FileHandle resolve(String filename) {
-		FileHandle handle = new FileHandle(new File(path.file(), filename + extension));
+		if(!filename.contains("."))
+			filename = filename + extension;
+		FileHandle handle = new FileHandle(new File(path.file(), filename));
 		if(!handle.exists())
-			return Gdx.files.internal(directory + "/" + filename + extension);
+			handle = Gdx.files.internal(directory + "/" + filename);
+		if(!handle.exists())
+			handle = Gdx.files.internal(filename);
 		return handle;
 	}
 	

@@ -36,17 +36,32 @@ public class AssetsHandler {
 	
 	private PythonInterpreter interpreter = new PythonInterpreter();
 	
-	private DirectoryHandler textureDirectory = new DirectoryHandler("test/art", ".png");
-	private DirectoryHandler soundDirectory = new DirectoryHandler("test/sound", ".ogg");
-	private JsonDirectoryHandler soundFxDirectory = new JsonDirectoryHandler("test/soundfx", ".json");
-	private DirectoryHandler musicDirectory = new DirectoryHandler("test/music", ".ogg");
-	private JsonDirectoryHandler animationDirectory = new JsonDirectoryHandler("test/animations", ".json");
-	private JsonDirectoryHandler entityDataDirectory = new JsonDirectoryHandler("test/entities", ".json");
-	private ExclusiveDirectoryHandler scriptsDirectory = new ExclusiveDirectoryHandler("test/scripts", ".py");
-	private ExclusiveDirectoryHandler fontsDirectory = new ExclusiveDirectoryHandler("test/fonts", ".fnt");
+	private static final String defaultAssets = "assets";
+	
+	private DirectoryHandler textureDirectory;
+	private DirectoryHandler soundDirectory;
+	private JsonDirectoryHandler soundFxDirectory;
+	private DirectoryHandler musicDirectory;
+	private JsonDirectoryHandler animationDirectory;
+	private JsonDirectoryHandler entityDataDirectory;
+	private ExclusiveDirectoryHandler scriptsDirectory;
+	private ExclusiveDirectoryHandler fontsDirectory;
 	
 	public AssetsHandler()
 	{
+		this(defaultAssets);
+	}
+	
+	public AssetsHandler(String folder)
+	{
+		textureDirectory = new DirectoryHandler(folder + "/art", ".png");
+		soundDirectory = new DirectoryHandler(folder + "/sound", ".ogg");
+		soundFxDirectory = new JsonDirectoryHandler(folder + "/soundfx", ".json");
+		musicDirectory = new DirectoryHandler(folder + "/music", ".ogg");
+		animationDirectory = new JsonDirectoryHandler(folder + "/animations", ".json");
+		entityDataDirectory = new JsonDirectoryHandler(folder + "/entities", ".json");
+		scriptsDirectory = new ExclusiveDirectoryHandler(folder + "/scripts", ".py");
+		fontsDirectory = new ExclusiveDirectoryHandler(folder + "/fonts", ".fnt");
 		populateJsons();
 		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getPath()));
 		manager.setLoader(Texture.class, new TextureLoader(textureDirectory));

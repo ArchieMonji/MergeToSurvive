@@ -71,10 +71,10 @@ public class GameScreen extends AbstractScreen {
 		myWorld.setUIManager(uiManager);
 
 		Entity testEntity = null;
-		testEntity = new Entity(game.getAssets().getEntityData("hugging_enemy"), myWorld);
+		testEntity = new Entity(game.getHandler().getEntityData("hugging_enemy"), myWorld);
 		testEntity.setPosition(new Vector2(500, 0));
 		myWorld.getEntityManager().addEntity(testEntity);
-		testEntity = new Entity(game.getHandler().getEntityData("testplayer"), myWorld);
+		testEntity = new Entity(game.getHandler().getEntityData("test_player"), myWorld);
 		testEntity.setPosition(new Vector2(58, 58));
 		testEntity.getMovingBody().setElasticity(0);
 		myWorld.getEntityManager().addEntity(testEntity);

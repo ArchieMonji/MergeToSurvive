@@ -1,0 +1,42 @@
+{
+	sounds: [
+		sound1,
+		sound2,
+		sound3
+	],
+	soundfxs: [
+		soundfx1,
+		soundfx2,
+		soundfx3
+	],
+	images: [
+		image1,
+		image2,
+		image3
+	],
+	animations: [
+		anim1,
+		anim2,
+		anim3
+	],
+	music: [
+		music1,
+		music2,
+		music3
+	],
+	scripts: [
+		script1,
+		script2,
+		script3
+	],
+	entitydata: [
+		entitydata1,
+		entitydata2,
+		entitydata3
+	],
+	fonts: [
+		font1,
+		font2,
+		font3
+	]
+}

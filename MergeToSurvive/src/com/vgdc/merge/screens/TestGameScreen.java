@@ -38,8 +38,8 @@ public class TestGameScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		if (delta < 0.05f) {
 			batch.begin();
-			myWorld.onUpdate();
-			myWorld.onRender(batch);
+			myWorld.onUpdate(delta);
+			myWorld.onRender(delta);
 			batch.end();
 			if (SHOWHITBOXES)
 				hrenderer.onRender(myWorld.getCamera());

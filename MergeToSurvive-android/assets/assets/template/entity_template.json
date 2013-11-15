@@ -1,0 +1,57 @@
+{
+maxHealth: 	value,
+jumpHeight: value,
+moveSpeed: 	value,
+damage: value,
+defaultTeam: value,
+mergeable: boolean,
+
+dimensions: {
+	x: value,
+	y: value
+},
+
+controller: {
+	class: javaName,
+	arg1: x,
+	arg2: 3,
+	arg3: {class:whatever, arg1: 3, arg3: 4 }
+},
+
+scrontroller: {
+	script: pyName,
+	arg1: x,
+	arg2: 3,
+	arg3: {class:whatever, arg1: 3, arg3: 4 }
+},
+
+abilities: [
+	{ class: javaName, arg1: x, arg2: 3, arg3: {class:whatever, arg1: 3, arg2: 4 },
+	{ class: javaName, arg1: x, arg2: 3, arg3: {class:whatever, arg1: 3, arg2: 4 }
+],
+
+sabilities: [
+	{ script: pyName, arg1: x, arg2: 3, arg3: {class:whatever, arg1: 3, arg2: 4 },
+	{ script: pyName, arg1: x, arg2: 3, arg3: {class:whatever, arg1: 3, arg2: 4 }
+],
+
+
+
+animations: {
+	animation_filename_1, 
+	animation_filename_2,
+	animation_filename_3 
+},
+
+sounds: {
+	UnitStateEnum.ENUM_1: [
+		attack_sound_name_1,
+		attack_sound_name_2,
+		attack_sound_name_3
+	],
+	UnitStateEnum.ENUM_2: [
+		death_sound_name_1,
+		death_sound_name_2
+	]
+}
+}
