@@ -47,6 +47,8 @@ public class DirectoryHandler implements FileHandleResolver
 			handle = Gdx.files.internal(directory + "/" + filename);
 		if(!handle.exists())
 			handle = Gdx.files.internal(filename);
+		if(!handle.exists())
+			handle = Gdx.files.absolute(filename);
 		return handle;
 	}
 	

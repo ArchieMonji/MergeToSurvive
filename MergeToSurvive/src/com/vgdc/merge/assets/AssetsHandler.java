@@ -175,6 +175,15 @@ public class AssetsHandler {
 	}
 	
 	/**
+	 * loads just the files necessary to run the given act
+	 * @param filename
+	 */
+	public void loadBasedOnAct(String filename)
+	{
+		
+	}
+	
+	/**
 	 * loads just the files described in the given json
 	 * @param filename
 	 */

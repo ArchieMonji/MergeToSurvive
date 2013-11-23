@@ -1,0 +1,10 @@
+<level width="640" height="480">
+  <PlatformLayer>
+    <Platform id="0" x="192" y="112" width="320" height="64" />
+  </PlatformLayer>
+  <EntityLayer>
+    <entity_data1 id="0" x="400" y="272" />
+    <entity_data2 id="1" x="208" y="144" />
+    <entity_data1 id="2" x="336" y="128" />
+  </EntityLayer>
+</level>

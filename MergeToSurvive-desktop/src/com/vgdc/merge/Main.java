@@ -11,6 +11,29 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 600;
 		
-		new LwjglApplication(new MainGame(), cfg);
+		if(args!=null&&args.length>0)
+		{
+			if(args.length>=2)
+			{
+				if(args[0]=="-level")
+				{
+					
+				}
+				else if(args[0]=="-act")
+				{
+					
+				}
+				else
+				{
+					//error or something
+				}
+			}
+			else
+			{
+				//error or something
+			}
+		}
+		else
+			new LwjglApplication(new MainGame(), cfg);
 	}
 }
