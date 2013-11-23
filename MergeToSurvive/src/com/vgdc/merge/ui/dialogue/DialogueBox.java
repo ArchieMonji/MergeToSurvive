@@ -7,9 +7,6 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -27,7 +24,7 @@ public class DialogueBox extends Window {
 	private World world;
 	private DialogueLabel dialogueLabel;
 	private ContinueLabel continueLabel;
-	private Image leftSpeaker;
+	private Image speaker;
 	private DialogueScript script;
 	private Event onCloseEvent;
 	private Skin skin;
@@ -58,10 +55,10 @@ public class DialogueBox extends Window {
 
 	private void create() {
 		this.setSize(450, 125);
-		leftSpeaker = new Image();
+		speaker = new Image();
 
 		this.row();
-		add(leftSpeaker).top().size(64, 64);
+		add(speaker).top().size(64, 64);
 		dialogueLabel = new DialogueLabel(skin);
 		{
 			// this.add(textLabel).top().left().expand().size(500, 100);
@@ -111,7 +108,7 @@ public class DialogueBox extends Window {
 		setTitle(currentPage.speaker);
 		currentEmotion = currentPage.emotions[0];
 		dialogueLabel.setScriptLine(currentEmotion.lines[0]);
-		setLeftSpeaker(currentEmotion.image);
+		setSpeaker(currentEmotion.image);
 		
 		world.stop();
 	}
@@ -163,7 +160,7 @@ public class DialogueBox extends Window {
 		linePointer = -1;
 		if (emotionPointer < currentPage.emotions.length) {
 			currentEmotion = currentPage.emotions[emotionPointer];
-			setLeftSpeaker(currentEmotion.image);
+			setSpeaker(currentEmotion.image);
 			nextLine();
 		}
 		else{
@@ -212,9 +209,9 @@ public class DialogueBox extends Window {
 		return closed;
 	}
 
-	public void setLeftSpeaker(String imageName) {
+	public void setSpeaker(String imageName) {
 		TextureRegionDrawable image = manager.getPortrait(imageName);
-		leftSpeaker.setDrawable(image);
+		speaker.setDrawable(image);
 	}
 
 	private class ContinueLabel extends Label {

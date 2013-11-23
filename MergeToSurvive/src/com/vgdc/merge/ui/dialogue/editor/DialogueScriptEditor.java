@@ -42,7 +42,6 @@ import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import com.badlogic.gdx.utils.Json;
 import com.vgdc.merge.ui.dialogue.DialogueScript;
@@ -336,8 +335,7 @@ public class DialogueScriptEditor extends JFrame {
 	public void createGUI() {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1) {
+		} catch (Exception e) {
 			// fail silently
 		}
 		this.setSize(800, 600);
