@@ -1,4 +1,5 @@
 package com.vgdc.merge.ui.dialogue.editor;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -44,6 +45,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.badlogic.gdx.utils.Json;
+import com.vgdc.merge.ui.dialogue.DialogueScript;
 
 public class DialogueScriptEditor extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -72,7 +74,7 @@ public class DialogueScriptEditor extends JFrame {
 		list.updateUI();
 		isSaved = false;
 	}
-	
+
 	/*
 	 * Editor Access
 	 */
@@ -104,7 +106,7 @@ public class DialogueScriptEditor extends JFrame {
 	public static final String SCRIPT_FILE_EXTENSION = ".json";
 
 	public void selectFileLocation(int mode) {
-		FileDialog fileDialog = new FileDialog(new JFrame(), "Save Script As");
+		FileDialog fileDialog = new FileDialog(new JFrame(), "Save DialogueScript As");
 		if (filePath != null) {
 			fileDialog.setDirectory(lastDir);
 			fileDialog.setFile(lastFile);
@@ -139,12 +141,12 @@ public class DialogueScriptEditor extends JFrame {
 			return false;
 		}
 
-		// create script object
-		Script script = null;
+		// create DialogueScript object
+		DialogueScript script = null;
 		try {
 			script = buildScriptObject();
 		} catch (Exception e) {
-			output("Save failed: error building script object.");
+			output("Save failed: error building DialogueScript object.");
 			e.printStackTrace();
 			return false;
 		}
@@ -155,7 +157,7 @@ public class DialogueScriptEditor extends JFrame {
 			Json json = new Json();
 			fileOutput = json.prettyPrint(json.toJson(script));
 		} catch (Exception e) {
-			output("Save failed: error generating output script file.");
+			output("Save failed: error generating output DialogueScript file.");
 			e.printStackTrace();
 			return false;
 		}
@@ -179,7 +181,7 @@ public class DialogueScriptEditor extends JFrame {
 	public boolean checkAndPromptSave() {
 		if (!isSaved) {
 			int option = JOptionPane.showConfirmDialog(this, "You have unsaved changes. Save changes?",
-					"Dialogue Script Editor: Save changes", JOptionPane.YES_NO_CANCEL_OPTION);
+					"Dialogue DialogueScript Editor: Save changes", JOptionPane.YES_NO_CANCEL_OPTION);
 			if (option == JOptionPane.YES_OPTION) {
 				if (filePath == null) {
 					selectFileLocation(FileDialog.SAVE);
@@ -204,8 +206,8 @@ public class DialogueScriptEditor extends JFrame {
 			return;
 		}
 
-		// create script object
-		Script script = null;
+		// create DialogueScript object
+		DialogueScript script = null;
 		System.out.println(filePath);
 		FileInputStream inputStream = null;
 		try {
@@ -215,7 +217,7 @@ public class DialogueScriptEditor extends JFrame {
 				inputStream.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-				output("Load failed: error loading file: file must be script format.");
+				output("Load failed: error loading file: file must be DialogueScript format.");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -227,61 +229,71 @@ public class DialogueScriptEditor extends JFrame {
 		createCards(script);
 	}
 
-	public void createCards(Script script) {
+	public void createCards(DialogueScript script) {
 		// clear current cards
 		DefaultListModel<DialogueCard> listModel = (DefaultListModel<DialogueCard>) list.getModel();
 		listModel.removeAllElements();
 
-		for (Script.Page page : script.pages) {
+		for (DialogueScript.Page page : script.pages) {
 			if (page.speaker != null) {
 				DialogueCard nameCard = new DialogueCard(CardType.NAME);
 				nameCard.setText(page.speaker);
 				listModel.addElement(nameCard);
 			}
 
-			if (page.imageName != null) {
-				DialogueCard imageCard = new DialogueCard(CardType.IMAGE);
-				imageCard.setText(page.imageName);
-				listModel.addElement(imageCard);
-			}
+			if (page.emotions != null) {
+				for (DialogueScript.Emotion emotion : page.emotions) {
+					DialogueCard imageCard = new DialogueCard(CardType.IMAGE);
+					imageCard.setText(emotion.image);
+					listModel.addElement(imageCard);
 
-			if (page.lines != null) {
-				for (String line : page.lines) {
-					System.out.println(page.lines.length);
-					DialogueCard dialogueCard = new DialogueCard(CardType.DIALOGUE);
-					dialogueCard.setText(line);
-					listModel.addElement(dialogueCard);
+					if (emotion.lines != null) {
+						for (String line : emotion.lines) {
+							DialogueCard dialogueCard = new DialogueCard(CardType.DIALOGUE);
+							dialogueCard.setText(line);
+							listModel.addElement(dialogueCard);
+						}
+					}
 				}
 			}
+
 		}
 		if (script.event != null) {
 			DialogueCard eventCard = new DialogueCard(CardType.EVENT);
 			eventCard.setText(script.event);
 			listModel.addElement(eventCard);
 		}
-
 	}
 
-	public Script buildScriptObject() throws Exception {
-		Script script = new Script();
-		ArrayList<Script.Page> pages = new ArrayList<Script.Page>();
-		Script.Page page = null;
+	public DialogueScript buildScriptObject() throws Exception {
+		DialogueScript script = new DialogueScript();
+		ArrayList<DialogueScript.Page> pages = new ArrayList<DialogueScript.Page>();
+		ArrayList<DialogueScript.Emotion> emotions = new ArrayList<DialogueScript.Emotion>();
 		ArrayList<String> lines = new ArrayList<String>();
+		DialogueScript.Page page = null;
+		DialogueScript.Emotion emotion = null;
 		DefaultListModel<DialogueCard> listModel = (DefaultListModel<DialogueCard>) list.getModel();
 		for (int i = 0; i < listModel.size(); i++) {
 			DialogueCard card = listModel.getElementAt(i);
 			if (card.getType() == CardType.NAME) {
-				System.out.println(lines.size());
-				if (page != null && lines.size() > 0) {
-					page.lines = lines.toArray(new String[1]);
+				if (page != null && emotions.size() > 0) {
+					page.emotions = emotions.toArray(new DialogueScript.Emotion[1]);
 				}
-				page = new Script.Page();
-				pages.add(page);
-				lines = new ArrayList<String>();
+				page = new DialogueScript.Page();
 				page.speaker = card.getText();
+				pages.add(page);
+
+				emotions = new ArrayList<DialogueScript.Emotion>();
 			}
 			else if (card.getType() == CardType.IMAGE) {
-				page.imageName = card.getText();
+				if (emotion != null && lines.size() > 0) {
+					emotion.lines = lines.toArray(new String[1]);
+				}
+				emotion = new DialogueScript.Emotion();
+				emotion.image = card.getText();
+				emotions.add(emotion);
+
+				lines = new ArrayList<String>();
 			}
 			else if (card.getType() == CardType.EVENT) {
 				script.event = card.getText();
@@ -291,18 +303,21 @@ public class DialogueScriptEditor extends JFrame {
 			}
 		}
 		if (lines.size() > 0) {
-			page.lines = lines.toArray(new String[1]);
+			emotion.lines = lines.toArray(new String[1]);
+		}
+		if (emotions.size() > 0) {
+			page.emotions = emotions.toArray(new DialogueScript.Emotion[1]);
 		}
 		if (pages.size() > 0) {
-			script.pages = pages.toArray(new Script.Page[1]);
+			script.pages = pages.toArray(new DialogueScript.Page[1]);
 		}
 
 		return script;
 	}
 
-	public Script loadScriptFromJson(FileInputStream fileInputStream) throws Exception {
+	public DialogueScript loadScriptFromJson(FileInputStream fileInputStream) throws Exception {
 		Json json = new Json();
-		Script script = json.fromJson(Script.class, fileInputStream);
+		DialogueScript script = json.fromJson(DialogueScript.class, fileInputStream);
 		return script;
 	}
 

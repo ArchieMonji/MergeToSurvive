@@ -1,16 +1,16 @@
 package com.vgdc.merge.ui.dialogue;
 
 public class DialogueScript{
-	Page[] pages;
-	String event;
+	public Page[] pages;
+	public String event;
 
 	public static class Page {
-		String speaker;
-		Emotion[] emotions;
+		public String speaker;
+		public Emotion[] emotions;
 	}
 	
 	public static class Emotion{
-		String image;
-		String[] lines;
+		public String image;
+		public String[] lines;
 	}
 }

@@ -21,14 +21,20 @@ public class DialogueManager {
 		this.manager = manager;
 		this.world = world;
 		this.skin = skin;
-		
+
 		loadPortraits();
 	}
 
 	private void loadPortraits() {
-		speakerPortraits.put("proto_neutral",new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/ui/dialogue/portraits/proto_neutral.png")))));
-		speakerPortraits.put("proto_angry",new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/ui/dialogue/portraits/proto_angry.png")))));
-		speakerPortraits.put("chibi",new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("data/ui/dialogue/portraits/chibi.png")))));
+		speakerPortraits.put("proto_neutral", createPortrait("data/ui/dialogue/portraits/proto_neutral.png"));
+		speakerPortraits.put("proto_angry", createPortrait("data/ui/dialogue/portraits/proto_angry.png"));
+		speakerPortraits.put("chibi", createPortrait("data/ui/dialogue/portraits/chibi.png"));
+		speakerPortraits.put("chibi_neutral", createPortrait("data/ui/dialogue/portraits/chibi_neutral.png"));
+		speakerPortraits.put("chibi_laugh", createPortrait("data/ui/dialogue/portraits/chibi_laugh.png"));
+	}
+
+	private TextureRegionDrawable createPortrait(String filename) {
+		return new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(filename))));
 	}
 
 	public TextureRegionDrawable getPortrait(String name) {
@@ -40,7 +46,7 @@ public class DialogueManager {
 		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
 
 		manager.addActor(db);
-		
+
 		return db;
 	}
 
@@ -49,16 +55,16 @@ public class DialogueManager {
 		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
 
 		manager.addActor(db);
-		
+
 		return db;
 	}
 
 	public void setWorld(World world) {
 		this.world = world;
 	}
-	
-	public void dispose(){
-		for(TextureRegionDrawable drawable: speakerPortraits.values()){
+
+	public void dispose() {
+		for (TextureRegionDrawable drawable : speakerPortraits.values()) {
 			drawable.getRegion().getTexture().dispose();
 		}
 	}

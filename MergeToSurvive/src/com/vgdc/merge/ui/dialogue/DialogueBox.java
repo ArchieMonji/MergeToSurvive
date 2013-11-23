@@ -28,7 +28,6 @@ public class DialogueBox extends Window {
 	private DialogueLabel dialogueLabel;
 	private ContinueLabel continueLabel;
 	private Image leftSpeaker;
-	private Image rightSpeaker;
 	private DialogueScript script;
 	private Event onCloseEvent;
 	private Skin skin;
@@ -60,7 +59,6 @@ public class DialogueBox extends Window {
 	private void create() {
 		this.setSize(450, 125);
 		leftSpeaker = new Image();
-		rightSpeaker = new Image();
 
 		this.row();
 		add(leftSpeaker).top().size(64, 64);
@@ -81,9 +79,6 @@ public class DialogueBox extends Window {
 		}
 		scrollPane = new ScrollPane(dialogueLabel, skin);
 		add(scrollPane).top().fill().expand();
-
-		rightSpeaker = new Image();
-		add(rightSpeaker).top().size(64, 64);
 		
 		this.row();
 
@@ -220,11 +215,6 @@ public class DialogueBox extends Window {
 	public void setLeftSpeaker(String imageName) {
 		TextureRegionDrawable image = manager.getPortrait(imageName);
 		leftSpeaker.setDrawable(image);
-	}
-
-	public void setRightSpeaker(String imageName) {
-		TextureRegionDrawable image = manager.getPortrait(imageName);
-		rightSpeaker.setDrawable(image);
 	}
 
 	private class ContinueLabel extends Label {

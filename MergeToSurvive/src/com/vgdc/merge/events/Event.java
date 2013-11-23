@@ -1,7 +1,9 @@
 package com.vgdc.merge.events;
 
+import com.vgdc.merge.world.World;
+
 public abstract class Event {
-	private EventSystem eventSystem;
+	private World world;
 	private String name;
 	
 	public Event(String name){
@@ -12,12 +14,12 @@ public abstract class Event {
 	public abstract void onUpdate(float delta);
 	public abstract boolean checkConditions();
 	
-	public EventSystem getEventSystem() {
-		return eventSystem;
+	public World getWorld() {
+		return world;
 	}
 	
-	public void setEventSystem(EventSystem eventSystem) {
-		this.eventSystem = eventSystem;
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 	public String getName() {
