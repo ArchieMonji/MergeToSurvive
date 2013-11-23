@@ -1,7 +1,7 @@
 {
-	frameCount: 30,
+	frameCount: 9,
 	frameDuration: 0.10,
 	path: data/test/animation_sheet.png,
-	cols: 6,
-	rows: 5
+	cols: 9,
+	rows: 1
 }

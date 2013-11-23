@@ -1,0 +1,23 @@
+{
+pages: [
+	{
+		emotions: [
+			{
+				image: proto_neutral,
+				lines: [
+					"Hey friend.",
+					"Don't take this the wrong way but..."
+				]
+			},
+			{
+				image: proto_angry,
+				lines: [
+					"...U ARE NOTHING BUT A PLANT!",
+					"Let me give you a hug!"
+				]
+			}
+		],
+		speaker: Chibi
+	}
+]
+}

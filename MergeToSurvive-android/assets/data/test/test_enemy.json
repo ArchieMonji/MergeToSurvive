@@ -5,8 +5,8 @@ moveSpeed: 	1,
 damage: 1,
 itemDrop: testitem,
 dimensions: {
-	x: 65,
-	y: 102
+	x: 57,
+	y: 89
 },
 
 controller: {

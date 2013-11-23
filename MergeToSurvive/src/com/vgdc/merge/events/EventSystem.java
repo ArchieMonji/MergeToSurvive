@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import com.vgdc.merge.world.World;
 
 public class EventSystem {
@@ -19,11 +17,11 @@ public class EventSystem {
 
 	public void loadEvents() {
 		// TODO: JSON? PYTHON? JYTHONON!
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
 	}
 
 	public void addEvent(Event event) {
-		event.setEventSystem(this);
+		event.setWorld(world);
 		events.add(event);
 	}
 
@@ -54,14 +52,14 @@ public class EventSystem {
 	}
 
 	public void trigger(Event event) {
-		event.setEventSystem(this);
+		event.setWorld(world);
 		event.onTrigger();
 	}
 
 	public void trigger(String eventName) {
 		Event event = eventMap.get(eventName);
 		System.out.println("Triggering: " + event.getName());
-		event.setEventSystem(this);
+		event.setWorld(world);
 		event.onTrigger();
 	}
 

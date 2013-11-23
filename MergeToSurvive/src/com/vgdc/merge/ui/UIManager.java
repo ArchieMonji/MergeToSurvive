@@ -12,6 +12,7 @@ import com.vgdc.merge.entities.rendering.HitboxRenderer;
 import com.vgdc.merge.events.Event;
 import com.vgdc.merge.ui.dialogue.DialogueBox;
 import com.vgdc.merge.ui.dialogue.DialogueBubble;
+import com.vgdc.merge.ui.dialogue.DialogueManager;
 import com.vgdc.merge.world.World;
 
 public class UIManager {
@@ -24,8 +25,8 @@ public class UIManager {
 
 	private HealthBarRenderer healthBarRenderer;
 	private HitboxRenderer hitboxRenderer;
-
 	private HeadsUpDisplay headsUpDisplay;
+	private DialogueManager dialogueManager;
 
 	public UIManager(World world) {
 		this.world = world;
@@ -40,6 +41,9 @@ public class UIManager {
 		healthBarRenderer = new HealthBarRenderer(world);
 
 		hitboxRenderer = new HitboxRenderer(world);
+		
+		dialogueManager = new DialogueManager(this, world, skin);
+		
 		if (DEBUG_WORLD) {
 			hitboxRenderer.renderFPS(true);
 			hitboxRenderer.renderHitboxes(true);
@@ -76,30 +80,14 @@ public class UIManager {
 		healthBarRenderer.dispose();
 		hitboxRenderer.dispose();
 		headsUpDisplay.dispose();
-	}
-
-	public DialogueBox createDialogueBox(String scriptPath, Event onCloseEvent) {
-		DialogueBox db = new DialogueBox(world, scriptPath, skin);
-		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
-
-		stage.addActor(db);
-
-		return db;
-	}
-
-	public DialogueBubble createDialogueBubble(String scriptPath, Event onCloseEvent) {
-		DialogueBubble db = new DialogueBubble(scriptPath, skin);
-		db.setOnCloseEvent(onCloseEvent, world.getEventSystem());
-		
-		stage.addActor(db);
-
-		return db;
+		dialogueManager.dispose();
 	}
 
 	public void setWorld(World world) {
 		this.world = world;
 		world.setUIManager(this);
 		headsUpDisplay.setWorld(world);
+		dialogueManager.setWorld(world);
 	}
 
 	public void setPlayer(Entity player) {
@@ -108,5 +96,9 @@ public class UIManager {
 
 	public void addActor(Actor actor) {
 		stage.addActor(actor);
+	}
+
+	public DialogueManager getDialogueManager() {
+		return dialogueManager;
 	}
 }
