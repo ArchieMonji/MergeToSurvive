@@ -1,4 +1,4 @@
-<level width="640" height="480">
+<level width="640" height="480" startx="16" starty="16" background="picture">
   <PlatformLayer>
     <Platform id="0" x="192" y="112" width="320" height="64" />
   </PlatformLayer>

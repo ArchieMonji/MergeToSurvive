@@ -1,4 +1,4 @@
-package com.vgdc.merge.assets.loaders.data;
+package com.vgdc.merge.world.level;
 
 import com.badlogic.gdx.math.Vector2;
 

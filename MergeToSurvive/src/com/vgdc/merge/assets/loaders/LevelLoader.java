@@ -18,10 +18,10 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.vgdc.merge.assets.loaders.data.LevelData;
-import com.vgdc.merge.assets.loaders.data.LevelEntityData;
-import com.vgdc.merge.assets.loaders.data.LevelPlatformData;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.world.level.LevelData;
+import com.vgdc.merge.world.level.LevelEntityData;
+import com.vgdc.merge.world.level.LevelPlatformData;
 
 public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.LevelParameter> {
 	

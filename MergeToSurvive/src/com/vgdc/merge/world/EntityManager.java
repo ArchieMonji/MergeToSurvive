@@ -22,16 +22,6 @@ public class EntityManager {
 		toAdd.add(entity);
 	}
 	
-	/**
-	 * adds the entity now, by passing next update checks
-	 * use only if you know what you're doing
-	 * @param entity
-	 */
-	protected void addEntityNow(BaseEntity entity)
-	{
-		entities.add(entity);
-	}
-	
 	public void removeEntity(BaseEntity entity)
 	{
 		toRemove.add(entity);

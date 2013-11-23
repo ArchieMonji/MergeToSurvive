@@ -12,9 +12,14 @@ import com.vgdc.merge.entities.BaseEntity;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.events.EventSystem;
 import com.vgdc.merge.ui.UIManager;
+import com.vgdc.merge.world.level.Act;
+import com.vgdc.merge.world.level.Level;
 
 public class World {
-	private EntityManager entityManager = new EntityManager();
+	
+	private Act currentAct;
+	
+	//private EntityManager entityManager = new EntityManager();
 	private ParticleManager particleManager;
 
 	private OrthographicCamera camera;
@@ -42,10 +47,23 @@ public class World {
 		eventSystem = new EventSystem(this);
 		particleManager = new ParticleManager(this);
 		isRunning = true;
+		currentAct = new Act(this);
+		currentAct.addLevel(new Level(this));
+		//currentAct.setLevel(0);
+	}
+	
+	public World(Act act) {
+		batch = new SpriteBatch();
+		eventSystem = new EventSystem(this);
+		particleManager = new ParticleManager(this);
+		isRunning = true;
+		currentAct = act;
+		act.setWorld(this);
+		//currentAct.setLevel(0);
 	}
 
 	public EntityManager getEntityManager() {
-		return entityManager;
+		return currentAct.getCurrentLevel().getEntityManager();
 	}
 
 	public ParticleManager getParticleManager() {
@@ -54,8 +72,8 @@ public class World {
 
 	public void onUpdate(float delta) {
 		if (isRunning) {
-			entityManager.onUpdate();
-			for (BaseEntity e : entityManager.getEntities())
+			getEntityManager().onUpdate();
+			for (BaseEntity e : getEntityManager().getEntities())
 				e.onUpdate(delta);
 			particleManager.onUpdate(delta);
 			eventSystem.onUpdate(delta);
@@ -66,11 +84,11 @@ public class World {
 	public void onRender(float delta) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.draw(getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Color c = batch.getColor();
 		particleManager.onRender_Back(batch);
 		batch.setColor(c);
-		for (BaseEntity e : entityManager.getEntities()) {
+		for (BaseEntity e : getEntityManager().getEntities()) {
 			e.onRender(batch, delta);
 		}
 		particleManager.onRender_Front(batch);
@@ -159,5 +177,9 @@ public class World {
 
 	public void setBackground(Texture background) {
 		this.background = background;
+	}
+	
+	public Texture getBackground(){
+		return background;
 	}
 }
