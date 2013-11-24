@@ -59,6 +59,8 @@ public class Level {
 			platform.getPhysicsBody().setSize(d.dimensions);
 			entities.addEntity(platform);
 		}
+		if(myWorld.getPlayer()!=null)
+			entities.addEntity(myWorld.getPlayer());
 		for(LevelEntityData d : data.entities)
 		{
 			EntityData e = myWorld.getHandler().getEntityData(d.entityData);

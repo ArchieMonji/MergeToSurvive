@@ -182,4 +182,14 @@ public class World {
 	public Texture getBackground(){
 		return background;
 	}
+	
+	public Act getCurrentAct()
+	{
+		return currentAct;
+	}
+	
+	public Level getCurrentLevel()
+	{
+		return currentAct.getCurrentLevel();
+	}
 }
