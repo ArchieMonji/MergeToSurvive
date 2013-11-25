@@ -38,7 +38,7 @@ public class TitleScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
-			game.setScreen(new GameScreen(game));
+			game.setScreen(new TestGameScreen(game));
 			return;
 		}
 

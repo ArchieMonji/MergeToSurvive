@@ -1,0 +1,14 @@
+<level width="1600" height="600" startx="64" starty="64" background="darkroom">
+  <EntityLayer>
+    <hugging_enemy id="0" x="500" y="0" />
+    <test_item id="1" x="450" y="275" />
+    <spear_i_e id="2" x="650" y="275" />
+  </EntityLayer>
+  <PlatformLayer>
+    <grass_platform id="0" x="250" y="50" width="200" height="50" />
+    <grass_platform id="1" x="650" y="50" width="200" height="50" />
+    <grass_platform id="2" x="750" y="500" width="200" height="50" />
+    <grass_platform id="3" x="-50" y="300" width="200" height="50" />
+    <grass_platform id="4" x="400" y="75" width="50" height="100" />
+  </PlatformLayer>
+</level>

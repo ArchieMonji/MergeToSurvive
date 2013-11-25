@@ -1,4 +1,4 @@
-from AbilityController import AbilityController
+from com.vgdc.merge.entities.controllers import AbilityController
 from com.badlogic.gdx.math import Vector2
 
 class HitBoxController(AbilityController):

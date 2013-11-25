@@ -30,16 +30,15 @@ public class Act {
 	{
 		if(currentLevel!=-1)
 			levels.get(currentLevel).setStart(myWorld.getPlayer().getPosition());
-		//level = 2, size = 2, needs to be 3
-		System.out.println(levels.size());
 		if(level>=levels.size()||levels.get(level)==null)
 		{
-			while(levels.size()<=level)
+			while(level>=levels.size())
 				levels.add(null);
 			levels.set(level, new Level(myWorld, datas.get(level)));
 		}
 		currentLevel = level;
 		myWorld.getPlayer().setPosition(levels.get(currentLevel).getStart());
+		myWorld.setDimensions(levels.get(currentLevel).getDimensions());
 		return levels.get(currentLevel);
 	}
 	

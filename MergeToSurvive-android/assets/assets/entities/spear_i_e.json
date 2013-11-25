@@ -20,5 +20,6 @@ abilities: [
 animations: [
 	spear_i_a
 ],
-sounds: {}
+sounds: {},
+type: Item
 }

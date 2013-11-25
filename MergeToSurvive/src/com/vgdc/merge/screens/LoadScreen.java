@@ -20,9 +20,22 @@ public class LoadScreen extends AbstractScreen {
 	private BitmapFont font;
 	private int state;
 	private float stateTime = stateDuration;
+	
+	private FinishLoadingAction onFinish;
 
 	public LoadScreen(MainGame game) {
 		super(game);
+		onFinish = new FinishLoadingAction(){
+			public void finishedLoading(MainGame game)
+			{
+				game.setScreen(new TitleScreen(game));
+			}
+		};
+	}
+	
+	public LoadScreen(MainGame game, FinishLoadingAction onFinish){
+		super(game);
+		this.onFinish = onFinish;
 	}
 
 	@Override
@@ -32,7 +45,7 @@ public class LoadScreen extends AbstractScreen {
 		
 		if(game.getHandler().update())
 		{
-			game.setScreen(new TitleScreen(game));
+			onFinish.finishedLoading(game);
 			return;
 		}
 		stateTime-=delta;
@@ -81,7 +94,7 @@ public class LoadScreen extends AbstractScreen {
 				- textBounds.width / 2, camera.position.y - textBounds.height / 2);
 		
 		//game.getHandler().loadAll();
-		game.getHandler().loadBasedOnDescription("assets/test_descriptor.json");
+//		game.getHandler().loadBasedOnDescription("assets/test_descriptor.json");
 	}
 
 	@Override

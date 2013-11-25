@@ -5,7 +5,7 @@ import com.vgdc.merge.entities.physics.PlatformType;
 
 public class LevelPlatformData {
 	
-	public String imageFileName;
+	public String platformDataName;
 	public Vector2 location;
 	public Vector2 dimensions;
 	

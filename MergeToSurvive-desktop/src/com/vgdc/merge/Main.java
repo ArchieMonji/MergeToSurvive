@@ -11,29 +11,29 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 600;
 		
-		if(args!=null&&args.length>0)
+		String player = "test_player";
+		String act = null;
+		String level = null;
+		
+		if(args!=null)
 		{
-			if(args.length>=2)
+			for(int i = 0; i < args.length; i++)
 			{
-				if(args[0]=="-level")
-				{
-					
-				}
-				else if(args[0]=="-act")
-				{
-					
-				}
-				else
-				{
-					//error or something
-				}
-			}
-			else
-			{
-				//error or something
+				if("-level".equals(args[i]))
+					level = args[++i];
+				else if("-act".equals(args[i]))
+					act = args[++i];
+				else if("-player".equals(args[i]))
+					player = args[++i];
 			}
 		}
-		else
-			new LwjglApplication(new MainGame(), cfg);
+		System.out.println(player);
+		System.out.println(level);
+		System.out.println(act);
+		MainGame game = new MainGame();
+		game.setPlayer(player);
+		game.setAct(act);
+		game.setLevel(level);
+		new LwjglApplication(game, cfg);
 	}
 }

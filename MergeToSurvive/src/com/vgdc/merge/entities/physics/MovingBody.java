@@ -110,15 +110,15 @@ public class MovingBody extends PhysicsBody {
 		if(pos.x < siz.x/2){
 			pos.x = siz.x/2;
 			applySideCollision(CollisionSide.Left);
-		}else if(pos.x > world.dimensions.x-siz.x/2){
-			pos.x = world.dimensions.x-siz.x/2;
+		}else if(pos.x > world.getDimensions().x-siz.x/2){
+			pos.x = world.getDimensions().x-siz.x/2;
 			applySideCollision(CollisionSide.Right);
 		}
 		if(pos.y < siz.y/2){
 			pos.y = siz.y/2;
 			applySideCollision(CollisionSide.Up);
-		}else if(pos.y > world.dimensions.y-siz.y/2){
-			pos.y = world.dimensions.y-siz.y/2;
+		}else if(pos.y > world.getDimensions().y-siz.y/2){
+			pos.y = world.getDimensions().y-siz.y/2;
 			applySideCollision(CollisionSide.Down);
 		}
 	}

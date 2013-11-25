@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.PlatformData;
 import com.vgdc.merge.world.level.LevelData;
 import com.vgdc.merge.world.level.LevelEntityData;
 import com.vgdc.merge.world.level.LevelPlatformData;
@@ -48,9 +49,7 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 	
 	private class TempLevelData extends DefaultHandler
 	{
-		public LevelData data;
-		
-		public Vector2 dimensions;
+		public LevelData data = new LevelData();
 		
 		private LayerType currentLayer = LayerType.NoLayer;
 		
@@ -58,38 +57,46 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
         {
 			if(qName.equals("level"))
 			{
-				dimensions = new Vector2();
-				dimensions.x = Float.parseFloat(attributes.getValue("width"));
-				dimensions.y = Float.parseFloat(attributes.getValue("height"));
+				data.dimensions = new Vector2();
+				data.dimensions.x = Float.parseFloat(attributes.getValue("width"));
+				data.dimensions.y = Float.parseFloat(attributes.getValue("height"));
+				data.playerStart = new Vector2();
+				data.playerStart.x = Float.parseFloat(attributes.getValue("startx"));
+				data.playerStart.y = Float.parseFloat(attributes.getValue("starty"));
+				data.background = attributes.getValue("background");
 			}
-			switch(currentLayer){
-			case NoLayer:
-				try{
-					currentLayer = LayerType.valueOf(qName);
+			else
+			{
+				switch(currentLayer){
+				case NoLayer:
+					try{
+						currentLayer = LayerType.valueOf(qName);
+					}
+					catch(Exception e)
+					{
+						throw new SAXException("Invalid Layer : " + qName);
+					}
+					break;
+				case EntityLayer:
+					LevelEntityData ent = new LevelEntityData();
+					ent.entityData = qName;
+					ent.location = new Vector2();
+					ent.location.x = Float.parseFloat(attributes.getValue("x"));
+					ent.location.y = Float.parseFloat(attributes.getValue("y"));
+					data.entities.add(ent);
+					break;
+				case PlatformLayer:
+					LevelPlatformData plat = new LevelPlatformData();
+					plat.platformDataName = qName;
+					plat.location = new Vector2();
+					plat.location.x = Float.parseFloat(attributes.getValue("x"));
+					plat.location.y = Float.parseFloat(attributes.getValue("y"));
+					plat.dimensions = new Vector2();
+					plat.dimensions.x = Float.parseFloat(attributes.getValue("width"));
+					plat.dimensions.y = Float.parseFloat(attributes.getValue("height"));
+					data.platforms.add(plat);
+					break;
 				}
-				catch(Exception e)
-				{
-					throw new SAXException("Invalid Layer : " + qName);
-				}
-				break;
-			case EntityLayer:
-				LevelEntityData ent = new LevelEntityData();
-				ent.entityData = qName;
-				ent.location = new Vector2();
-				ent.location.x = Float.parseFloat(attributes.getValue("x"));
-				ent.location.y = Float.parseFloat(attributes.getValue("y"));
-				data.entities.add(ent);
-				break;
-			case PlatformLayer:
-				LevelPlatformData plat = new LevelPlatformData();
-				plat.location = new Vector2();
-				plat.location.x = Float.parseFloat(attributes.getValue("x"));
-				plat.location.y = Float.parseFloat(attributes.getValue("y"));
-				plat.dimensions = new Vector2();
-				plat.dimensions.x = Float.parseFloat(attributes.getValue("width"));
-				plat.dimensions.y = Float.parseFloat(attributes.getValue("height"));
-				data.platforms.add(plat);
-				break;
 			}
         }
 		
@@ -107,10 +114,6 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 	@Override
 	public void loadAsync(AssetManager manager, String fileName,
 			LevelParameter parameter) {
-//		for(LevelEntityData d : levelData.entities)
-//			deps.add(new AssetDescriptor(d.entityData, EntityData.class));
-//		for(LevelPlatformData d : levelData.platforms)
-//			deps.add(new AssetDescriptor(d.imageFileName, Texture.class));
 		
 	}
 
@@ -131,7 +134,9 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 			for(LevelEntityData d : levelData.data.entities)
 				deps.add(new AssetDescriptor(d.entityData, EntityData.class));
 			for(LevelPlatformData d : levelData.data.platforms)
-				deps.add(new AssetDescriptor(d.imageFileName, Texture.class));
+				deps.add(new AssetDescriptor(d.platformDataName, PlatformData.class));
+			deps.add(new AssetDescriptor(levelData.data.background, Texture.class));
+			return deps;
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

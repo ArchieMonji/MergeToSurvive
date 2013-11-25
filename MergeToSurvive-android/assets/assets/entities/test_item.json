@@ -23,6 +23,7 @@ animations: [
 	item_animation
 ],
 
-sounds: {}
+sounds: {},
+type: Item
 
 }

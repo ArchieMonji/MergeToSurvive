@@ -1,10 +1,10 @@
 package com.vgdc.merge.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.assets.AssetsHandler;
@@ -26,7 +26,9 @@ public class World {
 
 	private Assets assets;
 
-	public Vector2 dimensions = new Vector2(800, 600);
+	//private Vector2 dimensions = new Vector2();
+	
+	private CameraController cameraController = new CameraController();
 
 	private SpriteBatch batch;
 
@@ -40,7 +42,7 @@ public class World {
 	
 	private boolean isRunning;
 	
-	private Texture background;
+	//private Texture background;
 
 	public World() {
 		batch = new SpriteBatch();
@@ -77,14 +79,17 @@ public class World {
 				e.onUpdate(delta);
 			particleManager.onUpdate(delta);
 			eventSystem.onUpdate(delta);
+			cameraController.update(delta);
+			camera.position.x = MathUtils.clamp(camera.position.x, camera.viewportWidth/2, getDimensions().x- camera.viewportWidth/2);
+			camera.position.y = MathUtils.clamp(camera.position.y, camera.viewportHeight/2, getDimensions().y- camera.viewportHeight/2);
 			camera.update();
 		}
 	}
 
 	public void onRender(float delta) {
-		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		currentAct.getCurrentLevel().drawBackground(batch);
+		batch.setProjectionMatrix(camera.combined);
 		Color c = batch.getColor();
 		particleManager.onRender_Back(batch);
 		batch.setColor(c);
@@ -129,12 +134,22 @@ public class World {
 	}
 
 	public void setDimensions(int width, int height) {
-		dimensions.x = width;
-		dimensions.y = height;
+		setDimensions(new Vector2(width, height));
+	}
+	
+	public void setDimensions(Vector2 dim)
+	{
+		currentAct.getCurrentLevel().setDimensions(dim);
+	}
+	
+	public Vector2 getDimensions()
+	{
+		return currentAct.getCurrentLevel().getDimensions();
 	}
 
 	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
+		cameraController.setCamera(camera);
 	}
 
 	public void dispose() {
@@ -161,6 +176,7 @@ public class World {
 	public void setPlayer(Entity player) {
 		this.player = player;
 		uiManager.setPlayer(player);
+		cameraController.setPlayer(player);
 	}
 
 	public void stop() {
@@ -176,11 +192,11 @@ public class World {
 	}
 
 	public void setBackground(Texture background) {
-		this.background = background;
+		currentAct.getCurrentLevel().setBackground(background);
 	}
 	
 	public Texture getBackground(){
-		return background;
+		return currentAct.getCurrentLevel().getBackground();
 	}
 	
 	public Act getCurrentAct()

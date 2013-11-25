@@ -2,11 +2,15 @@ package com.vgdc.merge.world.level;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.Item;
 import com.vgdc.merge.entities.Platform;
+import com.vgdc.merge.entities.PlatformData;
 import com.vgdc.merge.entities.rendering.PlatformRenderer;
 import com.vgdc.merge.world.EntityManager;
 import com.vgdc.merge.world.EventBox;
@@ -17,6 +21,7 @@ public class Level {
 	
 	private EntityManager entities= new EntityManager();
 	private Vector2 playerStart;
+	private Vector2 dimensions = new Vector2();
 	
 	//might move these into their own classes, we'll see
 	private ArrayList<Spawner> spawners;
@@ -24,6 +29,7 @@ public class Level {
 	
 	private World myWorld;
 	private Texture myBackground;
+	private OrthographicCamera backgroundCamera;
 	
 	public Level()
 	{
@@ -48,13 +54,15 @@ public class Level {
 	
 	public void constructFrom(LevelData data)
 	{
-		myBackground = data.background;
+		setBackground(myWorld.getHandler().getTexture(data.background));
 		playerStart = data.playerStart.cpy();
+		dimensions.set(data.dimensions);
 		for(LevelPlatformData d : data.platforms)
 		{
+			PlatformData platdata = myWorld.getHandler().getPlatformData(d.platformDataName);
 			Platform platform = new Platform(myWorld);
 			platform.getPlatformBody().setPlatformType(d.type);
-			platform.setRenderer(new PlatformRenderer(d.imageFileName, 1,1,1,1));
+			platform.setRenderer(new PlatformRenderer(myWorld.getHandler().getTexture(platdata.texture), platdata.left, platdata.right, platdata.top, platdata.bottom));
 			platform.getPhysicsBody().setPosition(d.location);
 			platform.getPhysicsBody().setSize(d.dimensions);
 			entities.addEntity(platform);
@@ -64,7 +72,24 @@ public class Level {
 		for(LevelEntityData d : data.entities)
 		{
 			EntityData e = myWorld.getHandler().getEntityData(d.entityData);
-			entities.addEntity(new Entity(e, myWorld));
+			switch(e.type)
+			{
+			case Entity:
+				Entity entity = new Entity(e, myWorld);
+				entity.getMovingBody().setElasticity(0);
+				entity.setPosition(d.location);
+				entities.addEntity(entity);
+				break;
+			case Item:
+				Item item = new Item(e, myWorld);
+				item.getMovingBody().setElasticity(0);
+				item.setPosition(d.location);
+				item.getController().onCreate();
+				entities.addEntity(item);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	
@@ -86,11 +111,31 @@ public class Level {
 	public void setBackground(Texture texture)
 	{
 		myBackground = texture;
+		backgroundCamera = new OrthographicCamera(myBackground.getWidth(), myBackground.getHeight());
+		backgroundCamera.position.x = myBackground.getWidth()/2;
+		backgroundCamera.position.y = myBackground.getHeight()/2;
+		backgroundCamera.update();
+	}
+	
+	public void drawBackground(SpriteBatch batch)
+	{
+		batch.setProjectionMatrix(backgroundCamera.combined);
+		batch.draw(myBackground, 0, 0);
 	}
 	
 	public void setStart(Vector2 position)
 	{
 		playerStart.set(position);
+	}
+	
+	public void setDimensions(Vector2 dimensions)
+	{
+		this.dimensions.set(dimensions);
+	}
+	
+	public Vector2 getDimensions()
+	{
+		return dimensions;
 	}
 
 }

@@ -21,14 +21,19 @@ import com.badlogic.gdx.utils.Json;
 import com.vgdc.merge.assets.loaders.AnimationLoader;
 import com.vgdc.merge.assets.loaders.DescriptorLoader;
 import com.vgdc.merge.assets.loaders.EntityDataLoader;
+import com.vgdc.merge.assets.loaders.LevelLoader;
+import com.vgdc.merge.assets.loaders.PlatformDataLoader;
 import com.vgdc.merge.assets.loaders.ScriptLoader;
 import com.vgdc.merge.assets.loaders.SoundFxLoader;
 import com.vgdc.merge.assets.loaders.data.DescriptorData;
 import com.vgdc.merge.assets.loaders.data.SoundFxData;
 import com.vgdc.merge.entities.EntityData;
+import com.vgdc.merge.entities.PlatformData;
 import com.vgdc.merge.entities.abilities.Ability;
 import com.vgdc.merge.entities.audio.SoundFx;
 import com.vgdc.merge.entities.controllers.Controller;
+import com.vgdc.merge.world.level.Act;
+import com.vgdc.merge.world.level.LevelData;
 
 public class AssetsHandler {
 	
@@ -46,6 +51,8 @@ public class AssetsHandler {
 	private JsonDirectoryHandler entityDataDirectory;
 	private ExclusiveDirectoryHandler scriptsDirectory;
 	private ExclusiveDirectoryHandler fontsDirectory;
+	private JsonDirectoryHandler platformDataDirectory;
+	private DirectoryHandler levelDataDirectory;
 	
 	public AssetsHandler()
 	{
@@ -62,6 +69,8 @@ public class AssetsHandler {
 		entityDataDirectory = new JsonDirectoryHandler(folder + "/entities", ".json");
 		scriptsDirectory = new ExclusiveDirectoryHandler(folder + "/scripts", ".py");
 		fontsDirectory = new ExclusiveDirectoryHandler(folder + "/fonts", ".fnt");
+		platformDataDirectory = new JsonDirectoryHandler(folder + "/platforms", ".json");
+		levelDataDirectory = new DirectoryHandler(folder + "/levels");
 		populateJsons();
 		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getPath()));
 		manager.setLoader(Texture.class, new TextureLoader(textureDirectory));
@@ -72,6 +81,8 @@ public class AssetsHandler {
 		manager.setLoader(PyObject.class, new ScriptLoader(scriptsDirectory, interpreter));
 		manager.setLoader(SoundFx.class, new SoundFxLoader(soundFxDirectory, soundFxDirectory.getJson()));
 		manager.setLoader(BitmapFont.class, new BitmapFontLoader(fontsDirectory));
+		manager.setLoader(PlatformData.class, new PlatformDataLoader(platformDataDirectory, platformDataDirectory.getJson()));
+		manager.setLoader(LevelData.class, new LevelLoader(levelDataDirectory));
 		manager.setLoader(DescriptorData.class, new DescriptorLoader(new InternalFileHandleResolver(), new Json()));
 	}
 	
@@ -108,6 +119,18 @@ public class AssetsHandler {
 	
 	public EntityData getEntityData(String path){
 		return manager.get(path, EntityData.class);
+	}
+	
+	public PlatformData getPlatformData(String path){
+		return manager.get(path, PlatformData.class);
+	}
+	
+	public LevelData getLevelData(String path){
+		return manager.get(path, LevelData.class);
+	}
+	
+	public Act getAct(String path){
+		return manager.get(path, Act.class);
 	}
 	
 	public <T> T createScriptObject(String filename, Class<T> cls)
@@ -171,7 +194,7 @@ public class AssetsHandler {
 	 */
 	public void loadBasedOnLevel(String filename)
 	{
-		
+		manager.load(filename, LevelData.class);
 	}
 	
 	/**
@@ -180,7 +203,13 @@ public class AssetsHandler {
 	 */
 	public void loadBasedOnAct(String filename)
 	{
-		
+		//TODO implement this later
+		System.exit(0);
+	}
+	
+	public void loadEntity(String filename)
+	{
+		manager.load(filename, EntityData.class);
 	}
 	
 	/**

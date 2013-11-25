@@ -62,7 +62,7 @@ public class UIManager {
 	}
 
 	public void onRender(Camera camera, float delta) {
-		stage.setCamera(camera);
+		//stage.setCamera(camera);
 		stage.act();
 		stage.draw();
 		if (DEBUG_WORLD) {
