@@ -1,7 +1,7 @@
 {
 	frameCount: 8,
 	frameDuration: 0.083,
-	path: flames,
+	path: "flames",
 	cols: 8,
 	rows: 1
 }

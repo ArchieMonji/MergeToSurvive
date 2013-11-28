@@ -1,7 +1,7 @@
 {
 	frameCount: 6,
 	frameDuration: 0.10,
-	path: purple_attack,
+	path: "purple_attack",
 	frameWidth: 32,
 	frameHeight: 32,
 	cols: 3,

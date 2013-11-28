@@ -5,14 +5,14 @@ damage:1,
 dimensions: {x:8,y:8},
 
 controller: {
-	class: ProjectileController
+	class: "ProjectileController"
 },
 
 abilities: [
 ],
 
 animations: [
-	projectile_animation
+	"projectile_animation"
 ],
 sounds: {}
 }

@@ -8,22 +8,22 @@ dimensions: {
 },
 
 controller: {
-	class: ItemController
+	class: "ItemController"
 },
 
 abilities: [
 	{
-		class: ProjectileAbility,
-		projectile: item_projectile,
-		itemName: test_item
+		class: "ProjectileAbility",
+		projectile: "item_projectile",
+		itemName: "test_item"
 	}
 ],
 
 animations: [
-	item_animation
+	"item_animation"
 ],
 
 sounds: {},
-type: Item
+type: "Item"
 
 }

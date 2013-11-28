@@ -1,7 +1,7 @@
 {
 	frameCount: 1,
 	frameDuration: 0.10,
-	path: spear_i,
+	path: "spear_i",
 	frameWidth: 45,
 	frameHeight: 45,
 	cols: 1,

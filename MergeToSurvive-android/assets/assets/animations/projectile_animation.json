@@ -1,7 +1,7 @@
 {
 	frameCount: 4,
 	frameDuration: 0.10,
-	path: colorboxes,
+	path: "colorboxes",
 	frameWidth: 8,
 	frameHeight: 8,
 	cols: 4,

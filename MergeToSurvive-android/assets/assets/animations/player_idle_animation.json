@@ -1,7 +1,7 @@
 {
 	frameCount: 2,
 	frameDuration: 0.3,
-	path: proto_idle,
+	path: "proto_idle",
 	cols: 2,
 	rows: 1
 }

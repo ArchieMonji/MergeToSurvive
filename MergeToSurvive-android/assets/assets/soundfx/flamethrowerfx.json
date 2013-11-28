@@ -1,4 +1,4 @@
 {
-	path: flamethrower,
+	path: "flamethrower",
 	looping: true
 }

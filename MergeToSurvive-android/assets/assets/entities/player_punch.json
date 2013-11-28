@@ -3,9 +3,9 @@
 	dimensions: {x:32,y:32},
 
 	scontroller: { 
-		script: HitBoxController,
+		script: "HitBoxController",
 		duration: 0.5,
-		knockback: {class:Vector2, x: 3, y: 3 }
+		knockback: {class:"Vector2", x: 3, y: 3 }
 	},
 
 	abilities: [

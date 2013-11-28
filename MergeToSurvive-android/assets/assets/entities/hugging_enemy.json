@@ -3,26 +3,26 @@ maxHealth: 	4,
 jumpHeight: 15,
 moveSpeed: 	2,
 damage: 1,
-itemDrop: test_item,
+itemDrop: "test_item",
 dimensions: {
 	x: 65,
 	y: 102
 },
 
 controller: {
-	class: com.vgdc.merge.test.HuggingAIController
+	class: "com.vgdc.merge.test.HuggingAIController"
 },
 
 abilities: [
 	{
-		class: ProjectileAbility,
-		projectile: test_projectile
+		class: "ProjectileAbility",
+		projectile: "test_projectile"
 	}
 ],
 
 animations: [
-	idle_animation,
-	run_animation
+	"idle_animation",
+	"run_animation"
 ],
 sounds: {}
 }
