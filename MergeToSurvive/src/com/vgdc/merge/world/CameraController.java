@@ -2,15 +2,20 @@ package com.vgdc.merge.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.entities.Entity;
 import com.vgdc.merge.entities.physics.MovingBody;
 
 public class CameraController {
 	//i may split this class in two
-	OrthographicCamera camera;
+	OrthographicCamera camera = new OrthographicCamera(800, 600);
 	Entity player;
 	//Vector2 worldDimensions;
+	World world;
+	
+	public CameraController(World world)
+	{
+		this.world = world;
+	}
 	
 	public void setCamera(OrthographicCamera camera) {
 		this.camera = camera;
@@ -28,6 +33,13 @@ public class CameraController {
 	
 	public void update(float delta){
 		updateCamera(delta);
+	}
+	
+	public void setCameraDimensions(float width, float height)
+	{
+		this.camera.viewportWidth = width;
+		this.camera.viewportHeight = height;
+		System.out.println(camera.viewportWidth + ", " + camera.viewportHeight);
 	}
 	
 	private void updateCamera(float delta)
@@ -58,5 +70,10 @@ public class CameraController {
 //		camera.position.x = body.getPosition().x + leadingOffset;
 		camera.position.x = body.getPosition().x;
 		camera.position.y = body.getPosition().y;
+		camera.position.x = MathUtils.clamp(camera.position.x, camera.viewportWidth/2, world.getDimensions().x- camera.viewportWidth/2);
+		camera.position.y = MathUtils.clamp(camera.position.y, camera.viewportHeight/2, world.getDimensions().y- camera.viewportHeight/2);
+		camera.update();
+		System.out.println(camera.position.x + ", " + camera.position.y);
+		System.out.println(camera.viewportWidth + ", " + camera.viewportHeight);
 	}
 }

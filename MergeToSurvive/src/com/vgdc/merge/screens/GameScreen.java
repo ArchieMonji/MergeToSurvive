@@ -54,7 +54,7 @@ public class GameScreen extends AbstractScreen {
 	public void show() {
 		
 		myWorld = new World(currentAct);
-		myWorld.setCamera(new OrthographicCamera(800, 600));
+		//myWorld.setCamera(new OrthographicCamera(800, 600));
 		myWorld.setHandler(game.getHandler());
 		uiManager = new UIManager(myWorld);
 		myWorld.setUIManager(uiManager);

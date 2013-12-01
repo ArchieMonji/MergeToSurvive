@@ -12,9 +12,9 @@ public class LevelData {
 	
 	public String background;
 	
-	public Vector2 playerStart;
+	public Vector2 playerStart = new Vector2(64, 64);
 	
-	public Vector2 dimensions;
-	public Vector2 cameraDimensions;
+	public Vector2 dimensions = new Vector2(800, 600);
+	public Vector2 cameraDimensions = new Vector2(800, 600);
 
 }

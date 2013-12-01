@@ -44,7 +44,7 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 	}
 	
 	private static enum LayerType {
-		NoLayer, PlatformLayer, EntityLayer
+		NoLayer, Platform, Entity
 	}
 	
 	private class TempLevelData extends DefaultHandler
@@ -60,10 +60,19 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 				data.dimensions = new Vector2();
 				data.dimensions.x = Float.parseFloat(attributes.getValue("width"));
 				data.dimensions.y = Float.parseFloat(attributes.getValue("height"));
+				data.background = attributes.getValue("Background");
+			}
+			else if(qName.equals("camera"))
+			{
+				data.cameraDimensions = new Vector2();
+				data.cameraDimensions.x = Float.parseFloat(attributes.getValue("width"));
+				data.cameraDimensions.y = Float.parseFloat(attributes.getValue("height"));
+			}
+			else if(qName.equals("start"))
+			{
 				data.playerStart = new Vector2();
-				data.playerStart.x = Float.parseFloat(attributes.getValue("startx"));
-				data.playerStart.y = Float.parseFloat(attributes.getValue("starty"));
-				data.background = attributes.getValue("background");
+				data.playerStart.x = Float.parseFloat(attributes.getValue("x"));
+				data.playerStart.y = Float.parseFloat(attributes.getValue("y"));
 			}
 			else
 			{
@@ -77,7 +86,7 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 						throw new SAXException("Invalid Layer : " + qName);
 					}
 					break;
-				case EntityLayer:
+				case Entity:
 					LevelEntityData ent = new LevelEntityData();
 					ent.entityData = qName;
 					ent.location = new Vector2();
@@ -85,7 +94,7 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 					ent.location.y = Float.parseFloat(attributes.getValue("y"));
 					data.entities.add(ent);
 					break;
-				case PlatformLayer:
+				case Platform:
 					LevelPlatformData plat = new LevelPlatformData();
 					plat.platformDataName = qName;
 					plat.location = new Vector2();
@@ -120,6 +129,7 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 	@Override
 	public LevelData loadSync(AssetManager manager, String fileName,
 			LevelParameter parameter) {
+		System.out.println("finish : " + fileName);
 		return levelData.data;
 	}
 
@@ -129,6 +139,9 @@ public class LevelLoader extends AsynchronousAssetLoader<LevelData, LevelLoader.
 			LevelParameter parameter) {
 		levelData = new TempLevelData();
 		try {
+			System.out.println("start : " + fileName);
+			System.out.println(resolve(fileName).file().getAbsolutePath());
+			System.out.println(fileName);
 			parser.parse(resolve(fileName).file(), levelData);
 			Array<AssetDescriptor> deps = new Array<AssetDescriptor>();
 			for(LevelEntityData d : levelData.data.entities)

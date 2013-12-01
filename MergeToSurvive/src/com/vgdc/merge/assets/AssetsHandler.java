@@ -1,5 +1,7 @@
 package com.vgdc.merge.assets;
 
+import java.io.File;
+
 import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
@@ -72,7 +74,7 @@ public class AssetsHandler {
 		platformDataDirectory = new JsonDirectoryHandler(folder + "/platforms", ".json");
 		levelDataDirectory = new DirectoryHandler(folder + "/levels");
 		populateJsons();
-		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getPath()));
+		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getAbsolutePath()));
 		manager.setLoader(Texture.class, new TextureLoader(textureDirectory));
 		manager.setLoader(Sound.class, new SoundLoader(soundDirectory));
 		manager.setLoader(Music.class, new MusicLoader(musicDirectory));

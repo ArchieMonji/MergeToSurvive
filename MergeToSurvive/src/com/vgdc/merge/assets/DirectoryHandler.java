@@ -27,12 +27,17 @@ public class DirectoryHandler implements FileHandleResolver
 		base = Gdx.files.internal("");
 		if(!path.isDirectory())
 		{
-			path = Gdx.files.internal("./bin/" + directory);
-			base = Gdx.files.internal("./bin/");
+			path = Gdx.files.internal("bin/" + directory);
+			base = Gdx.files.internal("bin/");
 			if(!path.isDirectory())
 			{
-				base = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-				path = new FileHandle(AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath() + directory);
+				String s = AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+				if(s.contains("\\"))
+						s = s.substring(0, s.lastIndexOf("\\"));
+				else if(s.contains("/"))
+					s = s.substring(0, s.lastIndexOf("/"));
+				base = new FileHandle(s);
+				path = new FileHandle(s + "\\" + directory);
 			}
 		}
 		//System.out.println(path.path());

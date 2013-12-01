@@ -39,6 +39,7 @@ public class Act {
 		currentLevel = level;
 		myWorld.getPlayer().setPosition(levels.get(currentLevel).getStart());
 		myWorld.setDimensions(levels.get(currentLevel).getDimensions());
+		myWorld.setCameraDimensions(levels.get(currentLevel).getCameraDimensions());
 		return levels.get(currentLevel);
 	}
 	

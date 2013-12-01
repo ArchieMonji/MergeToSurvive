@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.vgdc.merge.assets.Assets;
 import com.vgdc.merge.assets.AssetsHandler;
@@ -22,13 +21,13 @@ public class World {
 	//private EntityManager entityManager = new EntityManager();
 	private ParticleManager particleManager;
 
-	private OrthographicCamera camera;
+	//private OrthographicCamera camera;
 
 	private Assets assets;
 
 	//private Vector2 dimensions = new Vector2();
 	
-	private CameraController cameraController = new CameraController();
+	private CameraController cameraController = new CameraController(this);
 
 	private SpriteBatch batch;
 
@@ -80,16 +79,13 @@ public class World {
 			particleManager.onUpdate(delta);
 			eventSystem.onUpdate(delta);
 			cameraController.update(delta);
-			camera.position.x = MathUtils.clamp(camera.position.x, camera.viewportWidth/2, getDimensions().x- camera.viewportWidth/2);
-			camera.position.y = MathUtils.clamp(camera.position.y, camera.viewportHeight/2, getDimensions().y- camera.viewportHeight/2);
-			camera.update();
 		}
 	}
 
 	public void onRender(float delta) {
 		batch.begin();
 		currentAct.getCurrentLevel().drawBackground(batch);
-		batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(cameraController.camera.combined);
 		Color c = batch.getColor();
 		particleManager.onRender_Back(batch);
 		batch.setColor(c);
@@ -98,7 +94,7 @@ public class World {
 		}
 		particleManager.onRender_Front(batch);
 		batch.end();
-		uiManager.onRender(camera, delta);
+		uiManager.onRender(cameraController.camera, delta);
 	}
 
 //	public void setAssets(Assets nAssets) {
@@ -130,7 +126,7 @@ public class World {
 	}
 
 	public OrthographicCamera getCamera() {
-		return camera;
+		return cameraController.camera;
 	}
 
 	public void setDimensions(int width, int height) {
@@ -148,8 +144,17 @@ public class World {
 	}
 
 	public void setCamera(OrthographicCamera camera) {
-		this.camera = camera;
 		cameraController.setCamera(camera);
+	}
+	
+	public void setCameraDimensions(float width, float height)
+	{
+		cameraController.setCameraDimensions(width, height);
+	}
+	
+	public void setCameraDimensions(Vector2 vec)
+	{
+		cameraController.setCameraDimensions(vec.x, vec.y);
 	}
 
 	public void dispose() {

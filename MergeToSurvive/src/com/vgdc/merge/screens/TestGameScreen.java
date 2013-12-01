@@ -60,9 +60,9 @@ public class TestGameScreen extends AbstractScreen {
 		float h = Gdx.graphics.getHeight();
 		
 		myWorld = new World();
-		myWorld.setCamera(new OrthographicCamera(800, 600));
-		myWorld.getCamera().position.x = 400;
-		myWorld.getCamera().position.y = 300;
+//		myWorld.setCamera(new OrthographicCamera(800, 600));
+//		myWorld.getCamera().position.x = 400;
+//		myWorld.getCamera().position.y = 300;
 		myWorld.setHandler(game.getHandler());
 		//myWorld.setDimensions(1600, 600);
 		

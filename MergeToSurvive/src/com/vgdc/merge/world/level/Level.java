@@ -22,6 +22,7 @@ public class Level {
 	private EntityManager entities= new EntityManager();
 	private Vector2 playerStart;
 	private Vector2 dimensions = new Vector2();
+	private Vector2 cameraDimensions = new Vector2(800, 600);
 	
 	//might move these into their own classes, we'll see
 	private ArrayList<Spawner> spawners;
@@ -54,9 +55,11 @@ public class Level {
 	
 	public void constructFrom(LevelData data)
 	{
-		setBackground(myWorld.getHandler().getTexture(data.background));
+		if(data.background!=null&&!"".equals(data.background))
+			setBackground(myWorld.getHandler().getTexture(data.background));
 		playerStart = data.playerStart.cpy();
 		dimensions.set(data.dimensions);
+		cameraDimensions.set(data.cameraDimensions);
 		for(LevelPlatformData d : data.platforms)
 		{
 			PlatformData platdata = myWorld.getHandler().getPlatformData(d.platformDataName);
@@ -119,6 +122,8 @@ public class Level {
 	
 	public void drawBackground(SpriteBatch batch)
 	{
+		if(myBackground==null)
+			return;
 		batch.setProjectionMatrix(backgroundCamera.combined);
 		batch.draw(myBackground, 0, 0);
 	}
@@ -136,6 +141,11 @@ public class Level {
 	public Vector2 getDimensions()
 	{
 		return dimensions;
+	}
+	
+	public Vector2 getCameraDimensions()
+	{
+		return cameraDimensions;
 	}
 
 }

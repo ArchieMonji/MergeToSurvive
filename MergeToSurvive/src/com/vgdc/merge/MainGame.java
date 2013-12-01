@@ -1,6 +1,7 @@
 package com.vgdc.merge;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.files.FileHandle;
 import com.vgdc.merge.assets.AssetsHandler;
 import com.vgdc.merge.entities.EntityData;
 import com.vgdc.merge.screens.FinishLoadingAction;
@@ -61,12 +62,16 @@ public class MainGame extends Game {
 		handler  = new AssetsHandler();
 		if(level!=null)
 		{
+			FileHandle f = new FileHandle(level);
+			level = f.path();
 			handler.loadEntity(player);
 			handler.loadBasedOnLevel(level);
 			setScreen(new LoadScreen(this, new FinishLoadingLevel(level, player)));
 		}
 		else if(act!=null)
 		{
+			FileHandle f = new FileHandle(act);
+			act = f.path();
 			handler.loadEntity(player);
 			handler.loadBasedOnAct(act);
 			setScreen(new LoadScreen(this, new FinishLoadingAct(level, player)));
