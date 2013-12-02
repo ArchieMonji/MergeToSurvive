@@ -75,6 +75,7 @@ public class AssetsHandler {
 		levelDataDirectory = new DirectoryHandler(folder + "/levels");
 		populateJsons();
 		interpreter.getSystemState().path.append(new PyString(scriptsDirectory.getPath().getAbsolutePath()));
+		System.out.println(interpreter.getSystemState().path);
 		manager.setLoader(Texture.class, new TextureLoader(textureDirectory));
 		manager.setLoader(Sound.class, new SoundLoader(soundDirectory));
 		manager.setLoader(Music.class, new MusicLoader(musicDirectory));

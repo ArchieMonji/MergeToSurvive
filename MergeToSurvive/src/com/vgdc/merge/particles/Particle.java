@@ -33,7 +33,7 @@ public abstract class Particle{
 		this.manager = manager;
 	}
 	public void remove(){
-		System.out.println("remove");
+		//System.out.println("remove");
 		manager.removeParticle(this);
 	}
 	
@@ -68,7 +68,7 @@ public abstract class Particle{
 	/////Update
 	public static final float TIMEMULT = 60;
 	public void onUpdate(float dt){
-		System.out.println("UPDATE!");
+		//System.out.println("UPDATE!");
 		lifetime -= dt;
 		if(lifetime <= 0){
 			remove();

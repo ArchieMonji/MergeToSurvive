@@ -73,7 +73,5 @@ public class CameraController {
 		camera.position.x = MathUtils.clamp(camera.position.x, camera.viewportWidth/2, world.getDimensions().x- camera.viewportWidth/2);
 		camera.position.y = MathUtils.clamp(camera.position.y, camera.viewportHeight/2, world.getDimensions().y- camera.viewportHeight/2);
 		camera.update();
-		System.out.println(camera.position.x + ", " + camera.position.y);
-		System.out.println(camera.viewportWidth + ", " + camera.viewportHeight);
 	}
 }

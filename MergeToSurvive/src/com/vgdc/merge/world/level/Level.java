@@ -64,7 +64,7 @@ public class Level {
 		{
 			PlatformData platdata = myWorld.getHandler().getPlatformData(d.platformDataName);
 			Platform platform = new Platform(myWorld);
-			platform.getPlatformBody().setPlatformType(d.type);
+			platform.getPlatformBody().setPlatformType(platdata.type);
 			platform.setRenderer(new PlatformRenderer(myWorld.getHandler().getTexture(platdata.texture), platdata.left, platdata.right, platdata.top, platdata.bottom));
 			platform.getPhysicsBody().setPosition(d.location);
 			platform.getPhysicsBody().setSize(d.dimensions);

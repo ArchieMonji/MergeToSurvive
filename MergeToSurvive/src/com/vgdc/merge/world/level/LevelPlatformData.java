@@ -8,7 +8,5 @@ public class LevelPlatformData {
 	public String platformDataName;
 	public Vector2 location;
 	public Vector2 dimensions;
-	
-	public PlatformType type;
 
 }

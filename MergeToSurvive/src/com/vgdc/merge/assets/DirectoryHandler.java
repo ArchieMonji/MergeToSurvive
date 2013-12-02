@@ -1,6 +1,8 @@
 package com.vgdc.merge.assets;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -32,11 +34,17 @@ public class DirectoryHandler implements FileHandleResolver
 			if(!path.isDirectory())
 			{
 				String s = AssetsHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+				try {
+					s = URLDecoder.decode(s, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 				if(s.contains("\\"))
 						s = s.substring(0, s.lastIndexOf("\\"));
 				else if(s.contains("/"))
 					s = s.substring(0, s.lastIndexOf("/"));
 				base = new FileHandle(s);
+				System.out.println(base.path());
 				path = new FileHandle(s + "\\" + directory);
 			}
 		}
